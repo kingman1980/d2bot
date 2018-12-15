@@ -1,0 +1,5725 @@
+; Highly modified pickit.ini by Bobbywolf @ micro64@hotmail.com
+; for use with pickit-0.82 by ackmed@gotwalls.com
+;
+; Syntax:
+; [unique string]
+; Code="abc "		- [Optional] This is the 4 letter itemcode.  There is normally a space as the 4th char	
+; Description=<string>	- [Optional] This will print when the item drops. if not defined nothing will print
+; Identified=0/1	- [Optional] 1 = identified, 0 = unidentified
+; Type=<string>		- [Optional] shield/weapon/armor/helm/bow/other
+; Level=<string>	- [Optional] rare/unique/set/magic/normal/craft/superior/lowquality are accepted
+; Pickup=0/1		- [Optional] 0 = dont pickup, 1 = pickup {default if not specified}
+; HasSockets=0/1	- [Optional] 1 = has sockets, 0 = doesnt have sockets
+; isEthereal=0/1	- [Optional] 1 = is Ethereal, 0 = isnt Ethereal
+;
+; If an item matches on multiple definations the one nearest to the top
+; will be used.
+
+;========================Set=Items======================
+;===================Expansion=Set=Items=================
+;====================Aldur's Watchtower=================
+[Set Jagged Star]
+Code="9mt"
+Description=ÿc2Set Jagged Star {Aldur's Rhythm} Dropped
+Level=Set
+Pickup=1
+
+[Set Hunter's Guise]
+Code="dr8"
+Description=ÿc2Set Hunter's Guise {Aldur's Stony Gaze} Dropped
+Level=Set
+Pickup=1
+
+[Set Shadow Plate]
+Code="uul"
+Description=ÿc2Set Shadow Plate {Aldur's Deception} Dropped
+Level=Set
+Pickup=1
+
+[Set Battle Boots]
+Code="xtb"
+Description=ÿc2Set Battle Boots {Aldur's Advance} Dropped
+Level=Set
+Pickup=1
+
+;===================Bul Kathos' Children================
+[Set Colossus Blade]
+Code="7gd"
+Description=ÿc2Set Colossus Blade {Bul-Kathos' Sacred Charge} Dropped
+Level=Set
+Pickup=1
+
+[Set Mythical Sword]
+Code="7wd"
+Description=ÿc2Set Mythical Sword {Bul-Kathos' Tribal Guardian} Dropped
+Level=Set
+Pickup=1
+
+;===================Cow King's Leathers=================
+[Set War Hat]
+Code="xap"
+Description=ÿc2Set War Hat {Cow King's Horns} Dropped
+Level=Set
+Pickup=1
+
+[Set Studded Leather]
+Code="stu"
+Description=ÿc2Set Studded Leather Armor {Cow King's Hide} Dropped
+Level=Set
+Pickup=1
+
+;=======================The Disciple====================
+[Set Dusk Shroud]
+Code="uui"
+Description=ÿc2Set Dusk Shroud Armor {Spiritual Custodian} Dropped
+Level=Set
+Pickup=1
+
+[Set Mithril Coil]
+Code="umc"
+Description=ÿc2Set Mithril Coil {Credendum} Dropped
+Level=Set
+Pickup=1
+
+[Set Bramble Mitts]
+Code="ulg"
+Description=ÿc2Set Bramble Mitts {Laying of Hands} Dropped
+Level=Set
+Pickup=1
+
+[Set Demonhide Boots]
+Code="xlb"
+Description=ÿc2Set Demonhide Boots {Rite of Passage} Dropped
+Level=Set
+Pickup=1
+
+;====================Griswold's Legacy==================
+[Set Caduceus]
+Code="7ws"
+Description=ÿc2Set Caduceus {Griswolds's Redemption} Dropped
+Level=Set
+Pickup=1
+
+[Set Corona]
+Code="urn"
+Description=ÿc2Set Corona {Griswold's Valor} Dropped
+Level=Set
+Pickup=1
+
+[Set Ornate Plate]
+Code="xar"
+Description=ÿc2Set Ornate Plate {Griswold's Heart} Dropped
+Level=Set
+Pickup=1
+
+[Set Vortex Shield]
+Code="paf"
+Description=ÿc2Set Vortex Shield {Griswold's Honor} Dropped
+Level=Set
+Pickup=1
+
+;====================Heaven's Brethren==================
+[Set Reinforced Mace]
+Code="7ma"
+Description=ÿc2Set Reinforced Mace {Dangoon's Teaching} Dropped
+Level=Set
+Pickup=1
+
+[Set Cuirass]
+Code="xrs"
+Description=ÿc2Set Cuirass Armor {Haemosu's Adament} Dropped
+Level=Set
+Pickup=1
+
+[Set Ward]
+Code="uts"
+Description=ÿc2Set Ward Shield {Heaven's Taebaek} Dropped
+Level=Set
+Pickup=1
+
+[Set Spired Helm]
+Code="uhm"
+Description=ÿc2Set Spired Helm {Ondal's Almighty} Dropped
+Level=Set
+Pickup=1
+
+;====================Hwanin's Majesty===================
+[Set Bill]
+Code="9vo"
+Description=ÿc2Set Bill {Hwanin's Justice} Dropped
+Level=Set
+Pickup=1
+
+[Set Tigulated Mail]
+Code="xcl"
+Description=ÿc2Set Tigulated Mail {Hwanin's Refuge} Dropped
+Level=Set
+Pickup=1
+
+[Set Grand Crown]
+Code="xrn"
+Description=ÿc2Set Grand Crown {Hwanin's Splendor} Dropped
+Level=Set
+Pickup=1
+
+;====================The Immortal King==================
+[Set Ogre Maul]
+Code="7m7"
+Description=ÿc2Set Ogre Maul {Immortal King's Stone Crusher} Dropped
+Level=Set
+Pickup=1
+
+[Set Avenger Guard]
+Code="ba5"
+Description=ÿc2Set Avenger Guard {Immortal King's Will} Dropped
+Level=Set
+Pickup=1
+
+[Set Sacred Armor]
+Code="uar"
+Description=ÿc2Set Sacred Armor {Immortal King's Soul Cage} Dropped
+Level=Set
+Pickup=1
+
+[Set War Belt]
+Code="zhb"
+Description=ÿc2Set War Belt {Immortal King's Detail} Dropped
+Level=Set
+Pickup=1
+
+[Set War Gauntlets]
+Code="xhg"
+Description=ÿc2Set War Gauntlets {Immortal King's Forge} Dropped
+Level=Set
+Pickup=1
+
+[Set War Boots]
+Code="xhb"
+Description=ÿc2Set War Boots {Immortal King's Pillar} Dropped
+Level=Set
+Pickup=1
+
+;==================M'avina's Battle Hymn================
+[Set Grand Matron Bow]
+Code="amc"
+Description=ÿc2Set Grand Matron Bow {M'avina's Caster} Dropped
+Level=Set
+Pickup=1
+
+[Set Kraken Shell]
+Code="uld"
+Description=ÿc2Set Kraken Shell Armor {M'avina's Embrace} Dropped
+Level=Set
+Pickup=1
+
+[Set Diadem]
+Code="ci3"
+Description=ÿc2Set Diadem Circlet {M'avina's True Sight} Dropped
+Level=Set
+Pickup=1
+
+[Set Sharkskin Belt]
+Code="zvb"
+Description=ÿc2Set Sharkskin Belt {M'avina's Tenet} Dropped
+Level=Set
+Pickup=1
+
+[Set Battle Gauntlets]
+Code="xtg"
+Description=ÿc2Set Battle Gauntlets {M'avina's Icy Clutch} Dropped
+Level=Set
+Pickup=1
+
+;==================Naj's Ancient Vestige================
+[Set Elder Staff]
+Code="6cs"
+Description=ÿc2Set Elder Staff {Naj's Puzzler} Dropped
+Level=Set
+Pickup=1
+
+[Set Hellforge Plate]
+Code="ult"
+Description=ÿc2Set Hellforge Plate {Naj's Light Plate} Dropped
+Level=Set
+Pickup=1
+
+[Set Circlet]
+Code="ci0"
+Description=ÿc2Set Circlet {Naj's Circlet} Dropped
+Level=Set
+Pickup=1
+
+;=====================Natalya's Odium===================
+[Set Scissors Suwayyah]
+Code="7qr"
+Description=ÿc2Set Scissors Suwayyah {Natalya's Mark} Dropped
+Level=Set
+Pickup=1
+
+[Set Loricated Mail]
+Code="ucl"
+Description=ÿc2Set Loricated Mail {Natalya's Shadow} Dropped
+Level=Set
+Pickup=1
+
+[Set Grim Helm]
+Code="xh9"
+Description=ÿc2Set Grim Helm {Natalya's Totem} Dropped
+Level=Set
+Pickup=1
+
+[Set Mesh Boots]
+Code="xmb"
+Description=ÿc2Set Mesh Boots {Natalya's Soul} Dropped
+Level=Set
+Pickup=1
+
+;======================Orphan's Call====================
+[Set Round Shield]
+Code="xml"
+Description=ÿc2Set Round Shield {Whitstan's Guard} Dropped
+Level=Set
+Pickup=1
+
+[Set Winged Helm]
+Code="xhm"
+Description=ÿc2Set Winged Helm {Guillaume's Face} Dropped
+Level=Set
+Pickup=1
+
+[Set Battle Belt]
+Code="ztb"
+Description=ÿc2Set Battle Belt {Wilhelm's Pride} Dropped
+Level=Set
+Pickup=1
+
+[Set Sharkskin Gloves]
+Code="xvg"
+Description=ÿc2Set Sharkskin Gloves {Magnus' Skin} Dropped
+Level=Set
+Pickup=1
+
+;=====================Sander's Folly====================
+[Set Bone Wand]
+Code="bwn"
+Description=ÿc2Set Bone Wand {Sander's Superstition} Dropped
+Level=Set
+Pickup=1
+
+[Set Heavy Gloves]
+Code="vgl"
+Description=ÿc2Set Heavy Gloves {Sander's Taboo} Dropped
+Level=Set
+Pickup=1
+
+;==================Sazabi's Grand Tribute===============
+[Set Cryptic Sword]
+Code="7ls"
+Description=ÿc2Set Cryptic Sword {Sazabi's Cobalt Redeemer} Dropped
+Level=Set
+Pickup=1
+
+[Set Balrog Skin]
+Code="upl"
+Description=ÿc2Set Balrog Skin Armor {Sazabi's Ghost Liberator} Dropped
+Level=Set
+Pickup=1
+
+[Set Basinet]
+Code="xhl"
+Description=ÿc2Set Basinet {Sazabi's Mental Sheath} Dropped
+Level=Set
+Pickup=1
+
+;==================Tal Rasha's Wrappings================
+[Set Swirling Crystal]
+Code="oba"
+Description=ÿc2Set Swirling Crystal {Tal Rasha's Lidless Eye} Dropped
+Level=Set
+Pickup=1
+
+[Set Death Mask]
+Code="xsk"
+Description=ÿc2Set Death Mask {Tal Rasha's Horadric Crest} Dropped
+Level=Set
+Pickup=1
+
+[Set Mesh Belt]
+Code="zmb"
+Description=ÿc2Set Mesh Belt {Tal Rasha's Fire-Spun Cloth} Dropped
+Level=Set
+Pickup=1
+
+[Set Lacquered Plate]
+Code="uth"
+Description=ÿc2Set Lacquered Plate {Tal Rasha's Guardianship} Dropped
+Level=Set
+Pickup=1
+
+;===================Trang-Oul's Avatar==================
+[Set Bone Visage]
+Code="uh9"
+Description=ÿc2Set Bone Visage {Trang-Oul's Guise} Dropped
+Level=Set
+Pickup=1
+
+[Set Chaos Armor]
+Code="xul"
+Description=ÿc2Set Chaos Armor {Trang-Oul's Scales} Dropped
+Level=Set
+Pickup=1
+
+[Set Troll Belt]
+Code="utc"
+Description=ÿc2Set Troll Belt {Trang-Oul's Girth} Dropped
+Level=Set
+Pickup=1
+
+
+[Set Cantor Trophy]
+Code="ne9"
+Description=ÿc2Set Cantor Trophy {Trang-Oul's Wing} Dropped
+Level=Set
+Pickup=1
+
+;=====================Multi=Set=Items===================
+[Set Ring]
+Code="rin"
+Description=ÿc2Set Ring Dropped
+Level=Set
+
+[Set Amulet]
+Code="amu"
+Description=ÿc2Set Amulet Dropped
+Level=Set
+
+[Set Chain Gloves]
+Code="mgl"
+Description=ÿc2Set Chain Gloves {Cleglaw's Pincers/Trang-Oul's Claws} Dropped
+Level=Set
+Pickup=1
+
+[Set Heavy Boots]
+Code="vbt"
+Description=ÿc2Set Heavy Boots {Sander's Riprap/Cow King's Hooves} Dropped
+Level=Set
+Pickup=1
+
+[Set Belt]
+Code="mbl"
+Description=ÿc2Set Belt {Hsarus' Iron Stay/Hwanin's Blessing} Dropped
+Level=Set
+Pickup=1
+
+[Set Light Gauntlets]
+Code="tgl"
+Description=ÿc2Set Light Gauntlets {Arctic Mitts/Iratha's Cuff} Dropped
+Level=Set
+Pickup=1
+
+[Set Heavy Belt]
+Code="tbl"
+Description=ÿc2Set Heavy Belt {Infernal Buckle/Iratha's Cord} Dropped
+Level=Set
+Pickup=1
+
+[Set Crown]
+Code="crn"
+Description=ÿc2Set Crown {Milabrega's Diadem/Iratha's Coil} Dropped
+Level=Set
+Pickup=1
+
+[Set Cap]
+Code="cap"
+Description=ÿc2Set Cap {Infernal Cranium/Sander's Paragon} Dropped
+Level=Set
+Pickup=1
+;=====================Classic=Set=Items==================
+;======================Angelic Raiment===================
+[Set Ring Mail]
+Code="rng"
+Description=ÿc2Set Ring Mail {Angelic Mantle} Dropped
+Level=Set
+Pickup=1
+
+[Set Sabre]
+Code="sbr"
+Description=ÿc2Set Sabre {Angelic Sickle} Dropped
+Level=Set
+Pickup=1
+
+;=====================Arcanna's Tricks===================
+[Set Skull Cap]
+Code="skp"
+Description=ÿc2Set Skull Cap {Arcanna's Head} Dropped
+Level=Set
+Pickup=1
+
+[Set Field Plate]
+Code="fld"
+Description=ÿc2Set Field Plate {Arcanna's Flesh} Dropped
+Level=Set
+Pickup=1
+
+[Set War Staff]
+Code="wst"
+Description=ÿc2Set War Staff {Arcanna's Deathwand} Dropped
+Level=Set
+Pickup=1
+
+;=======================Arctic Gear======================
+[Set Light Belt]
+Code="vbl"
+Description=ÿc2Set Light Belt {Arctic Binding} Dropped
+Level=Set
+Pickup=1
+
+[Set Quilted Armor]
+Code="qui"
+Description=ÿc2Set Quilted Armor {Arctic Furs} Dropped
+Level=Set
+Pickup=1
+
+[Set Short War Bow]
+Code="swb"
+Description=ÿc2Set Short War Bow {Arctic Horn} Dropped
+Level=Set
+Pickup=1
+
+;=====================Berserker's Arsenal===============
+[Set Double Axe]
+Code="2ax"
+Description=ÿc2Set Double Axe {Berserker's Hatchet} Dropped
+Level=Set
+Pickup=1
+
+[Set Splint Mail]
+Code="spl"
+Description=ÿc2Set Splint Mail {Berserker's Hauberk} Dropped
+Level=Set
+Pickup=1
+
+[Set Helm]
+Code="hlm"
+Description=ÿc2Set Helm {Berserker's Headgear} Dropped
+Level=Set
+Pickup=1
+
+;=======================Cathan's Traps==================
+[Set Mask]
+Code="msk"
+Description=ÿc2Set Mask {Cathan's Visage} Dropped
+Level=Set
+Pickup=1
+
+[Set Chain Mail]
+Code="chn"
+Description=ÿc2Set Chain Mail {Cathan's Mesh} Dropped
+Level=Set
+Pickup=1
+
+[Set Battle Staff]
+Code="bst"
+Description=ÿc2Set Battle Staff {Cathan's Rule} Dropped
+Level=Set
+Pickup=1
+
+;====================Civerb's Vestments==================
+[Set Grand Scepter]
+Code="gsc"
+Description=ÿc2Set Grand Scepter {Civerb's Cudgel} Dropped
+Level=Set
+Pickup=1
+
+[Set Large Shield]
+Code="lrg"
+Description=ÿc2Set Large Shield {Civerb's Ward} Dropped
+Level=Set
+Pickup=1
+
+;=====================Cleglaw's Brace====================
+[Set Long Sword]
+Code="lsd"
+Description=ÿc2Set Long Sword {Cleglaw's Tooth} Dropped
+Level=Set
+Pickup=1
+
+[Set Small Shield]
+Code="sml"
+Description=ÿc2Set Small Shield {Cleglaw's Claw} Dropped
+Level=Set
+Pickup=1
+
+;=====================Death's Disguise===================
+[Set War Sword]
+Code="wsd"
+Description=ÿc2Set War Sword {Death's Touch} Dropped
+Level=Set
+Pickup=1
+
+[Set Sash]
+Code="lbl"
+Description=ÿc2Set Sash {Death's Guard} Dropped
+Level=Set
+Pickup=1
+
+[Set Leather Gloves]
+Code="lgl"
+Description=ÿc2Set Leather Gloves {Death's Hand} Dropped
+Level=Set
+Pickup=1
+
+;=====================Hsarus' Defense====================
+[Set Buckler]
+Code="buc"
+Description=ÿc2Set Buckler {Hsarus' Iron Fist} Dropped
+Level=Set
+Pickup=1
+
+[Set Chain Boots]
+Code="mbt"
+Description=ÿc2Set Chain Boots {Hsarus' Iron Heel} Dropped
+Level=Set
+Pickup=1
+
+;======================Infernal Tools====================
+[Set Grim Wand]
+Code="gwn"
+Description=ÿc2Set Grim Wand {Infernal Torch} Dropped
+Level=Set
+Pickup=1
+
+;=====================Iratha's Finery====================
+;(all Iratha's are possible other sets as well)
+
+;====================Isenhart's Armory===================
+[Set Broad Sword]
+Code="bsd"
+Description=ÿc2Set Broad Sword {Isenhart's Lightbrand} Dropped
+Level=Set
+Pickup=1
+
+[Set Breast Plate]
+Code="brs"
+Description=ÿc2Set Breast Plate {Isenhart's Case} Dropped
+Level=Set
+Pickup=1
+
+[Set Full Helm]
+Code="fhl"
+Description=ÿc2Set Full Helm {Isenhart's Horns} Dropped
+Level=Set
+Pickup=1
+
+[Set Gothic Shield]
+Code="gts"
+Description=ÿc2Set Gothic Shield {Isenhart's Parry} Dropped
+Level=Set
+Pickup=1
+
+;===================Milabrega's Regalia==================
+[Set War Scepter]
+Code="wsp"
+Description=ÿc2Set War Scepter {Milabrega's Rod} Dropped
+Level=Set
+Pickup=1
+
+[Set Ancient Armor]
+Code="aar"
+Description=ÿc2Set Ancient Armor {Milabrega's Robe} Dropped
+Level=Set
+Pickup=1
+
+[Set Kite Shield]
+Code="kit"
+Description=ÿc2Set Kite Shield {Milabrega's Orb} Dropped
+Level=Set
+Pickup=1
+
+;==================Sigon's Complete Steel================
+[Set Gothic Plate]
+Code="gth"
+Description=ÿc2Set Gothic Plate {Sigon's Shelter} Dropped
+Level=Set
+Pickup=1
+
+[Set Great Helm]
+Code="ghm"
+Description=ÿc2Set Great Helm {Sigon's Visor} Dropped
+Level=Set
+Pickup=1
+
+[Set Tower Shield]
+Code="tow"
+Description=ÿc2Set Tower Shield {Sigon's Guard} Dropped
+Level=Set
+Pickup=1
+
+[Set Gauntlets]
+Code="hgl"
+Description=ÿc2Set Gauntlets {Sigon's Gage} Dropped
+Level=Set
+Pickup=1
+
+[Set Greaves]
+Code="hbt"
+Description=ÿc2Set Greaves {Sigon's Sabot} Dropped
+Level=Set
+Pickup=1
+
+[Set Plated Belt]
+Code="hbl"
+Description=ÿc2Set Plated Belt {Sigon's Wrap} Dropped
+Level=Set
+Pickup=1
+
+;====================Tancred's Battlegear================
+[Set Bone Helm]
+Code="bhm"
+Description=ÿc2Set Bone Helm {Tancred's Skull} Dropped
+Level=Set
+Pickup=1
+
+[Set Boots]
+Code="lbt"
+Description=ÿc2Set Boots {Tancred's Hobnails} Dropped
+Level=Set
+Pickup=1
+
+[Set Full Plate Mail]
+Code="ful"
+Description=ÿc2Set Full Plate Mail {Tancred's Spine} Dropped
+Level=Set
+Pickup=1
+
+[Set Military Pick]
+Code="mpi"
+Description=ÿc2Set Military Pick {Tancred's Crowbill} Dropped
+Level=Set
+Pickup=1
+
+;=======================Vidala's Rig=====================
+[Set Leather Armor]
+Code="lea"
+Description=ÿc2Set Leather Armor {Vidala's Ambush} Dropped
+Level=Set
+Pickup=1
+
+[Set Light Plated Boots]
+Code="tbt"
+Description=ÿc2Set Light Plated Boots {Vidala's Fetlock} Dropped
+Level=Set
+Pickup=1
+
+[Set Long Battle Bow]
+Code="lbb"
+Description=ÿc2Set Long Battle Bow {Vidala's Barb} Dropped
+Level=Set
+Pickup=1
+
+;====================Unique=Normal=Armor=================
+;------------------------Body Armor----------------------
+[Unique Quilted Armor]
+Code="qui"
+Description=ÿc8{Norm}Unique Quilted Armor {Greyform} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Leather Armor]
+Code="lea"
+Description=ÿc8{Norm}Unique Leather Armor {Blinkbat's Form} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Hard Leather Armor]
+Code="hla"
+Description=ÿc8{Norm}Unique Hard Leather Armor {The Centurion} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Studded Leather]
+Code="stu"
+Description=ÿc8{Norm}Unique Studded Leather Armor {Twitchthroe} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Ring Mail]
+Code="rng"
+Description=ÿc8{Norm}Unique Ring Mail {Darkglow} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Scale Mail]
+Code="scl"
+Description=ÿc8{Norm}Unique Scale Mail {Hawkmail} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Breast Plate]
+Code="brs"
+Description=ÿc8{Norm}Unique Breast Plate {Venom Ward} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Chain Mail]
+Code="chn"
+Description=ÿc8{Norm}Unique Chain Mail {Sparking Mail} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Splint Mail]
+Code="spl"
+Description=ÿc8{Norm}Unique Splint Mail {Iceblink} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Light Plate]
+Code="ltp"
+Description=ÿc8{Norm}Unique Light Plate {Heavenly Garb} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Field Plate]
+Code="fld"
+Description=ÿc8{Norm}Unique Field Plate {Rockfleece} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Plate Mail]
+Code="plt"
+Description=ÿc8{Norm}Unique Plate Mail {Boneflesh} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Gothic Plate]
+Code="gth"
+Description=ÿc8{Norm}Unique Gothic Plate {Rattlecage} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Full Plate Mail]
+Code="ful"
+Description=ÿc8{Norm}Unique Full Plate Mail {Goldskin} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Ancient Armor]
+Code="aar"
+Description=ÿc8{Norm}Unique Ancient Armor {Silks of the Victor} Dropped
+Level=Unique
+Pickup=1
+
+;---------------------------Belts------------------------
+[Unique Sash]
+Code="lbl"
+Description=ÿc8{Norm}Unique Sash {Lenymo} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Light Belt]
+Code="vbl"
+Description=ÿc8{Norm}Unique Light Belt {Snakecord} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Belt]
+Code="mbl"
+Description=ÿc8{Norm}Unique Belt {Nightsmoke} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Heavy Belt]
+Code="tbl"
+Description=ÿc8{Norm}Unique Heavy Belt {Goldwrap} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Plated Belt]
+Code="hbl"
+Description=ÿc8{Norm}Unique Plated Belt {Bladebuckle} Dropped
+Level=Unique
+Pickup=1
+
+;---------------------------Boots------------------------
+[Unique Boots]
+Code="lbt"
+Description=ÿc8{Norm}Unique Boots {Hotspur} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Heavy Boots]
+Code="vbt"
+Description=ÿc8{Norm}Unique Heavy Boots {Gorefoot} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Chain Boots]
+Code="mbt"
+Description=ÿc8{Norm}Unique Chain Boots {Treads of Cthon} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Light Plated Boots]
+Code="tbt"
+Description=ÿc8{Norm}Unique Light Plated Boots {Goblin Toe} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Greaves]
+Code="hbt"
+Description=ÿc8{Norm}Unique Greaves {Tearhaunch} Dropped
+Level=Unique
+Pickup=1
+
+;---------------------------Helms------------------------
+[Unique Cap]
+Code="cap"
+Description=ÿc8{Norm}Unique Cap {Biggin's Bonnet} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Skull Cap]
+Code="skp"
+Description=ÿc8{Norm}Unique Skull Cap {Tarnhelm} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Helm]
+Code="hlm"
+Description=ÿc8{Norm}Unique Helm {Coif of Glory} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Full Helm]
+Code="fhl"
+Description=ÿc8{Norm}Unique Full Helm {Duskdeep} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Mask]
+Code="msk"
+Description=ÿc8{Norm}Unique Mask {Face of Horror} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Bone Helm]
+Code="bhm"
+Description=ÿc8{Norm}Unique Bone Helm {Wormskull} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Great Helm]
+Code="ghm"
+Description=ÿc8{Norm}Unique Great Helm {Howltusk} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Crown]
+Code="crn"
+Description=ÿc8{Norm}Unique Crown {Undead Crown} Dropped
+Level=Unique
+Pickup=1
+
+;--------------------------Gloves------------------------
+[Unique Leather Gloves]
+Code="lgl"
+Description=ÿc8{Norm}Unique Leather Gloves {Hand of Broc} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Heavy Gloves]
+Code="vgl"
+Description=ÿc8{Norm}Unique Heavy Gloves {Bloodfist} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Chain Gloves]
+Code="mgl"
+Description=ÿc8{Norm}Unique Chain Gloves {Chance Guards} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Light Gauntlets]
+Code="tgl"
+Description=ÿc8{Norm}Unique Light Gauntlets {Magefist} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Gauntlets]
+Code="hgl"
+Description=ÿc8{Norm}Unique Gauntlets {Frostburn} Dropped
+Level=Unique
+Pickup=1
+
+;--------------------------Shields-----------------------
+[Unique Buckler]
+Code="buc"
+Description=ÿc8{Norm}Unique Buckler {Pelta Lunata} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Small Shield]
+Code="sml"
+Description=ÿc8{Norm}Unique Small Shield {Umbral Disk} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Large Shield]
+Code="lrg"
+Description=ÿc8{Norm}Unique Large Shield {Stormguild} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Kite Shield]
+Code="kit"
+Description=ÿc8{Norm}Unique Kite Shield {Steelclash} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Spiked Shield]
+Code="spk"
+Description=ÿc8{Norm}Unique Spiked Shield {Swordback Hold} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Bone Shield]
+Code="bsh"
+Description=ÿc8{Norm}Unique Bone Shield {Wall of the Eyeless} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Tower Shield]
+Code="tow"
+Description=ÿc8{Norm}Unique Tower Shield {Bverrit Keep} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Gothic Shield]
+Code="gts"
+Description=ÿc8{Norm}Unique Gothic Shield {The Ward} Dropped
+Level=Unique
+Pickup=1
+
+;=====================Rare=Normal=Armor==================
+;------------------------Body Armor----------------------
+[Rare Quilted Armor]
+Code="qui"
+Description=ÿc9{Norm}Rare Ghost Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Leather Armor]
+Code="lea"
+Description=ÿc9{Norm}Rare Leather Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Hard Leather Armor]
+Code="hla"
+Description=ÿc9{Norm}Rare Hard Leather Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Studded Leather]
+Code="stu"
+Description=ÿc9{Norm}Rare Studded Leather Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ring Mail]
+Code="rng"
+Description=ÿc9{Norm}Rare Ring Mail Dropped
+Level=Rare
+Pickup=1
+
+[Rare Scale Mail]
+Code="scl"
+Description=ÿc9{Norm}Rare Scale Mail Dropped
+Level=Rare
+Pickup=1
+
+[Rare Breast Plate]
+Code="brs"
+Description=ÿc9{Norm}Rare Breast Plate Dropped
+Level=Rare
+Pickup=1
+
+[Rare Chain Mail]
+Code="chn"
+Description=ÿc9{Norm}Rare Chain Mail Dropped
+Level=Rare
+Pickup=1
+
+[Rare Splint Mail]
+Code="spl"
+Description=ÿc9{Norm}Rare Splint Mail Dropped
+Level=Rare
+Pickup=1
+
+[Rare Light Plate]
+Code="ltp"
+Description=ÿc9{Norm}Rare Light Plate Dropped
+Level=Rare
+Pickup=1
+
+[Rare Field Plate]
+Code="fld"
+Description=ÿc9{Norm}Rare Field Plate Dropped
+Level=Rare
+Pickup=1
+
+[Rare Plate Mail]
+Code="plt"
+Description=ÿc9{Norm}Rare Plate Mail Dropped
+Level=Rare
+Pickup=1
+
+[Rare Gothic Plate]
+Code="gth"
+Description=ÿc9{Norm}Rare Gothic Plate Dropped
+Level=Rare
+Pickup=1
+
+[Rare Full Plate Mail]
+Code="ful"
+Description=ÿc9{Norm}Rare Full Plate Mail Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ancient Armor]
+Code="aar"
+Description=ÿc9{Norm}Rare Ancient Armor Dropped
+Level=Rare
+Pickup=1
+
+;---------------------------Belts------------------------
+[Rare Sash]
+Code="lbl"
+Description=ÿc9{Norm}Rare Sash Dropped
+Level=Rare
+Pickup=1
+
+[Rare Light Belt]
+Code="vbl"
+Description=ÿc9{Norm}Rare Light Belt Dropped
+Level=Rare
+Pickup=1
+
+[Rare Belt]
+Code="mbl"
+Description=ÿc9{Norm}Rare Belt Dropped
+Level=Rare
+Pickup=1
+
+[Rare Heavy Belt]
+Code="tbl"
+Description=ÿc9{Norm}Rare Heavy Belt Dropped
+Level=Rare
+Pickup=1
+
+[Rare Plated Belt]
+Code="hbl"
+Description=ÿc9{Norm}Rare Plated Belt Dropped
+Level=Rare
+Pickup=1
+
+;---------------------------Boots------------------------
+[Rare Boots]
+Code="lbt"
+Description=ÿc9{Norm}Rare Boots Dropped
+Level=Rare
+Pickup=1
+
+[Rare Heavy Boots]
+Code="vbt"
+Description=ÿc9{Norm}Rare Heavy Boots Dropped
+Level=Rare
+Pickup=1
+
+[Rare Chain Boots]
+Code="mbt"
+Description=ÿc9{Norm}Rare Chain Boots Dropped
+Level=Rare
+Pickup=1
+
+[Rare Light Plated Boots]
+Code="tbt"
+Description=ÿc9{Norm}Rare Light Plated Boots Dropped
+Level=Rare
+Pickup=1
+
+[Rare Greaves]
+Code="hbt"
+Description=ÿc9{Norm}Rare Greaves Dropped
+Level=Rare
+Pickup=1
+
+;---------------------------Helms------------------------
+[Rare Cap]
+Code="cap"
+Description=ÿc9{Norm}Rare Cap Dropped
+Level=Rare
+Pickup=1
+
+[Rare Skull Cap]
+Code="skp"
+Description=ÿc9{Norm}Rare Skull Cap Dropped
+Level=Rare
+Pickup=1
+
+[Rare Helm]
+Code="hlm"
+Description=ÿc9{Norm}Rare Helm Dropped
+Level=Rare
+Pickup=1
+
+[Rare Full Helm]
+Code="fhl"
+Description=ÿc9{Norm}Rare Full Helm Dropped
+Level=Rare
+Pickup=1
+
+[Rare Mask]
+Code="msk"
+Description=ÿc9{Norm}Rare Mask Dropped
+Level=Rare
+Pickup=1
+
+[Rare Bone Helm]
+Code="bhm"
+Description=ÿc9{Norm}Rare Bone Helm Dropped
+Level=Rare
+Pickup=1
+
+[Rare Great Helm]
+Code="ghm"
+Description=ÿc9{Norm}Rare Great Helm Dropped
+Level=Rare
+Pickup=1
+
+[Rare Crown]
+Code="crn"
+Description=ÿc9{Norm}Rare Crown Dropped
+Level=Rare
+Pickup=1
+
+[Rare Circlet]
+Code="ci0"
+Description=ÿc9{Norm}Rare Circlet Dropped
+Level=Rare
+Pickup=1
+
+[Rare Coronet]
+Code="ci1"
+Description=ÿc9{Norm}Rare Coronet Dropped
+Level=Rare
+Pickup=1
+
+;--------------------------Gloves------------------------
+[Rare Leather Gloves]
+Code="lgl"
+Description=ÿc9{Norm}Rare Leather Gloves Dropped
+Level=Rare
+Pickup=1
+
+[Rare Heavy Gloves]
+Code="vgl"
+Description=ÿc9{Norm}Rare Heavy Gloves Dropped
+Level=Rare
+Pickup=1
+
+[Rare Chain Gloves]
+Code="mgl"
+Description=ÿc9{Norm}Rare Chain Gloves Dropped
+Level=Rare
+Pickup=1
+
+[Rare Light Gauntlets]
+Code="tgl"
+Description=ÿc9{Norm}Rare Light Gauntlets Dropped
+Level=Rare
+Pickup=1
+
+[Rare Gauntlets]
+Code="hgl"
+Description=ÿc9{Norm}Rare Gauntlets Dropped
+Level=Rare
+Pickup=1
+
+;--------------------------Shields-----------------------
+[Rare Buckler]
+Code="buc"
+Description=ÿc9{Norm}Rare Buckler Dropped
+Level=Rare
+Pickup=1
+
+[Rare Small Shield]
+Code="sml"
+Description=ÿc9{Norm}Rare Small Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Large Shield]
+Code="lrg"
+Description=ÿc9{Norm}Rare Large Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Dragon Shield]
+Code="kit"
+Description=ÿc9{Norm}Rare Dragon Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Spiked Shield]
+Code="spk"
+Description=ÿc9{Norm}Rare Spiked Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Bone Shield]
+Code="bsh"
+Description=ÿc9{Norm}Rare Bone Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Tower Shield]
+Code="tow"
+Description=ÿc9{Norm}Rare Tower Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Gothic Shield]
+Code="gts"
+Description=ÿc9{Norm}Rare Gothic Shield Dropped
+Level=Rare
+Pickup=1
+
+;----------------------Barbarian Helms-------------------
+[Rare Jawbone Cap]
+Code="ba1"
+Description=ÿc9{Norm}Rare Jawbone Cap Dropped
+Level=Rare
+Pickup=1
+
+[Rare Fanged Helm]
+Code="ba2"
+Description=ÿc9{Norm}Rare Fanged Helm Dropped
+Level=Rare
+Pickup=1
+
+[Rare Horned Helm]
+Code="ba3"
+Description=ÿc9{Norm}Rare Horned Helm Dropped
+Level=Rare
+Pickup=1
+
+[Rare Assault Helmet]
+Code="ba4"
+Description=ÿc9{Norm}Rare Assault Helmet Dropped
+Level=Rare
+Pickup=1
+
+[Rare Avenger Guard]
+Code="ba5"
+Description=ÿc9{Norm}Rare Avenger Guard Dropped
+Level=Rare
+Pickup=1
+
+
+;------------------------Druid Helms---------------------
+[Rare Wolf Head]
+Code="dr1"
+Description=ÿc9{Norm}Rare Wolf Head Dropped
+Level=Rare
+Pickup=1
+
+[Rare Hawk Helm]
+Code="dr2"
+Description=ÿc9{Norm}Rare Hawk Helm Dropped
+Level=Rare
+Pickup=1
+
+[Rare Antlers]
+Code="dr3"
+Description=ÿc9{Norm}Rare Antlers Dropped
+Level=Rare
+Pickup=1
+
+[Rare Falcon Mask]
+Code="dr4"
+Description=ÿc9{Norm}Rare Falcon Mask Dropped
+Level=Rare
+Pickup=1
+
+[Rare Spirit Mask]
+Code="dr5"
+Description=ÿc9{Norm}Rare Spirit Mask Dropped
+Level=Rare
+Pickup=1
+
+;---------------------Necromancer Skulls-----------------
+[Rare Preserved Head]
+Code="ne1"
+Description=ÿc9{Norm}Rare Preserved Head Dropped
+Level=Rare
+Pickup=1
+
+
+[Rare Zombie Head]
+Code="ne2"
+Description=ÿc9{Norm}Rare Zombie Head Dropped
+Level=Rare
+Pickup=1
+
+
+[Rare Unraveller Head]
+Code="ne3"
+Description=ÿc9{Norm}Rare Unraveller Head Dropped
+Level=Rare
+Pickup=1
+
+
+[Rare Gargoyle Head]
+Code="ne4"
+Description=ÿc9{Norm}Rare Gargoyle Head Dropped
+Level=Rare
+Pickup=1
+
+
+[Rare Demon Head]
+Code="ne5"
+Description=ÿc9{Norm}Rare Demon Head Dropped
+Level=Rare
+Pickup=1
+
+;----------------------Paladin Shields-------------------
+[Rare Targe]
+Code="pa1"
+Description=ÿc9{Norm}Rare Targe Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Rondache]
+Code="pa2"
+Description=ÿc9{Norm}Rare Rondache Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Heraldic Shield]
+Code="pa3"
+Description=ÿc9{Norm}Rare Heraldic Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Aerin Shield]
+Code="pa4"
+Description=ÿc9{Norm}Rare Aerin Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Crown Shield]
+Code="pa5"
+Description=ÿc9{Norm}Rare Crown Shield Dropped
+Level=Rare
+Pickup=1
+
+;=================Unique=Exceptional=Armor===============
+;------------------------Body Armor----------------------
+[Unique Ghost Armor]
+Code="xui"
+Description=ÿc8{Ecpt}Unique Ghost Armor {The Spirit Shroud} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Serpentskin Armor]
+Code="xea"
+Description=ÿc8{Ecpt}Unique Serpentskin Armor {Skin of the Vipermagi} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Demonhide Armor]
+Code="xla"
+Description=ÿc8{Ecpt}Unique Demonhide Armor {Skin of the Flayed One} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Trellised Armor]
+Code="xtu"
+Description=ÿc8{Ecpt}Unique Trellised Armor {Ironpelt} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Linked Mail]
+Code="xng"
+Description=ÿc8{Ecpt}Unique Linked Mail {Spirit Forge} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Tigulated Mail]
+Code="xcl"
+Description=ÿc8{Ecpt}Unique Tigulated Mail {Crow Caw} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Cuirass]
+Code="xrs"
+Description=ÿc8{Ecpt}Unique Cuirass Armor {Duriel's Shell} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Mesh Armor]
+Code="xhn"
+Description=ÿc8{Ecpt}Unique Mesh Armor {Shaftstop} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Russet Armor]
+Code="xpl"
+Description=ÿc8{Ecpt}Unique Russet Armor {Skullder's Ire} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Mage Plate]
+Code="xtp"
+Description=ÿc8{Ecpt}Unique Mage Plate {Que-Hegan's Wisdom} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Sharktooth Armor]
+Code="xld"
+Description=ÿc8{Ecpt}Unique Sharktooth Armor {Toothrow} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Templar Coat]
+Code="xlt"
+Description=ÿc8{Ecpt}Unique Templar Coat {Guardian Angel} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Embossed Plate]
+Code="xth"
+Description=ÿc8{Ecpt}Unique Embossed Plate {Atma's Wail} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Chaos Armor]
+Code="xul"
+Description=ÿc8{Ecpt}Unique Chaos Armor {Black Hades} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Ornate Plate]
+Code="xar"
+Description=ÿc8{Ecpt}Unique Ornate Plate {Corpsemourn} Dropped
+Level=Unique
+Pickup=1
+
+;---------------------------Belts------------------------
+[Unique Demonhide Sash]
+Code="zlb"
+Description=ÿc8{Ecpt}Unique Demonhide Sash {String of Ears} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Sharkskin Belt]
+Code="zvb"
+Description=ÿc8{Ecpt}Unique Sharkskin Belt {Razortail} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Mesh Belt]
+Code="zmb"
+Description=ÿc8{Ecpt}Unique Mesh Belt {Gloomstrap} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Battle Belt]
+Code="ztb"
+Description=ÿc8{Ecpt}Unique Battle Belt {Snowclash} Dropped
+Level=Unique
+Pickup=1
+
+[Unique War Belt]
+Code="zhb"
+Description=ÿc8{Ecpt}Unique War Belt {Thundergod's Vigor} Dropped
+Level=Unique
+Pickup=1
+
+;---------------------------Boots------------------------
+[Unique Demonhide Boots]
+Code="xlb"
+Description=ÿc8{Ecpt}Unique Demonhide Boots {Infernostride} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Sharkskin Boots]
+Code="xvb"
+Description=ÿc8{Ecpt}Unique Sharkskin Boots {Waterwalk} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Mesh Boots]
+Code="xmb"
+Description=ÿc8{Ecpt}Unique Mesh Boots {Silkweave} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Battle Boots]
+Code="xtb"
+Description=ÿc8{Ecpt}Unique Battle Boots {War Traveler} Dropped
+Level=Unique
+Pickup=1
+
+[Unique War Boots]
+Code="xhb"
+Description=ÿc8{Ecpt}Unique War Boots {Gore Rider} Dropped
+Level=Unique
+Pickup=1
+
+;---------------------------Helms------------------------
+[Unique War Hat]
+Code="xap"
+Description=ÿc8{Ecpt}Unique War Hat {Peasant Crown} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Sallet]
+Code="xkp"
+Description=ÿc8{Ecpt}Unique Sallet {Rockstopper} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Casque]
+Code="xlm"
+Description=ÿc8{Ecpt}Unique Casque {Stealskull} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Basinet]
+Code="xhl"
+Description=ÿc8{Ecpt}Unique Basinet {Darksight Helm} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Death Mask]
+Code="xsk"
+Description=ÿc8{Ecpt}Unique Death Mask {Blackhorn's Face} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Grim Helm]
+Code="xh9"
+Description=ÿc8{Ecpt}Unique Grim Helm {Vampiregaze} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Winged Helm]
+Code="xhm"
+Description=ÿc8{Ecpt}Unique Winged Helm {Valkyrie Wing} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Grand Crown]
+Code="xrn"
+Description=ÿc8{Ecpt}Unique Grand Crown {Crown of Thieves} Dropped
+Level=Unique
+Pickup=1
+
+;--------------------------Gloves------------------------
+[Unique Demonhide Gloves]
+Code="xlg"
+Description=ÿc8{Ecpt}Unique Demonhide Gloves {Venom Grip} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Sharkskin Gloves]
+Code="xvg"
+Description=ÿc8{Ecpt}Unique Sharkskin Gloves {Gravepalm} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Heavy Bracers]
+Code="xmg"
+Description=ÿc8{Ecpt}Unique Heavy Bracers {Ghoulhide} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Battle Gauntlets]
+Code="xtg"
+Description=ÿc8{Ecpt}Unique Battle Gauntlets {Lavagout} Dropped
+Level=Unique
+Pickup=1
+
+[Unique War Gauntlets]
+Code="xhg"
+Description=ÿc8{Ecpt}Unique War Gauntlets {Hellmouth} Dropped
+Level=Unique
+Pickup=1
+
+
+;--------------------------Shields-----------------------
+[Unique Defender]
+Code="xuc"
+Description=ÿc8{Ecpt}Unique Defender Shield {Viscerataunt} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Round Shield]
+Code="xml"
+Description=ÿc8{Ecpt}Unique Round Shield {Moser's Blessed Circle} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Scutum]
+Code="xrg"
+Description=ÿc8{Ecpt}Unique Scutum Shield {Stormchaser} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Dragon Shield]
+Code="xit"
+Description=ÿc8{Ecpt}Unique Dragon Shield {Tiamat's Rebuke} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Barbed Shield]
+Code="xpk"
+Description=ÿc8{Ecpt}Unique Barbed Shield {Lance Guard} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Grim Shield]
+Code="xsh"
+Description=ÿc8{Ecpt}Unique Grim Shield {Lidless Wall} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Pavise]
+Code="xow"
+Description=ÿc8{Ecpt}Unique Pavise Shield {Gerke's Sanctuary} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Ancient Shield]
+Code="xts"
+Description=ÿc8{Ecpt}Unique Ancient Shield {Radament's Sphere} Dropped
+Level=Unique
+Pickup=1
+
+;----------------------Barbarian Helms-------------------
+[Unique Slayer Guard]
+Code="baa"
+Description=ÿc8{Ecpt}Unique Slayer Guard {Arreat's Face} Dropped
+Level=Unique
+Pickup=1
+
+;------------------------Druid Helms---------------------
+[Unique Totemic Mask]
+Code="dra"
+Description=ÿc8{Ecpt}Unique Totemic Mask {Jalal's Mane} Dropped
+Level=Unique
+Pickup=1
+
+;---------------------Necromancer Skulls-----------------
+[Unique Hierophant Trophy]
+Code="nea"
+Description=ÿc8{Ecpt}Unique Hierophant Trophy {Homunculus} Dropped
+Level=Unique
+Pickup=1
+
+;----------------------Paladin Shields-------------------
+[Unique Gilded Shield]
+Code="pa9"
+Description=ÿc8{Ecpt}Unique Gilded Shield {Herald of Zakarum} Dropped
+Level=Unique
+Pickup=1
+
+;==================Rare=Exceptional=Armor================
+;------------------------Body Armor----------------------
+[Rare Ghost Armor]
+Code="xui"
+Description=ÿc9{Ecpt}Rare Ghost Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Serpentskin Armor]
+Code="xea"
+Description=ÿc9{Ecpt}Rare Serpentskin Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Demonhide Armor]
+Code="xla"
+Description=ÿc9{Ecpt}Rare Demonhide Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Trellised Armor]
+Code="xtu"
+Description=ÿc9{Ecpt}Rare Trellised Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Linked Mail]
+Code="xng"
+Description=ÿc9{Ecpt}Rare Linked Mail Dropped
+Level=Rare
+Pickup=1
+
+[Rare Tigulated Mail]
+Code="xcl"
+Description=ÿc9{Ecpt}Rare Tigulated Mail Dropped
+Level=Rare
+Pickup=1
+
+[Rare Cuirass]
+Code="xrs"
+Description=ÿc9{Ecpt}Rare Cuirass Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Mesh Armor]
+Code="xhn"
+Description=ÿc9{Ecpt}Rare Mesh Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Russet Armor]
+Code="xpl"
+Description=ÿc9{Ecpt}Rare Russet Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Mage Plate]
+Code="xtp"
+Description=ÿc9{Ecpt}Rare Mage Plate Dropped
+Level=Rare
+Pickup=1
+
+[Rare Sharktooth Armor]
+Code="xld"
+Description=ÿc9{Ecpt}Rare Sharktooth Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Templar Coat]
+Code="xlt"
+Description=ÿc9{Ecpt}Rare Templar Coat Dropped
+Level=Rare
+Pickup=1
+
+[Rare Embossed Plate]
+Code="xth"
+Description=ÿc9{Ecpt}Rare Embossed Plate Dropped
+Level=Rare
+Pickup=1
+
+[Rare Chaos Armor]
+Code="xul"
+Description=ÿc9{Ecpt}Rare Chaos Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ornate Plate]
+Code="xar"
+Description=ÿc9{Ecpt}Rare Ornate Plate Dropped
+Level=Rare
+Pickup=1
+
+;---------------------------Belts------------------------
+[Rare Demonhide Sash]
+Code="zlb"
+Description=ÿc9{Ecpt}Rare Demonhide Sash Dropped
+Level=Rare
+Pickup=1
+
+[Rare Sharkskin Belt]
+Code="zvb"
+Description=ÿc9{Ecpt}Rare Sharkskin Belt Dropped
+Level=Rare
+Pickup=1
+
+[Rare Mesh Belt]
+Code="zmb"
+Description=ÿc9{Ecpt}Rare Mesh Belt Dropped
+Level=Rare
+Pickup=1
+
+[Rare Battle Belt]
+Code="ztb"
+Description=ÿc9{Ecpt}Rare Battle Belt Dropped
+Level=Rare
+Pickup=1
+
+[Rare War Belt]
+Code="zhb"
+Description=ÿc9{Ecpt}Rare War Belt Dropped
+Level=Rare
+Pickup=1
+
+;---------------------------Boots------------------------
+[Rare Demonhide Boots]
+Code="xlb"
+Description=ÿc9{Ecpt}Rare Demonhide Boots Dropped
+Level=Rare
+Pickup=1
+
+[Rare Sharkskin Boots]
+Code="xvb"
+Description=ÿc9{Ecpt}Rare Sharkskin Boots Dropped
+Level=Rare
+Pickup=1
+
+[Rare Mesh Boots]
+Code="xmb"
+Description=ÿc9{Ecpt}Rare Mesh Boots Dropped
+Level=Rare
+Pickup=1
+
+[Rare Battle Boots]
+Code="xtb"
+Description=ÿc9{Ecpt}Rare Battle Boots Dropped
+Level=Rare
+Pickup=1
+
+[Rare War Boots]
+Code="xhb"
+Description=ÿc9{Ecpt}Rare War Boots Dropped
+Level=Rare
+Pickup=1
+
+;---------------------------Helms------------------------
+[Rare War Hat]
+Code="xap"
+Description=ÿc9{Ecpt}Rare War Hat Dropped
+Level=Rare
+Pickup=1
+
+[Rare Sallet]
+Code="xkp"
+Description=ÿc9{Ecpt}Rare Sallet Dropped
+Level=Rare
+Pickup=1
+
+[Rare Casque]
+Code="xlm"
+Description=ÿc9{Ecpt}Rare Casque Dropped
+Level=Rare
+Pickup=1
+
+[Rare Basinet]
+Code="xhl"
+Description=ÿc9{Ecpt}Rare Basinet Dropped
+Level=Rare
+Pickup=1
+
+[Rare Death Mask]
+Code="xsk"
+Description=ÿc9{Ecpt}Rare Death Mask Dropped
+Level=Rare
+Pickup=1
+
+[Rare Grim Helm]
+Code="xh9"
+Description=ÿc9{Ecpt}Rare Grim Helm Dropped
+Level=Rare
+Pickup=1
+
+[Rare Winged Helm]
+Code="xhm"
+Description=ÿc9{Ecpt}Rare Winged Helm Dropped
+Level=Rare
+Pickup=1
+
+[Rare Grand Crown]
+Code="xrn"
+Description=ÿc9{Ecpt}Rare Grand Crown Dropped
+Level=Rare
+Pickup=1
+
+[Rare Tiara]
+Code="ci2"
+Description=ÿc9{Ecpt}Rare Tiara Circlet Dropped
+Level=Rare
+Pickup=1
+
+;--------------------------Gloves------------------------
+[Rare Demonhide Gloves]
+Code="xlg"
+Description=ÿc9{Ecpt}Rare Demonhide Gloves Dropped
+Level=Rare
+Pickup=1
+
+[Rare Sharkskin Gloves]
+Code="xvg"
+Description=ÿc9{Ecpt}Rare Sharkskin Gloves Dropped
+Level=Rare
+Pickup=1
+
+[Rare Heavy Bracers]
+Code="xmg"
+Description=ÿc9{Ecpt}Rare Heavy Bracers Dropped
+Level=Rare
+Pickup=1
+
+[Rare Battle Gauntlets]
+Code="xtg"
+Description=ÿc9{Ecpt}Rare Battle Gauntlets Dropped
+Level=Rare
+Pickup=1
+
+[Rare War Gauntlets]
+Code="xhg"
+Description=ÿc9{Ecpt}Rare War Gauntlets Dropped
+Level=Rare
+Pickup=1
+
+;--------------------------Shields-----------------------
+[Rare Defender]
+Code="xuc"
+Description=ÿc9{Ecpt}Rare Defender Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Round Shield]
+Code="xml"
+Description=ÿc9{Ecpt}Rare Round Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Scutum]
+Code="xrg"
+Description=ÿc9{Ecpt}Rare Scutum Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Dragon Shield]
+Code="xit"
+Description=ÿc9{Ecpt}Rare Dragon Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Barbed Shield]
+Code="xpk"
+Description=ÿc9{Ecpt}Rare Barbed Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Grim Shield]
+Code="xsh"
+Description=ÿc9{Ecpt}Rare Grim Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Pavise]
+Code="xow"
+Description=ÿc9{Ecpt}Rare Pavise Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ancient Shield]
+Code="xts"
+Description=ÿc9{Ecpt}Rare Ancient Shield Dropped
+Level=Rare
+Pickup=1
+
+;----------------------Barbarian Helms-------------------
+[Rare Jawbone Visor]
+Code="ba6"
+Description=ÿc9{Ecpt}Rare Jawbone Visor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Lion Helm]
+Code="ba7"
+Description=ÿc9{Ecpt}Rare Lion Helm Dropped
+Level=Rare
+Pickup=1
+
+[Rare Rage Mask]
+Code="ba8"
+Description=ÿc9{Ecpt}Rare Rage Mask Dropped
+Level=Rare
+Pickup=1
+
+[Rare Savage Helmet]
+Code="ba9"
+Description=ÿc9{Ecpt}Rare Savage Helmet Dropped
+Level=Rare
+Pickup=1
+
+[Rare Slayer Guard]
+Code="baa"
+Description=ÿc9{Ecpt}Rare Slayer Guard Dropped
+Level=Rare
+Pickup=1
+
+
+;------------------------Druid Helms---------------------
+[Rare Alpha Helm]
+Code="dr6"
+Description=ÿc9{Ecpt}Rare Alpha Helm Dropped
+Level=Rare
+Pickup=1
+
+[Rare Griffon Headdress]
+Code="dr7"
+Description=ÿc9{Ecpt}Rare Griffon Headdress Dropped
+Level=Rare
+Pickup=1
+
+[Rare Hunter's Guise]
+Code="dr8"
+Description=ÿc9{Ecpt}Rare Hunter's Guise Dropped
+Level=Rare
+Pickup=1
+
+[Rare Sacred Feathers]
+Code="dr9"
+Description=ÿc9{Ecpt}Rare Sacred Feathers Dropped
+Level=Rare
+Pickup=1
+
+[Rare Totemic Mask]
+Code="dra"
+Description=ÿc9{Ecpt}Rare Totemic Mask Dropped
+Level=Rare
+Pickup=1
+
+;---------------------Necromancer Skulls-----------------
+[Rare Mummified Trophy]
+Code="ne6"
+Description=ÿc9{Ecpt}Rare Mummified Trophy Dropped
+Level=Rare
+Pickup=1
+
+[Rare Fetish Trophy]
+Code="ne7"
+Description=ÿc9{Ecpt}Rare Fetish Trophy Dropped
+Level=Rare
+Pickup=1
+
+[Rare Sexton Trophy]
+Code="ne8"
+Description=ÿc9{Ecpt}Rare Sexton Trophy Dropped
+Level=Rare
+Pickup=1
+
+[Rare Cantor Trophy]
+Code="ne9"
+Description=ÿc9{Ecpt}Rare Cantor Trophy Dropped
+Level=Rare
+Pickup=1
+
+[Rare Hierophant Trophy]
+Code="nea"
+Description=ÿc9{Ecpt}Rare Hierophant Trophy Dropped
+Level=Rare
+Pickup=1
+
+;----------------------Paladin Shields-------------------
+[Rare Akaran Targe]
+Code="pa6"
+Description=ÿc9{Ecpt}Rare Akaran Targe Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Akaran Rondache]
+Code="pa7"
+Description=ÿc9{Ecpt}Rare Akaran Rondache Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Protector Shield]
+Code="pa8"
+Description=ÿc9{Ecpt}Rare Protector Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Gilded Shield]
+Code="pa9"
+Description=ÿc9{Ecpt}Rare Gilded Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Royal Shield]
+Code="paa"
+Description=ÿc9{Ecpt}Rare Royal Shield Dropped
+Level=Rare
+Pickup=1
+
+;====================Unique=Elite=Armor==================
+;------------------------Body Armor----------------------
+
+[Unique Wire Fleece]
+Code="utu"
+Description=ÿc8{Elite}Unique Wire Fleece {Gladiator's Bane} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Balrog Skin]
+Code="upl"
+Description=ÿc8{Elite}Unique Balrog Skin {Arkaine's Valor} Dropped
+Level=Unique
+Pickup=1
+
+;---------------------------Belts------------------------
+[Unique Vampirefang Belt]
+Code="uvc"
+Description=ÿc8{Elite}Unique Vampirefang Belt {Nosferatu's Coil} Dropped
+Level=Unique
+Pickup=1
+
+;---------------------------Helms------------------------
+[Unique Shako]
+Code="uap"
+Description=ÿc8{Elite}Unique Shako {Harlequin Crest} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Spired Helm]
+Code="uhm"
+Description=ÿc8{Elite}Unique Spired Helm {Veil of Steel} Dropped
+Level=Unique
+Pickup=1
+
+;--------------------------Shields-----------------------
+[Unique Luna]
+Code="uml"
+Description=ÿc8{Elite}Unique Luna {Blackoak Shield} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Monarch]
+Code="uit"
+Description=ÿc8{Elite}Unique Monarch Shield {Stormshield} Dropped
+Level=Unique
+Pickup=1
+
+;=====================Rare=Elite=Armor===================
+;------------------------Body Armor----------------------
+[Rare Dusk Shroud]
+Code="uui"
+Description=ÿc9{Elite}Rare Dusk Shroud Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Wyrmhide]
+Code="Uea"
+Description=ÿc9{Elite}Rare Wyrmhide Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Scarab Husk]
+Code="ula"
+Description=ÿc9{Elite}Rare Scarab Husk Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Wire Fleece]
+Code="utu"
+Description=ÿc9{Elite}Rare Wire Fleece Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Diamond Mail]
+Code="ung"
+Description=ÿc9{Elite}Rare Diamond Mail Dropped
+Level=Rare
+Pickup=1
+
+[Rare Loricated Mail]
+Code="ucl"
+Description=ÿc9{Elite}Rare Loricated Mail Dropped
+Level=Rare
+Pickup=1
+
+[Rare Great Hauberk]
+Code="urs"
+Description=ÿc9{Elite}Rare Great Hauberk Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Boneweave]
+Code="uhn"
+Description=ÿc9{Elite}Rare Boneweave Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Balrog Skin]
+Code="upl"
+Description=ÿc9{Elite}Rare Balrog Skin Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Archon Plate]
+Code="utp"
+Description=ÿc9{Elite}Rare Archon Plate Dropped
+Level=Rare
+Pickup=1
+
+[Rare Kraken Shell]
+Code="uld"
+Description=ÿc9{Elite}Rare Kraken Shell Armor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Hellforge Plate]
+Code="ult"
+Description=ÿc9{Elite}Rare Hellforge Plate Dropped
+Level=Rare
+Pickup=1
+
+[Rare Lacquered Plate]
+Code="uth"
+Description=ÿc9{Elite}Rare Lacquered Plate Dropped
+Level=Rare
+Pickup=1
+
+[Rare Shadow Plate]
+Code="uul"
+Description=ÿc9{Elite}Rare Shadow Plate Dropped
+Level=Rare
+Pickup=1
+
+[Rare Sacred Armor]
+Code="uar"
+Description=ÿc9{Elite}Rare Sacred Armor Dropped
+Level=Rare
+Pickup=1
+
+;---------------------------Belts------------------------
+[Rare Spiderweb Sash]
+Code="ulc"
+Description=ÿc9{Elite}Rare Spiderweb Sash Dropped
+Level=Rare
+Pickup=1
+
+[Rare Vampirefang Belt]
+Code="uvc"
+Description=ÿc9{Elite}Rare Vampirefang Belt Dropped
+Level=Rare
+Pickup=1
+
+[Rare Mithril Coil]
+Code="umc"
+Description=ÿc9{Elite}Rare Mithril Coil Dropped
+Level=Rare
+Pickup=1
+
+[Rare Troll Belt]
+Code="utc"
+Description=ÿc9{Elite}Rare Troll Belt Dropped
+Level=Rare
+Pickup=1
+
+[Rare Colossus Girdle]
+Code="uhc"
+Description=ÿc9{Elite}Rare Colossus Girdle Dropped
+Level=Rare
+Pickup=1
+
+;---------------------------Boots------------------------
+[Rare Wyrmhide Boots]
+Code="ulb"
+Description=ÿc9{Elite}Rare Wyrmhide Boots Dropped
+Level=Rare
+Pickup=1
+
+[Rare Scarabshell Boots]
+Code="uvb"
+Description=ÿc9{Elite}Rare Scarabshell Boots Dropped
+Level=Rare
+Pickup=1
+
+[Rare Boneweave Boots]
+Code="umb"
+Description=ÿc9{Elite}Rare Boneweave Boots Dropped
+Level=Rare
+Pickup=1
+
+[Rare Mirrored Boots]
+Code="utb"
+Description=ÿc9{Elite}Rare Mirrored Boots Dropped
+Level=Rare
+Pickup=1
+
+[Rare Myrmidon Greaves]
+Code="uhb"
+Description=ÿc9{Elite}Rare Myrmidon Greaves Dropped
+Level=Rare
+Pickup=1
+
+;---------------------------Helms------------------------
+[Rare Shako]
+Code="uap"
+Description=ÿc9{Elite}Rare Shako Dropped
+Level=Rare
+Pickup=1
+
+[Rare Hydraskull]
+Code="ukp"
+Description=ÿc9{Elite}Rare Hydraskull Dropped
+Level=Rare
+Pickup=1
+
+[Rare Armet]
+Code="ulm"
+Description=ÿc9{Elite}Rare Armet Dropped
+Level=Rare
+Pickup=1
+
+[Rare Giant Conch]
+Code="uhl"
+Description=ÿc9{Elite}Rare Giant Conch Dropped
+Level=Rare
+Pickup=1
+
+[Rare Demonhead]
+Code="usk"
+Description=ÿc9{Elite}Rare Demonhead Dropped
+Level=Rare
+Pickup=1
+
+[Rare Bone Visage]
+Code="uh9"
+Description=ÿc9{Elite}Rare Bone Visage Dropped
+Level=Rare
+Pickup=1
+
+[Rare Spired Helm]
+Code="uhm"
+Description=ÿc9{Elite}Rare Spired Helm Dropped
+Level=Rare
+Pickup=1
+
+[Rare Corona]
+Code="urn"
+Description=ÿc9{Elite}Rare Corona Dropped
+Level=Rare
+Pickup=1
+
+[Rare Diadem]
+Code="ci3"
+Description=ÿc9{Elite}Rare Diadem Circlet Dropped
+Level=Rare
+Pickup=1
+
+;--------------------------Gloves------------------------
+[Rare Bramble Mitts]
+Code="ulg"
+Description=ÿc9{Elite}Rare Bramble Mitts Dropped
+Level=Rare
+Pickup=1
+
+[Rare Vampirebone Gloves]
+Code="uvg"
+Description=ÿc9{Elite}Rare Vampirebone Gloves Dropped
+Level=Rare
+Pickup=1
+
+[Rare Vambraces]
+Code="umg"
+Description=ÿc9{Elite}Rare Vambraces Dropped
+Level=Rare
+Pickup=1
+
+[Rare Crusader Gauntlets]
+Code="utg"
+Description=ÿc9{Elite}Rare Crusader Gauntlets Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ogre Gauntlets]
+Code="uhg"
+Description=ÿc9{Elite}Rare Ogre Gauntlets Dropped
+Level=Rare
+Pickup=1
+
+
+;--------------------------Shields-----------------------
+[Rare Heater]
+Code="uuc"
+Description=ÿc9{Elite}Rare Heater Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Luna]
+Code="uml"
+Description=ÿc9{Elite}Rare Luna Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Hyperion]
+Code="urg"
+Description=ÿc9{Elite}Rare Hyperion Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Monarch]
+Code="uit"
+Description=ÿc9{Elite}Rare Monarch Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Blade Barrier]
+Code="upk"
+Description=ÿc9{Elite}Rare Blade Barrier Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Troll Nest]
+Code="ush"
+Description=ÿc9{Elite}Rare Troll Nest Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Aegis]
+Code="uow"
+Description=ÿc9{Elite}Rare Aegis Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ward]
+Code="uts"
+Description=ÿc9{Elite}Rare Ward Shield Dropped
+Level=Rare
+Pickup=1
+;----------------------Barbarian Helms-------------------
+[Rare Carnage Helm]
+Code="bab"
+Description=ÿc9{Elite}Rare Carnage Helm Dropped
+Level=Rare
+Pickup=1
+
+[Rare Fury Visor]
+Code="bac"
+Description=ÿc9{Elite}Rare Fury Visor Dropped
+Level=Rare
+Pickup=1
+
+[Rare Destroyer Helm]
+Code="bad"
+Description=ÿc9{Elite}Rare Destroyer Helm Dropped
+Level=Rare
+Pickup=1
+
+[Rare Conqueror Crown]
+Code="bae"
+Description=ÿc9{Elite}Rare Conqueror Crown Dropped
+Level=Rare
+Pickup=1
+
+[Rare Guardian Crown]
+Code="baf"
+Description=ÿc9{Elite}Rare Guardian Crown Dropped
+Level=Rare
+Pickup=1
+
+
+;------------------------Druid Helms---------------------
+[Rare Blood Spirit]
+Code="drb"
+Description=ÿc9{Elite}Rare Blood Spirit Dropped
+Level=Rare
+Pickup=1
+
+[Rare Sun Spirit]
+Code="drc"
+Description=ÿc9{Elite}Rare Sun Spirit Dropped
+Level=Rare
+Pickup=1
+
+[Rare Earth Spirit]
+Code="drd"
+Description=ÿc9{Elite}Rare Earth Spirit Dropped
+Level=Rare
+Pickup=1
+
+[Rare Sky Spirit]
+Code="dre"
+Description=ÿc9{Elite}Rare Sky Spirit Dropped
+Level=Rare
+Pickup=1
+
+[Rare Dream Spirit]
+Code="drf"
+Description=ÿc9{Elite}Rare Dream Spirit Dropped
+Level=Rare
+Pickup=1
+
+;---------------------Necromancer Skulls-----------------
+[Rare Minion Skull]
+Code="neb"
+Description=ÿc9{Elite}Rare Minion Skull Dropped
+Level=Rare
+Pickup=1
+
+
+[Rare Hellspawn Skull]
+Code="nec"
+Description=ÿc9{Elite}Rare Hellspawn Skull Dropped
+Level=Rare
+Pickup=1
+
+
+[Rare Overseer Skull]
+Code="ned"
+Description=ÿc9{Elite}Rare Overseer Skull Dropped
+Level=Rare
+Pickup=1
+
+
+[Rare Succubus Skull]
+Code="nee"
+Description=ÿc9{Elite}Rare Succubus Skull Dropped
+Level=Rare
+Pickup=1
+
+
+[Rare Bloodlord Skull]
+Code="nef"
+Description=ÿc9{Elite}Rare Bloodlord Skull Dropped
+Level=Rare
+Pickup=1
+
+;----------------------Paladin Shields-------------------
+[Rare Sacred Targe]
+Code="pab"
+Description=ÿc9{Elite}Rare Sacred Targe Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Sacred Rondache]
+Code="pac"
+Description=ÿc9{Elite}Rare Sacred Rondache Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ancient Shield]
+Code="xts"
+Description=ÿc9{Elite}Rare Ancient Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Zakarum Shield]
+Code="pae"
+Description=ÿc9{Elite}Rare Zakarum Shield Dropped
+Level=Rare
+Pickup=1
+
+[Rare Vortex Shield]
+Code="paf"
+Description=ÿc9{Elite}Rare Vortex Shield Dropped
+Level=Rare
+Pickup=1
+
+;===================Unique=Elite=Weapons=================
+;--------------------------1h-Axes-----------------------
+[Unique Decapitator]
+Code="7bt"
+Description=ÿc8{Elite}Unique Decapitator {Hellslayer} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Champion Axe]
+Code="7ga"
+Description=ÿc8{Elite}Unique Champion Axe {Messerschmidt's Reaver} Dropped
+Level=Unique
+Pickup=1
+
+;---------------------------Bows-------------------------
+[Unique Crusader Bow]
+Code="6l7"
+Description=ÿc8{Elite}Unique Crusader Bow {Eaglehorn} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Hydra Bow]
+Code="6lw"
+Description=ÿc8{Elite}Unique Hydra Bow {Windforce} Dropped
+Level=Unique
+Pickup=1
+
+;-------------------------Daggers------------------------
+[Unique Bone Knife]
+Code="7dg"
+Description=ÿc8{Elite}Unique Bone Knife {Wizardspike} Dropped
+Level=Unique
+Pickup=1
+
+;--------------------------Maces-------------------------
+[Unique Devil Star]
+Code="7mt"
+Description=ÿc8{Elite}Rare Devil Star {Baranar's Star} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Legendary Mallet]
+Code="7wh"
+Description=ÿc8{Elite}Unique Legendary Mallet {Schaefer's Hammer} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Thunder Maul]
+Code="7gm"
+Description=ÿc8{Elite}Unique Thunder Maul {The Cranium Basher} Dropped
+Level=Unique
+Pickup=1
+
+;--------------------------Polearms----------------------
+[Unique Giant Thresher]
+Code="7wc"
+Description=ÿc8{Elite}Unique Giant Thresher {Stormspire} Dropped
+Level=Unique
+Pickup=1
+
+;------------------------1h Swords-----------------------
+[Unique Phase Blade]
+Code="7cr"
+Description=ÿc8{Elite}Unique Phase Blade {Lightsabre} Dropped
+Level=Unique
+Pickup=1
+
+;------------------------2h Swords-----------------------
+[Unique Champion Sword]
+Code="7b7"
+Description=ÿc8{Elite}Unique Champion Sword {Doombringer} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Colossus Blade]
+Code="7gd"
+Description=ÿc8{Elite}Unique Colossus Blade {The Grandfather} Dropped
+Level=Unique
+Pickup=1
+
+;======================Rare=Elite=Weapons================
+;--------------------------1h-Axes-----------------------
+[Rare Tomahawk]
+Code="7ha"
+Description=ÿc9{Elite}Rare Tomahawk Dropped
+Level=Rare
+Pickup=1
+
+[Rare Small Crescent]
+Code="7ax"
+Description=ÿc9{Elite}Rare Small Crescent Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ettin Axe]
+Code="72a"
+Description=ÿc9{Elite}Rare Ettin Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare War Spike]
+Code="7mp"
+Description=ÿc9{Elite}Rare War Spike Dropped
+Level=Rare
+Pickup=1
+
+[Rare Berserker Axe]
+Code="7wa"
+Description=ÿc9{Elite}Rare Berserker Axe Dropped
+Level=Rare
+Pickup=1
+
+;--------------------------2h-Axes-----------------------
+[Rare Feral Axe]
+Code="7la"
+Description=ÿc9{Elite}Rare Feral Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Silver-edged Axe]
+Code="7ba"
+Description=ÿc9{Elite}Rare Silver-edged Axe Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Decapitator]
+Code="7bt"
+Description=ÿc9{Elite}Rare Decapitator Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Champion Axe]
+Code="7ga"
+Description=ÿc9{Elite}Rare Champion Axe Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Glorious Axe]
+Code="7gi"
+Description=ÿc9{Elite}Rare Glorious Axe Dropped
+Level=Rare
+Pickup=1
+
+;--------------------------Bows--------------------------
+[Rare Spider Bow]
+Code="6sb"
+Description=ÿc9{Elite}Rare Spider Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Blade Bow]
+Code="6hb"
+Description=ÿc9{Elite}Rare Blade Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Shadow Bow]
+Code="6lb"
+Description=ÿc9{Elite}Rare Shadow Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Great Bow]
+Code="6cb"
+Description=ÿc9{Elite}Rare Great Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Diamond Bow]
+Code="6s7"
+Description=ÿc9{Elite}Rare Diamond Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Crusader Bow]
+Code="6l7"
+Description=ÿc9{Elite}Rare Crusader Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ward Bow]
+Code="6sw"
+Description=ÿc9{Elite}Rare Ward Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Hydra Bow]
+Code="6lw"
+Description=ÿc9{Elite}Rare Hydra Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Matriarchal Bow]
+Code="amb"
+Description=ÿc9{Elite}Rare Matriarchal Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Grand Matron Bow]
+Code="amc"
+Description=ÿc9{Elite}Rare Grand Matron Bow Dropped
+Level=Rare
+Pickup=1
+
+;-------------------------xBows--------------------------
+[Rare Pellet Bow]
+Code="6lx"
+Description=ÿc9{Elite}Rare Pellet Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Gorgon Crossbow]
+Code="6mx"
+Description=ÿc9{Elite}Rare Gorgon Crossbow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Colossus Crossbow]
+Code="6hx"
+Description=ÿc9{Elite}Rare Colossus Crossbow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Demon Crossbow]
+Code="6rx"
+Description=ÿc9{Elite}Rare Demon Crossbow Dropped
+Level=Rare
+Pickup=1
+
+;-------------------------Claws--------------------------
+[Rare Suwayyah]
+Code="7ar"
+Description=ÿc9{Elite}Rare Suwayyah Dropped
+Level=Rare
+Pickup=1
+
+[Rare Wrist Sword]
+Code="7wb"
+Description=ÿc9{Elite}Rare Wrist Sword Dropped
+Level=Rare
+Pickup=1
+
+[Rare War Fist]
+Code="7xf"
+Description=ÿc9{Elite}Rare War Fist Dropped
+Level=Rare
+Pickup=1
+
+[Rare Battle Cestus]
+Code="7cs"
+Description=ÿc9{Elite}Rare Battle Cestus Dropped
+Level=Rare
+Pickup=1
+
+[Rare Feral Claws]
+Code="7lw"
+Description=ÿc9{Elite}Rare Feral Claws Dropped
+Level=Rare
+Pickup=1
+
+[Rare Runic Talons]
+Code="7yw"
+Description=ÿc9{Elite}Rare Runic Talons Dropped
+Level=Rare
+Pickup=1
+
+[Rare Scissors Suwayyah]
+Code="7qr"
+Description=ÿc9{Elite}Rare Scissors Suwayyah Dropped
+Level=Rare
+Pickup=1
+
+
+;------------------------Daggers-------------------------
+[Rare Bone Knife]
+Code="7dg"
+Description=ÿc9{Elite}Rare Bone Knife Dropped
+Level=Rare
+Pickup=1
+
+[Rare Mithril Point]
+Code="7di"
+Description=ÿc9{Elite}Rare Mithril Point Dropped
+Level=Rare
+Pickup=1
+
+[Rare Fanged Knife]
+Code="7kr"
+Description=ÿc9{Elite}Rare Fanged Knife Dropped
+Level=Rare
+Pickup=1
+
+[Rare Legend Spike]
+Code="7bl"
+Description=ÿc9{Elite}Rare Legend Spike Dropped
+Level=Rare
+Pickup=1
+
+;------------------------Javelins------------------------
+[Rare Hyperion Javelin]
+Code="7ja"
+Description=ÿc9{Elite}Rare Hyperion Javelin Dropped
+Level=Rare
+Pickup=1
+
+[Rare Stygian Pilum]
+Code="7pi"
+Description=ÿc9{Elite}Rare Stygian Pilum Dropped
+Level=Rare
+Pickup=1
+
+[Rare Balrog Spear]
+Code="7s7"
+Description=ÿc9{Elite}Rare Balrog Spear Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ghost Glaive]
+Code="7gl"
+Description=ÿc9{Elite}Rare Ghost Glaive Dropped
+Level=Rare
+Pickup=1
+
+[Rare Winged Harpoon]
+Code="7ts"
+Description=ÿc9{Elite}Rare Winged Harpoon Dropped
+Level=Rare
+Pickup=1
+
+[Rare Matriarchal Javelin]
+Code="amf"
+Description=ÿc9{Elite}Rare Matriarchal Javelin Dropped
+Level=Rare
+Pickup=1
+
+;-------------------------Maces--------------------------
+[Rare Truncheon]
+Code="7cl"
+Description=ÿc9{Elite}Rare Truncheon Dropped
+Level=Rare
+Pickup=1
+
+[Rare Tyrant Club]
+Code="7sp"
+Description=ÿc9{Elite}Rare Tyrant Club Dropped
+Level=Rare
+Pickup=1
+
+[Rare Reinforced Mace]
+Code="7ma"
+Description=ÿc9{Elite}Rare Reinforced Mace Dropped
+Level=Rare
+Pickup=1
+
+[Rare Devil Star]
+Code="7mt"
+Description=ÿc9{Elite}Rare Devil Star Dropped
+Level=Rare
+Pickup=1
+
+[Rare Scourge]
+Code="7fl"
+Description=ÿc9{Elite}Rare Scourge Dropped
+Level=Rare
+Pickup=1
+
+[Rare Legendary Mallet]
+Code="7wh"
+Description=ÿc9{Elite}Rare Legendary Mallet Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ogre Maul]
+Code="7m7"
+Description=ÿc9{Elite}Rare Ogre Maul Dropped
+Level=Rare
+Pickup=1
+
+[Rare Thunder Maul]
+Code="7gm"
+Description=ÿc9{Elite}Rare Thunder Maul Dropped
+Level=Rare
+Pickup=1
+
+;------------------------Polearms------------------------
+[Rare Ogre Axe]
+Code="7o7"
+Description=ÿc9{Elite}Rare Ogre Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Colossus Voulge]
+Code="7vo"
+Description=ÿc9{Elite}Rare Colossus Voulge Dropped
+Level=Rare
+Pickup=1
+
+[Rare Thresher]
+Code="7s8"
+Description=ÿc9{Elite}Rare Thresher Dropped
+Level=Rare
+Pickup=1
+
+[Rare Cryptic Axe]
+Code="7pa"
+Description=ÿc9{Elite}Rare Cryptic Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Great Poleaxe]
+Code="7h7"
+Description=ÿc9{Elite}Rare Great Poleaxe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Giant Thresher]
+Code="7wc"
+Description=ÿc9{Elite}Rare Giant Thresher Dropped
+Level=Rare
+Pickup=1
+
+;------------------------Scepters------------------------
+[Rare Mighty Scepter]
+Code="7sc"
+Description=ÿc9{Elite}Rare Mighty Scepter Dropped
+Level=Rare
+Pickup=1
+
+[Rare Seraph Rod]
+Code="7qs"
+Description=ÿc9{Elite}Rare Seraph Rod Dropped
+Level=Rare
+Pickup=1
+
+[Rare Caduceus]
+Code="7ws"
+Description=ÿc9{Elite}Rare Caduceus Dropped
+Level=Rare
+Pickup=1
+
+;-------------------------Spears-------------------------
+[Rare Hyperion Spear]
+Code="7sr"
+Description=ÿc9{Elite}Rare Hyperion Spear Dropped
+Level=Rare
+Pickup=1
+
+[Rare Stygian Pike]
+Code="7tr"
+Description=ÿc9{Elite}Rare Stygian Pike Dropped
+Level=Rare
+Pickup=1
+
+[Rare Mancatcher]
+Code="7br"
+Description=ÿc9{Elite}Rare Mancatcher Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ghost Spear]
+Code="7st"
+Description=ÿc9{Elite}Rare Ghost Spear Dropped
+Level=Rare
+Pickup=1
+
+[Rare War Pike]
+Code="7p7"
+Description=ÿc9{Elite}Rare War Pike Dropped
+Level=Rare
+Pickup=1
+
+[Rare Matriarchal Spear]
+Code="amd"
+Description=ÿc9{Elite}Rare Matriarchal Spear Dropped
+Level=Rare
+Pickup=1
+
+[Rare Matriarchal Pike]
+Code="ame"
+Description=ÿc9{Elite}Rare Matriarchal Pike Dropped
+Level=Rare
+Pickup=1
+
+;-------------------------Staves-------------------------
+[Rare Walking Stick]
+Code="6ss"
+Description=ÿc9{Elite}Rare Walking Stick Dropped
+Level=Rare
+Pickup=1
+
+[Rare Stalagmite]
+Code="6ls"
+Description=ÿc9{Elite}Rare Stalagmite Dropped
+Level=Rare
+Pickup=1
+
+[Rare Elder Staff]
+Code="6cs"
+Description=ÿc9{Elite}Rare Elder Staff Dropped
+Level=Rare
+Pickup=1
+
+[Rare Shillelagh]
+Code="6bs"
+Description=ÿc9{Elite}Rare Shillelagh Dropped
+Level=Rare
+Pickup=1
+
+[Rare Archon Staff]
+Code="6ws"
+Description=ÿc9{Elite}Rare Archon Staff Dropped
+Level=Rare
+Pickup=1
+
+;------------------------1h Swords-----------------------
+[Rare Falcata]
+Code="7ss"
+Description=ÿc9{Elite}Rare Falcata Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ataghan]
+Code="7sm"
+Description=ÿc9{Elite}Rare Ataghan Dropped
+Level=Rare
+Pickup=1
+
+[Rare Elegant Blade]
+Code="7sb"
+Description=ÿc9{Elite}Rare Elegant Blade Dropped
+Level=Rare
+Pickup=1
+
+[Rare Hydra Edge]
+Code="7fc"
+Description=ÿc9{Elite}Rare Hydra Edge Dropped
+Level=Rare
+Pickup=1
+
+[Rare Phase Blade]
+Code="7cr"
+Description=ÿc9{Elite}Rare Phase Blade Dropped
+Level=Rare
+Pickup=1
+
+[Rare Conquest Sword]
+Code="7bs"
+Description=ÿc9{Elite}Rare Conquest Sword Dropped
+Level=Rare
+Pickup=1
+
+[Rare Cryptic Sword]
+Code="7ls"
+Description=ÿc9{Elite}Rare Cryptic Sword Dropped
+Level=Rare
+Pickup=1
+
+[Rare Mythical Sword]
+Code="7wd"
+Description=ÿc9{Elite}Rare Mythical Sword Dropped
+Level=Rare
+Pickup=1
+
+;------------------------2h Swords-----------------------
+[Rare Legend Sword]
+Code="72h"
+Description=ÿc9{Elite}Rare Legend Sword Dropped
+Level=Rare
+Pickup=1
+
+[Rare Highland Blade]
+Code="7cm"
+Description=ÿc9{Elite}Rare Highland Blade Dropped
+Level=Rare
+Pickup=1
+
+[Rare Balrog Blade]
+Code="7gs"
+Description=ÿc9{Elite}Rare Balrog Blade Dropped
+Level=Rare
+Pickup=1
+
+[Rare Champion Sword]
+Code="7b7"
+Description=ÿc9{Elite}Rare Champion Sword Dropped
+Level=Rare
+Pickup=1
+
+[Rare Colossal Sword]
+Code="7fb"
+Description=ÿc9{Elite}Rare Colossal Sword Dropped
+Level=Rare
+Pickup=1
+
+[Rare Colossus Blade]
+Code="7gd"
+Description=ÿc9{Elite}Rare Colossus Blade Dropped
+Level=Rare
+Pickup=1
+
+;------------------------Throwing------------------------
+[Rare Flying Knife]
+Code="7tk"
+Description=ÿc9{Elite}Rare Flying Knife Dropped
+Level=Rare
+Pickup=1
+
+[Rare Flying Axe]
+Code="7ta"
+Description=ÿc9{Elite}Rare Flying Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Winged Knife]
+Code="7bk"
+Description=ÿc9{Elite}Rare Winged Knife Dropped
+Level=Rare
+Pickup=1
+
+[Rare Winged Axe]
+Code="7b8"
+Description=ÿc9{Elite}Rare Winged Axe Dropped
+Level=Rare
+Pickup=1
+
+;--------------------------Wands-------------------------
+[Rare Polished Wand]
+Code="7wn"
+Description=ÿc9{Elite}Rare Polished Wand Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ghost Wand]
+Code="7yw"
+Description=ÿc9{Elite}Rare Ghost Wand Dropped
+Level=Rare
+Pickup=1
+
+[Rare Lich Wand]
+Code="7bw"
+Description=ÿc9{Elite}Rare Lich Wand Dropped
+Level=Rare
+Pickup=1
+
+[Rare Unearthed Wand]
+Code="7gw"
+Description=ÿc9{Elite}Rare Unearthed Wand Dropped
+Level=Rare
+Pickup=1
+
+;--------------------------Orbs--------------------------
+[Rare Heavenly Stone]
+Code="obb"
+Description=ÿc9{Elite}Rare Heavenly Stone Dropped
+Level=Rare
+Pickup=1
+
+[Rare Eldritch Orb]
+Code="obc"
+Description=ÿc9{Elite}Rare Eldritch Orb Dropped
+Level=Rare
+Pickup=1
+
+[Rare Demon Heart]
+Code="obd"
+Description=ÿc9{Elite}Rare Demon Heart Dropped
+Level=Rare
+Pickup=1
+
+[Rare Vortex Orb]
+Code="obe"
+Description=ÿc9{Elite}Rare Vortex Orb Dropped
+Level=Rare
+Pickup=1
+
+[Rare Dimensional Shard]
+Code="obf"
+Description=ÿc9{Elite}Rare Dimensional Shard Dropped
+Level=Rare
+Pickup=1
+
+;=================Unique=Exceptional=Weapons=============
+;--------------------------1h-Axes-----------------------
+[Unique Hatchet]
+Code="9ha"
+Description=ÿc8{Ecpt}Unique Hatchet {Coldkill} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Cleaver]
+Code="9ax"
+Description=ÿc8{Ecpt}Unique Cleaver {The Butcher's Pupil} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Twin Axe]
+Code="92a"
+Description=ÿc8{Ecpt}Unique Twin Axe {Islestrike} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Crowbill]
+Code="9mp"
+Description=ÿc8{Ecpt}Unique Crowbill {Pompei's Wrath} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Naga]
+Code="9wa"
+Description=ÿc8{Ecpt}Unique Naga {Guardian Naga} Dropped
+Level=Unique
+Pickup=1
+
+;--------------------------2h-Axes-----------------------
+[Unique Military Axe]
+Code="9la"
+Description=ÿc8{Ecpt}Unique Military Axe {Warlord's Trust} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Bearded Axe]
+Code="9ba"
+Description=ÿc8{Ecpt}Unique Bearded Axe {Spellsteel} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Tabar]
+Code="9bt"
+Description=ÿc8{Ecpt}Unique Tabar {Stormrider} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Gothic Axe]
+Code="9ga"
+Description=ÿc8{Ecpt}Unique Gothic Axe {Boneslayer Blade} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Ancient Axe]
+Code="9gi"
+Description=ÿc8{Ecpt}Unique Ancient Axe {The Minotaur} Dropped
+Level=Unique
+Pickup=1
+
+;--------------------------Bows--------------------------
+[Unique Edge Bow]
+Code="8sb"
+Description=ÿc8{Ecpt}Unique Edge Bow {Skystrike} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Razor Bow]
+Code="8hb"
+Description=ÿc8{Ecpt}Unique Razor Bow {Riphook} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Cedar Bow]
+Code="8lb"
+Description=ÿc8{Ecpt}Unique Cedar Bow {Kuko Shakaku} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Double Bow]
+Code="8cb"
+Description=ÿc8{Ecpt}Unique Double Bow {Endlesshail} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Short Siege Bow]
+Code="8s8"
+Description=ÿc8{Ecpt}Unique Short Siege Bow {Witchwild String} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Large Siege Bow]
+Code="8l8"
+Description=ÿc8{Ecpt}Unique Large Siege Bow {Cliffkiller} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Rune Bow]
+Code="8sw"
+Description=ÿc8{Ecpt}Unique Rune Bow {Magewrath} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Gothic Bow]
+Code="8lw"
+Description=ÿc8{Ecpt}Unique Gothic Bow {Goldstrike Arch} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Ceremonial Bow]
+Code="am7"
+Description=ÿc8{Ecpt}Unique Ceremonial Bow {Lycander's Aim} Dropped
+Level=Unique
+Pickup=1
+
+;-------------------------xBows--------------------------
+[Unique Arbalest]
+Code="8lx"
+Description=ÿc8{Ecpt}Unique Arbalest {Langer Briser} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Siege Crossbow]
+Code="8mx"
+Description=ÿc8{Ecpt}Unique Siege Crossbow {Pus Spitter} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Ballista]
+Code="8hx"
+Description=ÿc8{Ecpt}Unique Ballista {Buriza-Do Kyanon} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Chu-Ko-Nu]
+Code="8rx"
+Description=ÿc8{Ecpt}Unique Chu-Ko-Nu {Demon Machine} Dropped
+Level=Unique
+Pickup=1
+
+;-------------------------Claws--------------------------
+[Unique Greater Talons]
+Code="9tw"
+Description=ÿc8{Ecpt}Unique Greater Talons {Bartuc's Cut Throat} Dropped
+Level=Unique
+Pickup=1
+
+;------------------------Daggers-------------------------
+[Unique Poignard]
+Code="9dg"
+Description=ÿc8{Ecpt}Unique Poignard {Spineripper} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Rondel]
+Code="9di"
+Description=ÿc8{Ecpt}Unique Rondel {Heart Carver} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Cinquedeas]
+Code="9kr"
+Description=ÿc8{Ecpt}Unique Cinquedeas {Blackbog's Sharp} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Stiletto]
+Code="9bl"
+Description=ÿc8{Ecpt}Unique Stiletto {Stormspike} Dropped
+Level=Unique
+Pickup=1
+
+;------------------------Javelins------------------------
+[Unique Ceremonial Javelin]
+Code="ama"
+Description=ÿc8{Ecpt}Unique Ceremonial Javelin {Titan's Revenge} Dropped
+Level=Unique
+isEthereal=1
+Pickup=1
+
+;-------------------------Maces--------------------------
+[Unique Cudgel]
+Code="9cl"
+Description=ÿc8{Ecpt}Unique Cudgel {Dark Clan Crusher} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Barbed Club]
+Code="9sp"
+Description=ÿc8{Ecpt}Unique Barbed Club {Fleshrender} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Flanged Mace]
+Code="9ma"
+Description=ÿc8{Ecpt}Unique Flanged Mace {Sureshrill Frost} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Jagged Star]
+Code="9mt"
+Description=ÿc8{Ecpt}Unique Jagged Star {Moonfall} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Knout]
+Code="9fl"
+Description=ÿc8{Ecpt}Unique Knout {Baezil's Vortex} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Battle Hammer]
+Code="9wh"
+Description=ÿc8{Ecpt}Unique Battle Hammer {Earthshaker} Dropped
+Level=Unique
+Pickup=1
+
+[Unique War Club]
+Code="9m9"
+Description=ÿc8{Ecpt}Unique War Club {Bloodtree Stump} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Martel de Fer]
+Code="9gm"
+Description=ÿc8{Ecpt}Unique Martel de Fer {The Gavel of Pain} Dropped
+Level=Unique
+Pickup=1
+
+;------------------------Polearms------------------------
+[Unique Lochaber Axe]
+Code="9b7"
+Description=ÿc8{Ecpt}Unique Lochaber Axe {The Meat Scraper} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Bill]
+Code="9vo"
+Description=ÿc8{Ecpt}Unique Bill {Blackleach Blade} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Battle Scythe]
+Code="9s8"
+Description=ÿc8{Ecpt}Unique Battle Scythe {Athena's Wrath} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Partizan]
+Code="9pa"
+Description=ÿc8{Ecpt}Unique Partizan {Pierre Tombale Couant} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Bec-De-Corbin]
+Code="9h9"
+Description=ÿc8{Ecpt}Unique Bec-De-Corbin {Husoldal Evo} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Grim Scythe]
+Code="9wc"
+Description=ÿc8{Ecpt}Unique Grim Scythe {Grim's Burning Dead} Dropped
+Level=Unique
+Pickup=1
+
+;------------------------Scepters------------------------
+[Unique Rune Scepter]
+Code="9sc"
+Description=ÿc8{Ecpt}Unique Rune Scepter {Zakarum's Hand} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Holy Water Sprinkler]
+Code="9qs"
+Description=ÿc8{Ecpt}Unique Holy Water Sprinkler {The Fetid Sprinkler} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Divine Scepter]
+Code="9ws"
+Description=ÿc8{Ecpt}Unique Divine Scepter {Hand of Blessed Light} Dropped
+Level=Unique
+Pickup=1
+
+;-------------------------Spears-------------------------
+[Unique War Spear]
+Code="9sr"
+Description=ÿc8{Ecpt}Unique War Spear {The Impaler} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Fuscina]
+Code="9tr"
+Description=ÿc8{Ecpt}Unique Fuscina {Kelpie Snare} Dropped
+Level=Unique
+Pickup=1
+
+[Unique War Fork]
+Code="9br"
+Description=ÿc8{Ecpt}Unique War Fork {Soulfeast Tine} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Yari]
+Code="9st"
+Description=ÿc8{Ecpt}Unique Yari {Hone Sundan} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Lance]
+Code="9p9"
+Description=ÿc8{Ecpt}Unique Lance {Spire of Honor} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Ceremonial Pike]
+Code="am9"
+Description=ÿc8{Ecpt}Unique Ceremonial Pike {Lycander's Flank} Dropped
+Level=Unique
+Pickup=1
+
+;------------------------1h Swords-----------------------
+[Unique Gladius]
+Code="9ss"
+Description=ÿc8{Ecpt}Unique Gladius {Bloodletter} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Cutlass]
+Code="9sm"
+Description=ÿc8{Ecpt}Unique Cutlass {Coldsteel Eye} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Shamshir]
+Code="9sb"
+Description=ÿc8{Ecpt}Unique Shamshir {Hexfire} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Tulwar]
+Code="9fc"
+Description=ÿc8{Ecpt}Unique Tulwar {Blade of Ali Baba} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Dimensional Blade]
+Code="9cr"
+Description=ÿc8{Ecpt}Unique Dimensional Blade {Ginther's Rift} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Battle Sword]
+Code="9bs"
+Description=ÿc8{Ecpt}Unique Battle Sword {Headstriker} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Rune Sword]
+Code="9ls"
+Description=ÿc8{Ecpt}Unique Rune Sword {Plague Bearer} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Ancient Sword]
+Code="9wd"
+Description=ÿc8{Ecpt}Unique Ancient Sword {The Atlantian} Dropped
+Level=Unique
+Pickup=1
+
+;------------------------2h Swords-----------------------
+[Unique Espandon]
+Code="92h"
+Description=ÿc8{Ecpt}Unique Espandon {Crainte Vomir} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Dacian Falx]
+Code="9cm"
+Description=ÿc8{Ecpt}Unique Dacian Falx {Bing Sz Wang} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Tusk Sword]
+Code="9gs"
+Description=ÿc8{Ecpt}Unique Tusk Sword {The Vile Husk} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Gothic Sword]
+Code="9b9"
+Description=ÿc8{Ecpt}Unique Gothic Sword {Cloudcrack} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Zweihander]
+Code="9fb"
+Description=ÿc8{Ecpt}Unique Zweihander {Todesfaelle Flamme} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Executioner Sword]
+Code="9gd"
+Description=ÿc8{Ecpt}Unique Executioner Sword {Swordguard} Dropped
+Level=Unique
+Pickup=1
+
+;------------------------Throwing------------------------
+[Unique Battle Dart]
+Code="9tk"
+Description=ÿc8{Ecpt}Unique Battle Dart {Deathbit} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Francisca]
+Code="9ta"
+Description=ÿc8{Ecpt}Unique Francisca {The Scalper} Dropped
+Level=Unique
+Pickup=1
+
+;--------------------------Wands-------------------------
+[Unique Burnt Wand]
+Code="9wn"
+Description=ÿc8{Elite}Unique Burnt Wand {Suicide Branch} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Petrified Wand]
+Code="9yw"
+Description=ÿc8{Elite}Unique Petrified Wand {Cairn Shard} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Tomb Wand]
+Code="9bw"
+Description=ÿc8{Elite}Unique Tomb Wand {Arm of King Leoric} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Grave Wand]
+Code="9gw"
+Description=ÿc8{Elite}Unique Grave Wand {Blackhand Key} Dropped
+Level=Unique
+Pickup=1
+
+;--------------------------Orbs--------------------------
+[Unique Swirling Crystal]
+Code="oba"
+Description=ÿc8{Ecpt}Unique Swirling Crystal {The Oculus} Dropped
+Level=Unique
+Pickup=1
+
+;==================Rare=Exceptionals=Weapons=============
+;--------------------------1h-Axes-----------------------
+[Rare Hatchet]
+Code="9ha"
+Description=ÿc9{Ecpt}Rare Hatchet Dropped
+Level=Rare
+Pickup=1
+
+[Rare Cleaver]
+Code="9ax"
+Description=ÿc9{Ecpt}Rare Cleaver Dropped
+Level=Rare
+Pickup=1
+
+[Rare Twin Axe]
+Code="92a"
+Description=ÿc9{Ecpt}Rare Twin Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Crowbill]
+Code="9mp"
+Description=ÿc9{Ecpt}Rare Crowbill Dropped
+Level=Rare
+Pickup=1
+
+[Rare Naga]
+Code="9wa"
+Description=ÿc9{Ecpt}Rare Naga Dropped
+Level=Rare
+Pickup=1
+
+;--------------------------2h-Axes-----------------------
+[Rare Military Axe]
+Code="9la"
+Description=ÿc9{Ecpt}Rare Military Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Bearded Axe]
+Code="9ba"
+Description=ÿc9{Ecpt}Rare Bearded Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Tabar]
+Code="9bt"
+Description=ÿc9{Ecpt}Rare Tabar Dropped
+Level=Rare
+Pickup=1
+
+[Rare Gothic Axe]
+Code="9ga"
+Description=ÿc9{Ecpt}Rare Gothic Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ancient Axe]
+Code="9gi"
+Description=ÿc9{Ecpt}Rare Ancient Axe Dropped
+Level=Rare
+Pickup=1
+
+;--------------------------Bows--------------------------
+[Rare Edge Bow]
+Code="8sb"
+Description=ÿc9{Ecpt}Rare Edge Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Razor Bow]
+Code="8hb"
+Description=ÿc9{Ecpt}Rare Razor Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Cedar Bow]
+Code="8lb"
+Description=ÿc9{Ecpt}Rare Cedar Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Double Bow]
+Code="8cb"
+Description=ÿc9{Ecpt}Rare Double Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Short Siege Bow]
+Code="8s8"
+Description=ÿc9{Ecpt}Rare Short Siege Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Large Siege Bow]
+Code="8l8"
+Description=ÿc9{Ecpt}Rare Large Siege Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Rune Bow]
+Code="8sw"
+Description=ÿc9{Ecpt}Rare Rune Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Gothic Bow]
+Code="8lw"
+Description=ÿc9{Ecpt}Rare Gothic Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ashwood Bow]
+Code="am6"
+Description=ÿc9{Ecpt}Rare Ashwood Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ceremonial Bow]
+Code="am7"
+Description=ÿc9{Ecpt}Rare Ceremonial Bow Dropped
+Level=Rare
+Pickup=1
+
+;-------------------------xBows--------------------------
+[Rare Arbalest]
+Code="8lx"
+Description=ÿc9{Ecpt}Rare Arbalest Dropped
+Level=Rare
+Pickup=1
+
+[Rare Siege Crossbow]
+Code="8mx"
+Description=ÿc9{Ecpt}Rare Siege Crossbow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ballista]
+Code="8hx"
+Description=ÿc9{Ecpt}Rare Ballista Dropped
+Level=Rare
+Pickup=1
+
+[Rare Chu-Ko-Nu]
+Code="8rx"
+Description=ÿc9{Ecpt}Rare Chu-Ko-Nu Dropped
+Level=Rare
+Pickup=1
+
+;-------------------------Claws--------------------------
+[Rare Quhab]
+Code="9ar"
+Description=ÿc9{Ecpt}Rare Quhab Dropped
+Level=Rare
+Pickup=1
+
+[Rare Wrist Spike]
+Code="9wb"
+Description=ÿc9{Ecpt}Rare Wrist Spike Dropped
+Level=Rare
+Pickup=1
+
+[Rare Fascia]
+Code="9xf"
+Description=ÿc9{Ecpt}Rare Fascia Dropped
+Level=Rare
+Pickup=1
+
+[Rare Hand Scythe]
+Code="9cs"
+Description=ÿc9{Ecpt}Rare Hand Scythe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Greater Claws]
+Code="9lw"
+Description=ÿc9{Ecpt}Rare Greater Claws Dropped
+Level=Rare
+Pickup=1
+
+[Rare Greater Talons]
+Code="9tw"
+Description=ÿc9{Ecpt}Rare Greater Talons Dropped
+Level=Rare
+Pickup=1
+
+[Rare Scissors Quhab]
+Code="9qr"
+Description=ÿc9{Ecpt}Rare Scissors Quhab Dropped
+Level=Rare
+Pickup=1
+
+
+;------------------------Daggers-------------------------
+[Rare Poignard]
+Code="9dg"
+Description=ÿc9{Ecpt}Rare Poignard Dropped
+Level=Rare
+Pickup=1
+
+[Rare Rondel]
+Code="9di"
+Description=ÿc9{Ecpt}Rare Rondel Dropped
+Level=Rare
+Pickup=1
+
+[Rare Cinquedeas]
+Code="9kr"
+Description=ÿc9{Ecpt}Rare Cinquedeas Dropped
+Level=Rare
+Pickup=1
+
+[Rare Stiletto]
+Code="9bl"
+Description=ÿc9{Ecpt}Rare Stiletto Dropped
+Level=Rare
+Pickup=1
+
+;------------------------Javelins------------------------
+[Rare War Javelin]
+Code="9ja"
+Description=ÿc9{Ecpt}Rare War Javelin Dropped
+Level=Rare
+Pickup=1
+
+[Rare Great Pilum]
+Code="9pi"
+Description=ÿc9{Ecpt}Rare Great Pilum Dropped
+Level=Rare
+Pickup=1
+
+[Rare Simbilan]
+Code="9s9"
+Description=ÿc9{Ecpt}Rare Simbilan Dropped
+Level=Rare
+Pickup=1
+
+[Rare Spiculum]
+Code="9gl"
+Description=ÿc9{Ecpt}Rare Spiculum Dropped
+Level=Rare
+Pickup=1
+
+[Rare Harpoon]
+Code="9ts"
+Description=ÿc9{Ecpt}Rare Harpoon Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ceremonial Javelin]
+Code="ama"
+Description=ÿc9{Ecpt}Rare Ceremonial Javelin Dropped
+Level=Rare
+Pickup=1
+
+;-------------------------Maces--------------------------
+[Rare Cudgel]
+Code="9cl"
+Description=ÿc9{Ecpt}Rare Cudgel Dropped
+Level=Rare
+Pickup=1
+
+[Rare Barbed Club]
+Code="9sp"
+Description=ÿc9{Ecpt}Rare Barbed Club Dropped
+Level=Rare
+Pickup=1
+
+[Rare Flanged Mace]
+Code="9ma"
+Description=ÿc9{Ecpt}Rare Flanged Mace Dropped
+Level=Rare
+Pickup=1
+
+[Rare Jagged Star]
+Code="9mt"
+Description=ÿc9{Ecpt}Rare Jagged Star Dropped
+Level=Rare
+Pickup=1
+
+[Rare Knout]
+Code="9fl"
+Description=ÿc9{Ecpt}Rare Knout Dropped
+Level=Rare
+Pickup=1
+
+[Rare Battle Hammer]
+Code="9wh"
+Description=ÿc9{Ecpt}Rare Battle Hammer Dropped
+Level=Rare
+Pickup=1
+
+[Rare War Club]
+Code="9m9"
+Description=ÿc9{Ecpt}Rare War Club Dropped
+Level=Rare
+Pickup=1
+
+[Rare Martel de Fer]
+Code="9gm"
+Description=ÿc9{Ecpt}Rare Martel de Fer Dropped
+Level=Rare
+Pickup=1
+
+;------------------------Polearms------------------------
+[Rare Lochaber Axe]
+Code="9b7"
+Description=ÿc9{Ecpt}Rare Lochaber Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Bill]
+Code="9vo"
+Description=ÿc9{Ecpt}Rare Bill Dropped
+Level=Rare
+Pickup=1
+
+[Rare Battle Scythe]
+Code="9s8"
+Description=ÿc9{Ecpt}Rare Battle Scythe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Partizan]
+Code="9pa"
+Description=ÿc9{Ecpt}Rare Partizan Dropped
+Level=Rare
+Pickup=1
+
+[Rare Bec-De-Corbin]
+Code="9h9"
+Description=ÿc9{Ecpt}Rare Bec-De-Corbin Dropped
+Level=Rare
+Pickup=1
+
+[Rare Grim Scythe]
+Code="9wc"
+Description=ÿc9{Ecpt}Rare Grim Scythe Dropped
+Level=Rare
+Pickup=1
+
+;------------------------Scepters------------------------
+[Rare Rune Scepter]
+Code="9sc"
+Description=ÿc9{Ecpt}Rare Rune Scepter Dropped
+Level=Rare
+Pickup=1
+
+[Rare Holy Water Sprinkler]
+Code="9qs"
+Description=ÿc9{Ecpt}Rare Holy Water Sprinkler Dropped
+Level=Rare
+Pickup=1
+
+[Rare Divine Scepter]
+Code="9ws"
+Description=ÿc9{Ecpt}Rare Divine Scepter Dropped
+Level=Rare
+Pickup=1
+
+;-------------------------Spears-------------------------
+[Rare War Spear]
+Code="9sr"
+Description=ÿc9{Ecpt}Rare War Spear Dropped
+Level=Rare
+Pickup=1
+
+[Rare Fuscina]
+Code="9tr"
+Description=ÿc9{Ecpt}Rare Fuscina Dropped
+Level=Rare
+Pickup=1
+
+[Rare War Fork]
+Code="9br"
+Description=ÿc9{Ecpt}Rare War Fork Dropped
+Level=Rare
+Pickup=1
+
+[Rare Yari]
+Code="9st"
+Description=ÿc9{Ecpt}Rare Yari Dropped
+Level=Rare
+Pickup=1
+
+[Rare Lance]
+Code="9p9"
+Description=ÿc9{Ecpt}Rare Lance Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ceremonial Spear]
+Code="am8"
+Description=ÿc9{Ecpt}Rare Ceremonial Spear Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ceremonial Pike]
+Code="am9"
+Description=ÿc9{Ecpt}Rare Ceremonial Pike Dropped
+Level=Rare
+Pickup=1
+
+;-------------------------Staves-------------------------
+[Rare Jo Staff]
+Code="8ss"
+Description=ÿc9{Ecpt}Rare Jo Staff Dropped
+Level=Rare
+Pickup=1
+
+[Rare QuarterStaff]
+Code="8ls"
+Description=ÿc9{Ecpt}Rare QuarterStaff Dropped
+Level=Rare
+Pickup=1
+
+[Rare Cedar Staff]
+Code="8cs"
+Description=ÿc9{Ecpt}Rare Cedar Staff Dropped
+Level=Rare
+Pickup=1
+
+[Rare Gothic Staff]
+Code="8bs"
+Description=ÿc9{Ecpt}Rare Gothic Staff Dropped
+Level=Rare
+Pickup=1
+
+[Rare Rune Staff]
+Code="8ws"
+Description=ÿc9{Ecpt}Rare Rune Staff Dropped
+Level=Rare
+Pickup=1
+
+;------------------------1h Swords-----------------------
+[Rare Gladius]
+Code="9ss"
+Description=ÿc9{Ecpt}Rare Gladius Dropped
+Level=Rare
+Pickup=1
+
+[Rare Cutlass]
+Code="9sm"
+Description=ÿc9{Ecpt}Rare Cutlass Dropped
+Level=Rare
+Pickup=1
+
+[Rare Shamshir]
+Code="9sb"
+Description=ÿc9{Ecpt}Rare Shamshir Dropped
+Level=Rare
+Pickup=1
+
+[Rare Tulwar]
+Code="9fc"
+Description=ÿc9{Ecpt}Rare Tulwar Dropped
+Level=Rare
+Pickup=1
+
+[Rare Dimensional Blade]
+Code="9cr"
+Description=ÿc9{Ecpt}Rare Dimensional Blade Dropped
+Level=Rare
+Pickup=1
+
+[Rare Battle Sword]
+Code="9bs"
+Description=ÿc9{Ecpt}Rare Battle Sword Dropped
+Level=Rare
+Pickup=1
+
+[Rare Rune Sword]
+Code="9ls"
+Description=ÿc9{Ecpt}Rare Rune Sword Dropped
+Level=Rare
+Pickup=1
+
+[Rare Ancient Sword]
+Code="9wd"
+Description=ÿc9{Ecpt}Rare Ancient Sword Dropped
+Level=Rare
+Pickup=1
+
+;------------------------2h Swords-----------------------
+[Rare Espandon]
+Code="92h"
+Description=ÿc9{Ecpt}Rare Espandon Dropped
+Level=Rare
+Pickup=1
+
+[Rare Dacian Falx]
+Code="9cm"
+Description=ÿc9{Ecpt}Rare Dacian Falx Dropped
+Level=Rare
+Pickup=1
+
+[Rare Tusk Sword]
+Code="9gs"
+Description=ÿc9{Ecpt}Rare Tusk Sword Dropped
+Level=Rare
+Pickup=1
+
+[Rare Gothic Sword]
+Code="9b9"
+Description=ÿc9{Ecpt}Rare Gothic Sword Dropped
+Level=Rare
+Pickup=1
+
+[Rare Zweihander]
+Code="9fb"
+Description=ÿc9{Ecpt}Rare Zweihander Dropped
+Level=Rare
+Pickup=1
+
+[Rare Executioner Sword]
+Code="9gd"
+Description=ÿc9{Ecpt}Rare Executioner Sword Dropped
+Level=Rare
+Pickup=1
+
+;------------------------Throwing------------------------
+[Rare Battle Dart]
+Code="9tk"
+Description=ÿc9{Ecpt}Rare Battle Dart Dropped
+Level=Rare
+Pickup=1
+
+[Rare Francisca]
+Code="9ta"
+Description=ÿc9{Ecpt}Rare Francisca Dropped
+Level=Rare
+Pickup=1
+
+[Rare War Dart]
+Code="9bk"
+Description=ÿc9{Ecpt}Rare War Dart Dropped
+Level=Rare
+Pickup=1
+
+[Rare Hurlbat]
+Code="9b8"
+Description=ÿc9{Ecpt}Rare Hurlbat Dropped
+Level=Rare
+Pickup=1
+
+;--------------------------Wands-------------------------
+[Rare Burnt Wand]
+Code="9wn"
+Description=ÿc9{Ecpt}Rare Burnt Wand Dropped
+Level=Rare
+Pickup=1
+
+[Rare Petrified Wand]
+Code="9yw"
+Description=ÿc9{Ecpt}Rare Petrified Wand Dropped
+Level=Rare
+Pickup=1
+
+[Rare Tomb Wand]
+Code="9bw"
+Description=ÿc9{Ecpt}Rare Tomb Wand Dropped
+Level=Rare
+Pickup=1
+
+[Rare Grave Wand]
+Code="9gw"
+Description=ÿc9{Ecpt}Rare Grave Wand Dropped
+Level=Rare
+Pickup=1
+
+;--------------------------Orbs--------------------------
+[Rare Glowing Orb]
+Code="ob6"
+Description=ÿc9{Ecpt}Rare Glowing Orb Dropped
+Level=Rare
+Pickup=1
+
+[Rare Crystalline Globe]
+Code="ob7"
+Description=ÿc9{Ecpt}Rare Crystalline Globe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Cloudy Sphere]
+Code="ob8"
+Description=ÿc9{Ecpt}Rare Cloudy Sphere Dropped
+Level=Rare
+Pickup=1
+
+[Rare Sparkling Ball]
+Code="ob9"
+Description=ÿc9{Ecpt}Rare Sparkling Ball Dropped
+Level=Rare
+Pickup=1
+
+[Rare Swirling Crystal]
+Code="oba"
+Description=ÿc9{Ecpt}Rare Swirling Crystal Dropped
+Level=Rare
+Pickup=1
+
+;===================Unique=Normal=Weapons================
+;--------------------------1h-Axes-----------------------
+[Unique Hand Axe]
+Code="hax"
+Description=ÿc8{Norm}Unique Hand Axe {The Gnasher} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Axe]
+Code="axe"
+Description=ÿc8{Norm}Unique Axe {Deathspade} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Double Axe]
+Code="2ax"
+Description=ÿc8{Norm}Unique Double Axe {Bladebone} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Military Pick]
+Code="mpi"
+Description=ÿc8{Norm}Unique Military Pick {Skull Splitter} Dropped
+Level=Unique
+Pickup=1
+
+[Unique War Axe]
+Code="wax"
+Description=ÿc8{Norm}Unique War Axe {Rakescar} Dropped
+Level=Unique
+Pickup=1
+
+;--------------------------2h-Axes-----------------------
+[Unique Large Axe]
+Code="lax"
+Description=ÿc8{Norm}Unique Large Axe {Axe of Fechmar} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Broad Axe]
+Code="bax"
+Description=ÿc8{Norm}Unique Broad Axe {Goreshovel} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Battle Axe]
+Code="btx"
+Description=ÿc8{Norm}Unique Battle Axe {The Chieftain} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Great Axe]
+Code="gax"
+Description=ÿc8{Norm}Unique Great Axe {Brainhew} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Giant Axe]
+Code="gix"
+Description=ÿc8{Norm}Unique Giant Axe {The Humongous} Dropped
+Level=Unique
+Pickup=1
+
+;--------------------------Bows--------------------------
+[Unique Short Bow]
+Code="sbw"
+Description=ÿc8{Norm}Unique Short Bow {Pluckeye} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Hunter's Bow]
+Code="hbw"
+Description=ÿc8{Norm}Unique Hunter's Bow {Witherstring} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Long Bow]
+Code="lbw"
+Description=ÿc8{Norm}Unique Long Bow {Raven's Claw} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Composite Bow]
+Code="cbw"
+Description=ÿc8{Norm}Unique Composite Bow {Rogue's Bow} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Short Battle Bow]
+Code="sbb"
+Description=ÿc8{Norm}Unique Short Battle Bow {Stormstrike} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Long Battle Bow]
+Code="lbb"
+Description=ÿc8{Norm}Unique Long Battle Bow {Wizendraw} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Short War Bow]
+Code="swb"
+Description=ÿc8{Norm}Unique Short War Bow {Hellclap} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Long War Bow]
+Code="lwb"
+Description=ÿc8{Norm}Unique Long War Bow {Blastbark} Dropped
+Level=Unique
+Pickup=1
+
+;-------------------------xBows--------------------------
+[Unique Light Crossbow]
+Code="lxb"
+Description=ÿc8{Norm}Unique Light Crossbow {Leadcrow} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Crossbow]
+Code="mxb"
+Description=ÿc8{Norm}Unique Crossbow {Ichorsting} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Heavy Crossbow]
+Code="hxb"
+Description=ÿc8{Norm}Unique Heavy Crossbow {Hellcast} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Repeating Crossbow]
+Code="rxb"
+Description=ÿc8{Norm}Unique Repeating Crossbow {Doomslinger} Dropped
+Level=Unique
+Pickup=1
+
+;------------------------Daggers-------------------------
+[Unique Dagger]
+Code="dgr"
+Description=ÿc8{Norm}Unique Dagger {Gull} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Dirk]
+Code="dir"
+Description=ÿc8{Norm}Unique Dirk {The Diggler} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Kris]
+Code="kri"
+Description=ÿc8{Norm}Unique Kris {The Jade Tan Do} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Blade]
+Code="bld"
+Description=ÿc8{Norm}Unique Blade {Spectral Shard} Dropped
+Level=Unique
+Pickup=1
+
+;-------------------------Maces--------------------------
+[Unique Club]
+Code="clb"
+Description=ÿc8{Norm}Unique Club {Felloak} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Spiked Club]
+Code="spc"
+Description=ÿc8{Norm}Unique Spiked Club {Stoutnail} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Mace]
+Code="mac"
+Description=ÿc8{Norm}Unique Mace {Crushflange} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Morning Star]
+Code="mst"
+Description=ÿc8{Norm}Unique Morning Star {Bloodrise} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Flail]
+Code="fla"
+Description=ÿc8{Norm}Unique Flail {The General's Tan Do Li Ga} Dropped
+Level=Unique
+Pickup=1
+
+[Unique War Hammer]
+Code="whm"
+Description=ÿc8{Norm}Unique War Hammer {Ironstone} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Maul]
+Code="mau"
+Description=ÿc8{Norm}Unique Maul {Bonesnap} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Great Maul]
+Code="gma"
+Description=ÿc8{Norm}Unique Great Maul {Steeldriver} Dropped
+Level=Unique
+Pickup=1
+
+;------------------------Polearms------------------------
+[Unique Bardiche]
+Code="bar"
+Description=ÿc8{Norm}Unique Bardiche {Dimoak's Hue} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Voulge]
+Code="vou"
+Description=ÿc8{Norm}Unique Voulge {Steelgoad} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Scythe]
+Code="scy"
+Description=ÿc8{Norm}Unique Scythe {Soul Harvest} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Poleaxe]
+Code="pax"
+Description=ÿc8{Norm}Unique Poleaxe {The Battlebranch} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Halberd]
+Code="hal"
+Description=ÿc8{Norm}Unique Halberd {Woestave} Dropped
+Level=Unique
+Pickup=1
+
+[Unique War Scythe]
+Code="wsc"
+Description=ÿc8{Norm}Unique War Scythe {The Grim Reaper} Dropped
+Level=Unique
+Pickup=1
+
+;------------------------Scepters------------------------
+[Unique Scepter]
+Code="scp"
+Description=ÿc8{Norm}Unique Scepter {Knell Striker} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Grand Scepter]
+Code="gsc"
+Description=ÿc8{Norm}Unique Grand Scepter {Rusthandle} Dropped
+Level=Unique
+Pickup=1
+
+[Unique War Scepter]
+Code="wsp"
+Description=ÿc8{Norm}Unique War Scepter {Stormeye} Dropped
+Level=Unique
+Pickup=1
+
+;-------------------------Spears-------------------------
+[Unique Spear]
+Code="spr"
+Description=ÿc8{Norm}Unique Spear {The Dragon Chang} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Trident]
+Code="tri"
+Description=ÿc8{Norm}Unique Trident {Razortine} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Brandistock]
+Code="brn"
+Description=ÿc8{Norm}Unique Brandistock {Bloodthief} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Spetum]
+Code="spt"
+Description=ÿc8{Norm}Unique Spetum {Lance of Yaggai} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Pike]
+Code="pik"
+Description=ÿc8{Norm}Unique Pike {The Tannr Gorerod} Dropped
+Level=Unique
+Pickup=1
+
+;-------------------------Staves-------------------------
+[Unique Short Staff]
+Code="sst"
+Description=ÿc8{Norm}Unique Short Staff {Bane Ash} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Long Staff]
+Code="lst"
+Description=ÿc8{Norm}Unique Long Staff {Serpent Lord} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Gnarled Staff]
+Code="cst"
+Description=ÿc8{Norm}Unique Gnarled Staff {Spire of Lazarus} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Battle Staff]
+Code="bst"
+Description=ÿc8{Norm}Unique Battle Staff {The Salamander} Dropped
+Level=Unique
+Pickup=1
+
+[Unique War Staff]
+Code="wst"
+Description=ÿc8{Norm}Unique War Staff {The Iron Jang Bong} Dropped
+Level=Unique
+Pickup=1
+
+;------------------------1h Swords-----------------------
+[Unique Short Sword]
+Code="ssd"
+Description=ÿc8{Norm}Unique Short Sword {Rixot's Keen} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Scimitar]
+Code="scm"
+Description=ÿc8{Norm}Unique Scimitar {Blood Crescent} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Sabre]
+Code="sbr"
+Description=ÿc8{Norm}Unique Sabre {Skewer of Krintiz} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Falchion]
+Code="flc"
+Description=ÿc8{Norm}Unique Falchion {Gleamscythe} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Crystal Sword]
+Code="crs"
+Description=ÿc8{Norm}Unique Crystal Sword {Azurewrath} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Broad Sword]
+Code="bsd"
+Description=ÿc8{Norm}Unique Broad Sword {Griswold's Edge} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Long Sword]
+Code="lsd"
+Description=ÿc8{Norm}Unique Long Sword {Hellplague} Dropped
+Level=Unique
+Pickup=1
+
+[Unique War Sword]
+Code="wsd"
+Description=ÿc8{Norm}Unique War Sword {Culwen's Point} Dropped
+Level=Unique
+Pickup=1
+
+;------------------------2h Swords-----------------------
+[Unique Two-Handed Sword]
+Code="2hs"
+Description=ÿc8{Norm}Unique Two-Handed Sword {Shadowfang} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Claymore]
+Code="clm"
+Description=ÿc8{Norm}Unique Claymore {Soulflay} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Giant Sword]
+Code="gis"
+Description=ÿc8{Norm}Unique Giant Sword {Kinemil's Awl} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Bastard Sword]
+Code="bsw"
+Description=ÿc8{Norm}Unique Bastard Sword {Blacktongue} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Flamberge]
+Code="flb"
+Description=ÿc8{Norm}Unique Flamberge {Ripsaw} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Great Sword]
+Code="gsd"
+Description=ÿc8{Norm}Unique Great Sword {The Patriarch} Dropped
+Level=Unique
+Pickup=1
+
+;--------------------------Wands-------------------------
+[Unique Wand]
+Code="wnd"
+Description=ÿc8{Norm}Unique Wand {Torch of Iro} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Yew Wand]
+Code="ywn"
+Description=ÿc8{Norm}Unique Yew Wand {Maelstrom} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Bone Wand]
+Code="bwn"
+Description=ÿc8{Norm}Unique Bone Wand {Gravenspine} Dropped
+Level=Unique
+Pickup=1
+
+[Unique Grim Wand]
+Code="gwn"
+Description=ÿc8{Norm}Unique Grim Wand {Ume's Lament} Dropped
+Level=Unique
+Pickup=1
+
+;======================Rare=Normal=Weapons===============
+;--------------------------1h-Axes-----------------------
+[Rare Hand Axe]
+Code="hax"
+Description=ÿc9{Norm}Rare Hand Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Axe]
+Code="axe"
+Description=ÿc9{Norm}Rare Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Double Axe]
+Code="2ax"
+Description=ÿc9{Norm}Rare Double Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Military Pick]
+Code="mpi"
+Description=ÿc9{Norm}Rare Military Pick Dropped
+Level=Rare
+Pickup=1
+
+[Rare War Axe]
+Code="wax"
+Description=ÿc9{Norm}Rare War Axe Dropped
+Level=Rare
+Pickup=1
+
+;--------------------------2h-Axes-----------------------
+[Rare Large Axe]
+Code="lax"
+Description=ÿc9{Norm}Rare Large Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Broad Axe]
+Code="bax"
+Description=ÿc9{Norm}Rare Broad Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Battle Axe]
+Code="btx"
+Description=ÿc9{Norm}Rare Battle Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Great Axe]
+Code="gax"
+Description=ÿc9{Norm}Rare Great Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Giant Axe]
+Code="gix"
+Description=ÿc9{Norm}Rare Giant Axe Dropped
+Level=Rare
+Pickup=1
+
+;--------------------------Bows--------------------------
+[Rare Short Bow]
+Code="sbw"
+Description=ÿc9{Norm}Rare Short Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Hunter's Bow]
+Code="hbw"
+Description=ÿc9{Norm}Rare Hunter's Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Long Bow]
+Code="lbw"
+Description=ÿc9{Norm}Rare Long Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Composite Bow]
+Code="cbw"
+Description=ÿc9{Norm}Rare Composite Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Short Battle Bow]
+Code="sbb"
+Description=ÿc9{Norm}Rare Short Battle Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Long Battle Bow]
+Code="lbb"
+Description=ÿc9{Norm}Rare Long Battle Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Short War Bow]
+Code="swb"
+Description=ÿc9{Norm}Rare Short War Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Long War Bow]
+Code="lwb"
+Description=ÿc9{Norm}Rare Long War Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Stag Bow]
+Code="am1"
+Description=ÿc9{Norm}Rare Stag Bow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Reflex Bow]
+Code="am2"
+Description=ÿc9{Norm}Rare Reflex Bow Dropped
+Level=Rare
+Pickup=1
+
+;-------------------------xBows--------------------------
+[Rare Light Crossbow]
+Code="lxb"
+Description=ÿc9{Norm}Rare Light Crossbow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Crossbow]
+Code="mxb"
+Description=ÿc9{Norm}Rare Crossbow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Heavy Crossbow]
+Code="hxb"
+Description=ÿc9{Norm}Rare Heavy Crossbow Dropped
+Level=Rare
+Pickup=1
+
+[Rare Repeating Crossbow]
+Code="rxb"
+Description=ÿc9{Norm}Rare Repeating Crossbow Dropped
+Level=Rare
+Pickup=1
+
+;-------------------------Claws--------------------------
+[Rare Katar]
+Code="ktr"
+Description=ÿc9{Norm}Rare Katar Dropped
+Level=Rare
+Pickup=1
+
+[Rare Wrist Blade]
+Code="wrb"
+Description=ÿc9{Norm}Rare Wrist Blade Dropped
+Level=Rare
+Pickup=1
+
+[Rare Hatchet Hands]
+Code="axf"
+Description=ÿc9{Norm}Rare Hatchet Hands Dropped
+Level=Rare
+Pickup=1
+
+[Rare Cestus]
+Code="ces"
+Description=ÿc9{Norm}Rare Cestus Dropped
+Level=Rare
+Pickup=1
+
+[Rare Claws]
+Code="clw"
+Description=ÿc9{Norm}Rare Claws Dropped
+Level=Rare
+Pickup=1
+
+[Rare Blade Talons]
+Code="btl"
+Description=ÿc9{Norm}Rare Blade Talons Dropped
+Level=Rare
+Pickup=1
+
+[Rare Scissors Katar]
+Code="skr"
+Description=ÿc9{Norm}Rare Scissors Katar Dropped
+Level=Rare
+Pickup=1
+
+
+;------------------------Daggers-------------------------
+[Rare Dagger]
+Code="dgr"
+Description=ÿc9{Norm}Rare Dagger Dropped
+Level=Rare
+Pickup=1
+
+[Rare Dirk]
+Code="dir"
+Description=ÿc9{Norm}Rare Dirk Dropped
+Level=Rare
+Pickup=1
+
+[Rare Kris]
+Code="kri"
+Description=ÿc9{Norm}Rare Kris Dropped
+Level=Rare
+Pickup=1
+
+[Rare Blade]
+Code="bld"
+Description=ÿc9{Norm}Rare Blade Dropped
+Level=Rare
+Pickup=1
+
+;------------------------Javelins------------------------
+[Rare Javelin]
+Code="jav"
+Description=ÿc9{Norm}Rare Javelin Dropped
+Level=Rare
+Pickup=1
+
+[Rare Pilum]
+Code="pil"
+Description=ÿc9{Norm}Rare Pilum Dropped
+Level=Rare
+Pickup=1
+
+[Rare Short Spear]
+Code="ssp"
+Description=ÿc9{Norm}Rare Short Spear Dropped
+Level=Rare
+Pickup=1
+
+[Rare Glaive]
+Code="glv"
+Description=ÿc9{Norm}Rare Glaive Dropped
+Level=Rare
+Pickup=1
+
+[Rare Throwing Spear]
+Code="tsp"
+Description=ÿc9{Norm}Rare Throwing Spear Dropped
+Level=Rare
+Pickup=1
+
+[Rare Maiden Javelin]
+Code="am5"
+Description=ÿc9{Norm}Rare Maiden Javelin Dropped
+Level=Rare
+Pickup=1
+
+;-------------------------Maces--------------------------
+[Rare Club]
+Code="clb"
+Description=ÿc9{Norm}Rare Club Dropped
+Level=Rare
+Pickup=1
+
+[Rare Spiked Club]
+Code="spc"
+Description=ÿc9{Norm}Rare Spiked Club Dropped
+Level=Rare
+Pickup=1
+
+[Rare Mace]
+Code="mac"
+Description=ÿc9{Norm}Rare Mace Dropped
+Level=Rare
+Pickup=1
+
+[Rare Morning Star]
+Code="mst"
+Description=ÿc9{Norm}Rare Morning Star Dropped
+Level=Rare
+Pickup=1
+
+[Rare Flail]
+Code="fla"
+Description=ÿc9{Norm}Rare Flail Dropped
+Level=Rare
+Pickup=1
+
+[Rare War Hammer]
+Code="whm"
+Description=ÿc9{Norm}Rare War Hammer Dropped
+Level=Rare
+Pickup=1
+
+[Rare Maul]
+Code="mau"
+Description=ÿc9{Norm}Rare Maul Dropped
+Level=Rare
+Pickup=1
+
+[Rare Great Maul]
+Code="gma"
+Description=ÿc9{Norm}Rare Great Maul Dropped
+Level=Rare
+Pickup=1
+
+;------------------------Polearms------------------------
+[Rare Bardiche]
+Code="bar"
+Description=ÿc9{Norm}Rare Bardiche Dropped
+Level=Rare
+Pickup=1
+
+[Rare Voulge]
+Code="vou"
+Description=ÿc9{Norm}Rare Voulge Dropped
+Level=Rare
+Pickup=1
+
+[Rare Scythe]
+Code="scy"
+Description=ÿc9{Norm}Rare Scythe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Poleaxe]
+Code="pax"
+Description=ÿc9{Norm}Rare Poleaxe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Halberd]
+Code="hal"
+Description=ÿc9{Norm}Rare Halberd Dropped
+Level=Rare
+Pickup=1
+
+[Rare War Scythe]
+Code="wsc"
+Description=ÿc9{Norm}Rare War Scythe Dropped
+Level=Rare
+Pickup=1
+
+;------------------------Scepters------------------------
+[Rare Scepter]
+Code="scp"
+Description=ÿc9{Norm}Rare Scepter Dropped
+Level=Rare
+Pickup=1
+
+[Rare Grand Scepter]
+Code="gsc"
+Description=ÿc9{Norm}Rare Grand Scepter Dropped
+Level=Rare
+Pickup=1
+
+[Rare War Scepter]
+Code="wsp"
+Description=ÿc9{Norm}Rare War Scepter Dropped
+Level=Rare
+Pickup=1
+
+;-------------------------Spears-------------------------
+[Rare Spear]
+Code="spr"
+Description=ÿc9{Norm}Rare Spear Dropped
+Level=Rare
+Pickup=1
+
+[Rare Trident]
+Code="tri"
+Description=ÿc9{Norm}Rare Trident Dropped
+Level=Rare
+Pickup=1
+
+[Rare Brandistock]
+Code="brn"
+Description=ÿc9{Norm}Rare Brandistock Dropped
+Level=Rare
+Pickup=1
+
+[Rare Spetum]
+Code="spt"
+Description=ÿc9{Norm}Rare Spetum Dropped
+Level=Rare
+Pickup=1
+
+[Rare Pike]
+Code="pik"
+Description=ÿc9{Norm}Rare Pike Dropped
+Level=Rare
+Pickup=1
+
+[Rare Maiden Spear]
+Code="am3"
+Description=ÿc9{Norm}Rare Maiden Spear Dropped
+Level=Rare
+Pickup=1
+
+[Rare Maiden Pike]
+Code="am4"
+Description=ÿc9{Norm}Rare Maiden Pike Dropped
+Level=Rare
+Pickup=1
+
+;-------------------------Staves-------------------------
+[Rare Short Staff]
+Code="sst"
+Description=ÿc9{Norm}Rare Short Staff Dropped
+Level=Rare
+Pickup=1
+
+[Rare Long Staff]
+Code="lst"
+Description=ÿc9{Norm}Rare Long Staff Dropped
+Level=Rare
+Pickup=1
+
+[Rare Gnarled Staff]
+Code="cst"
+Description=ÿc9{Norm}Rare Gnarled Staff Dropped
+Level=Rare
+Pickup=1
+
+[Rare Battle Staff]
+Code="bst"
+Description=ÿc9{Norm}Rare Battle Staff Dropped
+Level=Rare
+Pickup=1
+
+[Rare War Staff]
+Code="wst"
+Description=ÿc9{Norm}Rare War Staff Dropped
+Level=Rare
+Pickup=1
+
+;------------------------1h Swords-----------------------
+[Rare Short Sword]
+Code="ssd"
+Description=ÿc9{Norm}Rare Short Sword Dropped
+Level=Rare
+Pickup=1
+
+[Rare Scimitar]
+Code="scm"
+Description=ÿc9{Norm}Rare Scimitar Dropped
+Level=Rare
+Pickup=1
+
+[Rare Sabre]
+Code="sbr"
+Description=ÿc9{Norm}Rare Sabre Dropped
+Level=Rare
+Pickup=1
+
+[Rare Falchion]
+Code="flc"
+Description=ÿc9{Norm}Rare Falchion Dropped
+Level=Rare
+Pickup=1
+
+[Rare Crystal Sword]
+Code="crs"
+Description=ÿc9{Norm}Rare Crystal Sword Dropped
+Level=Rare
+Pickup=1
+
+[Rare Broad Sword]
+Code="bsd"
+Description=ÿc9{Norm}Rare Broad Sword Dropped
+Level=Rare
+Pickup=1
+
+[Rare Long Sword]
+Code="lsd"
+Description=ÿc9{Norm}Rare Long Sword Dropped
+Level=Rare
+Pickup=1
+
+[Rare War Sword]
+Code="wsd"
+Description=ÿc9{Norm}Rare War Sword Dropped
+Level=Rare
+Pickup=1
+
+;------------------------2h Swords-----------------------
+[Rare Two-Handed Sword]
+Code="2hs"
+Description=ÿc9{Norm}Rare Two-Handed Sword Dropped
+Level=Rare
+Pickup=1
+
+[Rare Claymore]
+Code="clm"
+Description=ÿc9{Norm}Rare Claymore Dropped
+Level=Rare
+Pickup=1
+
+[Rare Giant Sword]
+Code="gis"
+Description=ÿc9{Norm}Rare Giant Sword Dropped
+Level=Rare
+Pickup=1
+
+[Rare Bastard Sword]
+Code="bsw"
+Description=ÿc9{Norm}Rare Bastard Sword Dropped
+Level=Rare
+Pickup=1
+
+[Rare Flamberge]
+Code="flb"
+Description=ÿc9{Norm}Rare Flamberge Dropped
+Level=Rare
+Pickup=1
+
+[Rare Great Sword]
+Code="gsd"
+Description=ÿc9{Norm}Rare Great Sword Dropped
+Level=Rare
+Pickup=1
+
+;------------------------Throwing------------------------
+[Rare Throwing Knife]
+Code="tkf"
+Description=ÿc9{Norm}Rare Throwing Knife Dropped
+Level=Rare
+Pickup=1
+
+[Rare Throwing Axe]
+Code="tax"
+Description=ÿc9{Norm}Rare Throwing Axe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Balanced Knife]
+Code="bkf"
+Description=ÿc9{Norm}Rare Balanced Knife Dropped
+Level=Rare
+Pickup=1
+
+[Rare Balanced Axe]
+Code="bal"
+Description=ÿc9{Norm}Rare Balanced Axe Dropped
+Level=Rare
+Pickup=1
+
+;--------------------------Wands-------------------------
+[Rare Wand]
+Code="wnd"
+Description=ÿc9{Elite}Rare Wand Dropped
+Level=Rare
+Pickup=1
+
+[Rare Yew Wand]
+Code="ywn"
+Description=ÿc9{Elite}Rare Yew Wand Dropped
+Level=Rare
+Pickup=1
+
+[Rare Bone Wand]
+Code="bwn"
+Description=ÿc9{Elite}Rare Bone Wand Dropped
+Level=Rare
+Pickup=1
+
+[Rare Grim Wand]
+Code="gwn"
+Description=ÿc9{Elite}Rare Grim Wand Dropped
+Level=Rare
+Pickup=1
+
+;--------------------------Orbs--------------------------
+[Rare Eagle Orb]
+Code="ob1"
+Description=ÿc9{Norm}Rare Eagle Orb Dropped
+Level=Rare
+Pickup=1
+
+[Rare Sacred Globe]
+Code="ob2"
+Description=ÿc9{Norm}Rare Sacred Globe Dropped
+Level=Rare
+Pickup=1
+
+[Rare Smoked Sphere]
+Code="ob3"
+Description=ÿc9{Norm}Rare Smoked Sphere Dropped
+Level=Rare
+Pickup=1
+
+[Rare Clasped Orb]
+Code="ob4"
+Description=ÿc9{Norm}Rare Clasped Orb Dropped
+Level=Rare
+Pickup=1
+
+[Rare Jared's Stone]
+Code="ob5"
+Description=ÿc9{Norm}Rare Jared's Stone Dropped
+Level=Rare
+Pickup=1
+
+;========
+; Rings
+;========
+[Unique Ring]
+Code="rin"
+Description=ÿc8Unique Ring Dropped
+;Identified=0
+Level=Unique
+
+[Rare Ring]
+Code="rin" 
+Description=ÿc9Rare Ring Dropped
+;Identified=0
+Level=Rare
+
+;========
+; Amulet
+;========
+[Unique Amulet]
+Code="amu"
+Description=ÿc8Unique Amulet Dropped
+;Identified=0
+Level=Unique
+
+[Rare Ammy]
+Code="amu"
+Description=ÿc9Rare Amulet Dropped
+;Identified=0
+Level=Rare
+
+;=======
+; Runes - pickup runes >= 13
+;=======
+[Shael Rune]
+Code="r13"
+Description=ÿc1{13}Shael Rune Dropped
+
+[Dol Rune]
+Code="r14"
+Description=ÿc1{14}Dol Rune Dropped
+
+[Hel Rune]
+Code="r15"
+Description=ÿc1{15}Hel Rune Dropped
+
+[Io Rune]
+Code="r16"
+Description=ÿc1{16}Io Rune Dropped
+
+[Lum Rune]
+Code="r17"
+Description=ÿc1{17}Lum Rune Dropped
+
+[Ko Rune]
+Code="r18"
+Description=ÿc1{18}Ko Rune Dropped
+
+[Fal Rune]
+Code="r19"
+Description=ÿc1{19}Fal Rune Dropped
+
+[Lem Rune]
+Code="r20"
+Description=ÿc1{20}Lem Rune Dropped
+
+[Pul Rune]
+Code="r21"
+Description=ÿc1{21}Pul Rune Dropped
+
+[Um Rune]
+Code="r22"
+Description=ÿc1{22}Um Rune Dropped
+
+[Mal Rune]
+Code="r23"
+Description=ÿc1{23}Mal Rune Dropped
+
+[Ist Rune]
+Code="r24"
+Description=ÿc1{24}Ist Rune Dropped
+
+[Gul Rune]
+Code="r25"
+Description=ÿc1{25}Gul Rune Dropped
+
+[Vex Rune]
+Code="r26"
+Description=ÿc1{26}Vex Rune Dropped
+
+[Ohm Rune]
+Code="r27"
+Description=ÿc1{27}Ohm Rune Dropped
+
+[Lo Rune]
+Code="r28"
+Description=ÿc1{28}Lo Rune Dropped
+
+[Sur Rune]
+Code="r29"
+Description=ÿc1{29}Sur Rune Dropped
+
+[Ber Rune]
+Code="r30"
+Description=ÿc1{30}Ber Rune Dropped
+
+[Jah Rune]
+Code="r31"
+Description=ÿc1{31}Jah Rune Dropped
+
+[Cham Rune]
+Code="r32"
+Description=ÿc1{32}Cham Rune Dropped
+
+[Zod Rune]
+Code="r33"
+Description=ÿc1{33}Zod Rune Dropped
+
+
+;=========
+; Potions
+;=========
+[Full Rejuv]
+Code="rvl"
+Description=ÿc0Full Rejuvenation Dropped
+
+;=============
+; Chipped Gems/Skulls
+;=============
+;[Chipped Emerald]
+;Code="gcg"
+;Description=ÿc1Chipped Emerald Dropped
+
+;[Chipped Ruby]
+;Code="gcr"
+;Description=ÿc1Chipped Ruby Dropped
+
+;[Chipped Topaz]
+;Code="gcy"
+;Description=ÿc1Chipped Topaz Dropped
+
+;[Chipped Amethyst]
+;Code="gcv"
+;Description=ÿc1Chipped Amethyst Dropped
+
+;[Chipped Diamond]
+;Code="gcw"
+;Description=ÿc1Chipped Diamond Dropped
+
+;[Chipped Sapphire]
+;Code="gcb"
+;Description=ÿc1Chipped Sapphire Dropped
+
+;[Chipped Skull]
+;Code="skc"
+;Description=ÿc1Chipped Skull Dropped
+
+;=============
+; Jewel/Charm 
+;=============
+[Small Charm]
+Code="cm1"
+Description=ÿc3Small Charm Dropped
+Pickup=1
+
+[Large Charm]
+Code="cm2"
+Description=ÿc3Large Charm Dropped
+Pickup=1
+
+[Grand Charm]
+Code="cm3"
+Description=ÿc3Grand Charm Dropped
+Pickup=1
+
+[Magic Jewels]
+Code="jew"
+Level=Magic
+Description=ÿc3Jewel Dropped
+Pickup=1
+
+[Rare Jewels]
+Code="jew"
+Level=Rare
+Description=ÿc9Rare Jewel Dropped
+Pickup=1
+
+;======
+; Base itemdrop notifiers for unidentified items.
+; Only notification of items drops will be sent
+;======
+
+;; unique items
+[Unique Armor]
+Type=armor
+Level=unique
+Description=ÿc8Unique Armor Dropped
+Pickup=1
+;Identified=0
+
+[Unique Helm]
+Type=helm
+Level=unique
+Description=ÿc8Unique Helm Dropped
+Pickup=1
+;Identified=0
+
+[Unique Weapon]
+Type=weapon
+Level=unique
+Description=ÿc8Unique Weapon Dropped
+Pickup=1
+;Identified=0
+
+[Unique Bow]
+Type=bow
+Level=unique
+Description=ÿc8Unique Bow Dropped
+Pickup=1
+;Identified=0
+
+; this will notify on all remaining unique items
+[Unique Other]
+Level=unique
+Description=ÿc8Unique Other Item Dropped
+Pickup=1
+;Identified=0
+
+;; set items
+[Set Armor]
+Type=armor
+Level=set
+Description=ÿc2Set Armor Dropped
+Pickup=1
+;Identified=0
+
+[Set Helm]
+Type=helm
+Level=set
+Description=ÿc2Set Helm Dropped
+Pickup=1
+;Identified=0
+
+[Set Weapon]
+Type=weapon
+Level=set
+Description=ÿc2Set Weapon Dropped
+Pickup=1
+;Identified=0
+
+[Set Bow]
+Type=bow
+Level=set
+Description=ÿc2Set Bow Dropped
+Pickup=1
+;Identified=0
+
+; this will notify on all remaining set items
+[Set Other]
+Level=Set
+Description=ÿc2Set Other Item Dropped
+Pickup=1
+;Identified=0
+
+;; rare items, uncomment if you want to be notified about these
+[Rare Armor]
+Type=armor
+Level=rare
+Description=ÿc9Rare Armor Dropped
+Pickup=1
+;Identified=0
+
+[Rare Helm]
+Type=helm
+Level=rare
+Description=ÿc9Rare Helm Dropped
+Pickup=1
+;Identified=0
+
+[Rare Weapon]
+Type=weapon
+Level=rare
+Description=ÿc9Rare Weapon Dropped
+Pickup=1
+;Identified=0
+
+[Rare Bow]
+Type=bow
+Level=rare
+Description=ÿc9Rare Bow Dropped
+Pickup=1
+;Identified=0
+
+; this will notify on all remaining rare items
+[Rare Other]
+Level=rare
+Description=ÿc9Rare Other Item Dropped
+Pickup=1
+;Identified=0
+
+;======
+; Gold
+;======
+; no description, we want to pickup gold but 
+; dont need to notified when it drops
+[Gold]
+Code="gld"
+
+;-------------------Custom magic pickups-------------------
+[Magic Colossus Blade]
+Code="7gd"
+Description=ÿc1Magic Colossus Blade {Cruel?} Dropped
+;Identified=0
+Level=Magic
+
+[Superior Winged Helm]
+Code="xhm"
+Description=ÿc1Socketed, Superior Winged Helm Dropped
+Level=Superior
+Pickup=1
+HasSockets=1
+
+
+[Superior Grand Crown]
+Code="xrn"
+Description=ÿc1Socketed, Superior Grand Crown Dropped
+Level=Superior
+Pickup=1
+HasSockets=1

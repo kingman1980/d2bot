@@ -1,0 +1,1819 @@
+//
+// Sy_Constants.d2l
+//
+// d2jsp constants library by Syadadasti
+//
+// version 0.3 3/10/03
+//		added c_StateNames array
+//		added c_RoomStat_ defines
+//		added c_ItemType_ defines, c_ItemTypeNames and c_ItemTypeCodes arrays
+//		added c_ColorChangeEscape and expanded list of ÿc<color> strings
+//		added NPC Menu defines
+//		added waypoints and quest IDs
+// version 0.2 3/7/03
+//		made capitalization consistent (InitialCaps not initialCaps)
+//		added shrine types, screen color strings, UI Flags
+// version 0.1 3/4/03
+//		initial release
+//
+// MISSING/FIXME:
+//
+// Font faces
+// getUnit(type, code/name, mode) mode parameter (njag needs to update docs)
+//
+
+// Library version
+
+var c_Sy_Constants_Version = 0.3;
+
+// Banner
+
+//print("Loading Syadasti's Constants Library version " + c_Sy_Constants_Version.toString());
+
+// gold()
+
+var c_Gold_DropToGround = 0;
+var c_Gold_MoveToInventory = 1;
+var c_Gold_MoveToStash = 2;
+
+// item.getBaseStat()
+
+var c_ItemBaseStat_AlternateGfx = 0;
+var c_ItemBaseStat_WeaponClass = 1;
+var c_ItemBaseStat_TwoHandedWeaponClass = 2;
+var c_ItemBaseStat_MinAC = 4;
+var c_ItemBaseStat_MaxAC = 5;
+var c_ItemBaseStat_BaseGambleCost = 6;
+var c_ItemBaseStat_BaseAttackSpeed = 7;
+var c_ItemBaseStat_DurabilityWarning = 8;
+var c_ItemBaseStat_BaseCost = 9;
+var c_ItemBaseStat_Version = 15;
+var c_ItemBaseStat_ItemRarity = 21;
+var c_ItemBaseStat_BaseItemLevel = 22;
+var c_ItemBaseStat_MinDmg = 23;
+var c_ItemBaseStat_MaxDmg = 24;
+var c_ItemBaseStat_MinTwoHandDmg = 27;
+var c_ItemBaseStat_MaxTwoHandDmg = 28;
+var c_ItemBaseStat_AttackRange = 29;
+var c_ItemBaseStat_StrBonus = 30;
+var c_ItemBaseStat_DexBonus = 31;
+var c_ItemBaseStat_StrReq = 32;
+var c_ItemBaseStat_DexReq = 33;
+var c_ItemBaseStat_SizeX = 35;
+var c_ItemBaseStat_SizeY = 36;
+var c_ItemBaseStat_BaseBlock = 37;
+var c_ItemBaseStat_BaseDurability = 38;
+var c_ItemBaseStat_Component = 41;
+var c_ItemBaseStat_TwoHanded = 48;
+var c_ItemBaseStat_Type = 50;
+var c_ItemBaseStat_SoundId = 53;
+var c_ItemBaseStat_Quest = 55;
+var c_ItemBaseStat_TransTable = 57;
+var c_ItemBaseStat_LightRadius = 59;
+var c_ItemBaseStat_DurationWarningWep = 65;
+var c_ItemBaseStat_MaxSockets = 68;
+var c_ItemBaseStat_BaseLevelReq = 75;
+var c_ItemBaseStat_MagicLvl = 76;
+var c_ItemBaseStat_Transform = 77;
+var c_ItemBaseStat_InvTrans = 78;
+
+// room.getCollision()
+
+var c_RoomCollisionFlag_BlockWalk = 0x01;
+var c_RoomCollisionFlag_BlockLight = 0x02;
+var c_RoomCollisionFlag_BlockLOS = 0x04;
+var c_RoomCollisionFlag_BlockPlayerWalk = 0x08;
+var c_RoomCollisionFlag_BlockLightOnly = 0x20;
+
+// unit.getEnchant()
+
+var c_UnitEnchant_ExtraStrong = 0;
+var c_UnitEnchant_ExtraFast = 1;
+var c_UnitEnchant_Cursed = 2;
+var c_UnitEnchant_MagicResistant = 3;
+var c_UnitEnchant_FireEnchanted = 4;
+var c_UnitEnchant_Champion = 5;
+var c_UnitEnchant_LightningEnchanted = 6;
+var c_UnitEnchant_ColdEnchanted = 7;
+var c_UnitEnchant_Thief = 8;
+var c_UnitEnchant_ManaBurn = 9;
+var c_UnitEnchant_Teleportation = 10;
+var c_UnitEnchant_SpectralHit = 11;
+var c_UnitEnchant_StoneSkin = 12;
+var c_UnitEnchant_MultipleShots = 13;
+var c_UnitEnchant_Ghostly = 14;
+var c_UnitEnchant_Fanatic = 15;
+var c_UnitEnchant_Possessed = 16;
+var c_UnitEnchant_Berserker = 17;
+
+// item.getFlag()
+
+var c_ItemFlag_Equipped =		0x0000001;
+var c_ItemFlag_InSocket =		0x0000008;
+var c_ItemFlag_Identified =		0x0000010;
+var c_ItemFlag_SwitchIn =		0x0000040;
+var c_ItemFlag_SwitchOut =		0x0000080;
+var c_ItemFlag_Broken =			0x0000100;
+var c_ItemFlag_Rejuv =			0x0000400;
+var c_ItemFlag_Socketed =		0x0000800;
+var c_ItemFlag_InStore =		0x0002000;
+var c_ItemFlag_NotInSocket =	0x0004000;
+var c_ItemFlag_Ear =			0x0010000;
+var c_ItemFlag_StartItem =		0x0020000;
+var c_ItemFlag_RuneOrPot =		0x0200000;
+var c_ItemFlag_Etheral =		0x0400000;
+var c_ItemFlag_Named =			0x1000000;
+var c_ItemFlag_Runeword =		0x4000000;
+
+// me.getQuest()
+
+// FIXME: should have defines for ACT# and quest name --> quest #
+
+// unit.getStat()
+
+var c_UnitStat_Strength = 0;
+var c_UnitStat_Energy = 1;
+var c_UnitStat_Dexterity = 2;
+var c_UnitStat_Vitality = 3;
+var c_UnitStat_StatPts = 4;
+var c_UnitStat_NewSkills = 5;
+var c_UnitStat_HitPoints = 6;
+var c_UnitStat_MaxHP = 7;
+var c_UnitStat_Mana = 8;
+var c_UnitStat_MaxMana = 9;
+var c_UnitStat_Stamina = 10;
+var c_UnitStat_MaxStamina = 11;
+var c_UnitStat_Level = 12;
+var c_UnitStat_Experience = 13;
+var c_UnitStat_Gold = 14;
+var c_UnitStat_GoldBank = 15;
+var c_UnitStat_ItemArmorPercent = 16;
+var c_UnitStat_ItemMaxDamagePercent = 17;
+var c_UnitStat_ItemMinDamagePercent = 18;
+var c_UnitStat_ToHit = 19;
+var c_UnitStat_ToBlock = 20;
+var c_UnitStat_MinDamage = 21;
+var c_UnitStat_MaxDamage = 22;
+var c_UnitStat_SecondaryMinDamage = 23;
+var c_UnitStat_SecondaryMaxDamage = 24;
+var c_UnitStat_DamagePercent = 25;
+var c_UnitStat_ManaRecovery = 26;
+var c_UnitStat_ManaRecoveryBonus = 27;
+var c_UnitStat_StaminaRecoveryBonus = 28;
+var c_UnitStat_LastExp = 29;
+var c_UnitStat_NextExp = 30;
+var c_UnitStat_ArmorClass = 31;
+var c_UnitStat_ArmorClassVsMissile = 32;
+var c_UnitStat_ArmorClassVsHTH = 33;
+var c_UnitStat_NormalDamageReduction = 34;
+var c_UnitStat_MagicDamageReduction = 35;
+var c_UnitStat_DamageResist = 36;
+var c_UnitStat_MagicResist = 37;
+var c_UnitStat_MaxMagicResist = 38;
+var c_UnitStat_FireResist = 39;
+var c_UnitStat_MaxFireResist = 40;
+var c_UnitStat_LightningResist = 41;
+var c_UnitStat_MaxLightningResist = 42;
+var c_UnitStat_ColdResist = 43;
+var c_UnitStat_MaxColdResist = 44;
+var c_UnitStat_PoisonResist = 45;
+var c_UnitStat_MaxPoisonResist = 46;
+var c_UnitStat_DamageAura = 47;
+var c_UnitStat_FireMinDamage = 48;
+var c_UnitStat_FireMaxDamage = 49;
+var c_UnitStat_LightningMinDamage = 50;
+var c_UnitStat_LightningMaxDamage = 51;
+var c_UnitStat_MagicMinDamage = 52;
+var c_UnitStat_MagicMaxDamage = 53;
+var c_UnitStat_ColdMinDamage = 54;
+var c_UnitStat_ColdMaxDamage = 55;
+var c_UnitStat_ColdLength = 56;
+var c_UnitStat_PoisonMinDamage = 57;
+var c_UnitStat_PoisonMaxDamage = 58;
+var c_UnitStat_PoisonLength = 59;
+var c_UnitStat_LifeDrainMinDamage = 60;
+var c_UnitStat_LifeDrainMaxDamage = 61;
+var c_UnitStat_ManaDrainMinDamage = 62;
+var c_UnitStat_ManaDrainMaxDamage = 63;
+var c_UnitStat_StaminaDrainMinDamage = 64;
+var c_UnitStat_StaminaDrainMaxDamage = 65;
+var c_UnitStat_StunLength = 66;
+var c_UnitStat_VelocityPercent = 67;
+var c_UnitStat_AttackRate = 68;
+var c_UnitStat_OtherAnimRate = 69;
+var c_UnitStat_Quantity = 70;
+var c_UnitStat_Value = 71;
+var c_UnitStat_Durability = 72;
+var c_UnitStat_MaxDurability = 73;
+var c_UnitStat_HPRegen = 74;
+var c_UnitStat_ItemMaxDurabilityPercent = 75;
+var c_UnitStat_ItemMaxHPPercent = 76;
+var c_UnitStat_ItemMaxManaPercent = 77;
+var c_UnitStat_ItemAttackerTakesDamage = 78;
+var c_UnitStat_ItemGoldBonus = 79;
+var c_UnitStat_ItemMagicBonus = 80;
+var c_UnitStat_ItemKnockback = 81;
+var c_UnitStat_ItemTimeDuration = 82;
+var c_UnitStat_ItemAddAmazonSkillPoints = 83;
+var c_UnitStat_ItemAddPaladinSkillPoints = 84;
+var c_UnitStat_ItemAddNecromancerSkillPoints = 85;
+var c_UnitStat_ItemAddSorceressSkillPoints = 86;
+var c_UnitStat_ItemAddBarbarianSkillPoints = 87;
+var c_UnitStat_ItemDoubleHerbDuration = 88;
+var c_UnitStat_ItemLightRadius = 89;
+var c_UnitStat_ItemLightColor = 90;
+var c_UnitStat_ItemReqPercent = 91;
+var c_UnitStat_ItemFastAttackRate = 92;
+var c_UnitStat_ItemFasterAttackRate = 93;
+var c_UnitStat_ItemFastestAttackRate = 94;
+var c_UnitStat_ItemFastMoveVelocity = 95;
+var c_UnitStat_ItemFasterMoveVelocity = 96;
+var c_UnitStat_ItemFastestMoveVelocity = 97;
+var c_UnitStat_ItemFastGetHitRate = 98;
+var c_UnitStat_ItemFasterGetHitRate = 99;
+var c_UnitStat_ItemFastestGetHitRate = 100;
+var c_UnitStat_ItemFastBlockRate = 101;
+var c_UnitStat_ItemFasterBlockRate = 102;
+var c_UnitStat_ItemFastestBlockRate = 103;
+var c_UnitStat_ItemFastCastRate = 104;
+var c_UnitStat_ItemFasterCastRate = 105;
+var c_UnitStat_ItemFastestCastRate = 106;
+var c_UnitStat_ItemSingleSkill1 = 107;
+var c_UnitStat_ItemSingleSkill2 = 108;
+var c_UnitStat_ItemSingleSkill3 = 109;
+var c_UnitStat_ItemPoisonLengthResist = 110;
+var c_UnitStat_ItemNormalDamage = 111;
+var c_UnitStat_ItemHowl = 112;
+var c_UnitStat_ItemStupidity = 113;
+var c_UnitStat_ItemDamageToMana = 114;
+var c_UnitStat_ItemIgnoreTargetAC = 115;
+var c_UnitStat_ItemFractionalTargetAC = 116;
+var c_UnitStat_ItemPreventHeal = 117;
+var c_UnitStat_ItemHalfFreezeDuration = 118;
+var c_UnitStat_ItemToHitPercent = 119;
+var c_UnitStat_ItemDamageTargetAC = 120;
+var c_UnitStat_ItemDemonDamagePercent = 121;
+var c_UnitStat_ItemUndeadDamagePercent = 122;
+var c_UnitStat_ItemDemonToHit = 123;
+var c_UnitStat_ItemUndeadToHit = 124;
+var c_UnitStat_ItemThrowable = 125;
+var c_UnitStat_ItemFireSkill = 126;
+var c_UnitStat_ItemAllSkills = 127;
+var c_UnitStat_ItemAttackerTakesLightningDamage = 128;
+var c_UnitStat_IronMaidenLevel = 129;
+var c_UnitStat_LifeTapLevel = 130;
+var c_UnitStat_ThornsLevel = 131;
+var c_UnitStat_BoneArmor = 132;
+var c_UnitStat_BoneArmorMax = 133;
+var c_UnitStat_ItemFreeze = 134;
+var c_UnitStat_ItemOpenWounds = 135;
+var c_UnitStat_ItemCrushingBlow = 136;
+var c_UnitStat_ItemKickDamage = 137;
+var c_UnitStat_ItemManaAfterKill = 138;
+var c_UnitStat_ItemHealAfterDemonKill = 139;
+var c_UnitStat_ItemExtraBlood = 140;
+var c_UnitStat_ItemDeadlyStrike = 141;
+var c_UnitStat_ItemAbsorbFirePercent = 142;
+var c_UnitStat_ItemAbsorbFire = 143;
+var c_UnitStat_ItemAbsorbLightningPercent = 144;
+var c_UnitStat_ItemAbsorbLightning = 145;
+var c_UnitStat_ItemAbsorbMagicPercent = 146;
+var c_UnitStat_ItemAbsorbMagic = 147;
+var c_UnitStat_ItemAbsorbColdPercent = 148;
+var c_UnitStat_ItemAbsorbCold = 149;
+var c_UnitStat_ItemSlow = 150;
+var c_UnitStat_ItemBlessedAim = 151;
+var c_UnitStat_ItemDefiance = 152;
+var c_UnitStat_ItemCannotBeFrozen = 153;
+var c_UnitStat_ItemStaminaDrainPercent = 154;
+var c_UnitStat_ItemReanimate = 155;
+var c_UnitStat_ItemPierce = 156;
+var c_UnitStat_ItemMagicArrow = 157;
+var c_UnitStat_ItemExplosiveArrow = 158;
+var c_UnitStat_ItemThrowMinDamage = 159;
+var c_UnitStat_ItemThrowMaxDamage = 160;
+var c_UnitStat_SkillHandOfAthena = 161;
+var c_UnitStat_SkillStaminaPercent = 162;
+var c_UnitStat_SkillPassiveStaminaPercent = 163;
+var c_UnitStat_SkillConcentration = 164;
+var c_UnitStat_SkillEnchant = 165;
+var c_UnitStat_SkillPierce = 166;
+var c_UnitStat_SkillConviction = 167;
+var c_UnitStat_SkillChillingArmor = 168;
+var c_UnitStat_SkillFrenzy = 169;
+var c_UnitStat_SkillDecrepify = 170;
+var c_UnitStat_SkillArmorPercent = 171;
+var c_UnitStat_Alignment = 172;
+var c_UnitStat_Target0 = 173;
+var c_UnitStat_Target1 = 174;
+var c_UnitStat_GoldLost = 175;
+var c_UnitStat_ConversionLevel = 176;
+var c_UnitStat_ConversionMaxHP = 177;
+var c_UnitStat_UnitDoOverlay = 178;
+var c_UnitStat_ItemAddDruidSkillPoints = 179;
+var c_UnitStat_ItemAddAssassinSkillPoints = 180;
+var c_UnitStat_ItemAddSkillSingle4 = 181;
+var c_UnitStat_ItemAddSkillSingle5 = 182;
+var c_UnitStat_ItemAddSkillSingle6 = 183;
+var c_UnitStat_ItemAddSkillSingle7 = 184;
+var c_UnitStat_ItemAddSkillSingle8 = 185;
+var c_UnitStat_ItemAddSkillSingle9 = 186;
+var c_UnitStat_ItemAddSkillSingle10 = 187;
+var c_UnitStat_ItemAddSkillTab1 = 188;
+var c_UnitStat_ItemAddSkillTab2 = 189;
+var c_UnitStat_ItemAddSkillTab3 = 190;
+var c_UnitStat_ItemAddSkillTab4 = 191;
+var c_UnitStat_ItemAddSkillTab5 = 192;
+var c_UnitStat_ItemAddSkillTab6 = 193;
+var c_UnitStat_ItemNumSockets = 194;
+var c_UnitStat_ItemSkillOnAttack1 = 195;
+var c_UnitStat_ItemSkillOnAttack2 = 196;
+var c_UnitStat_ItemSkillOnAttack3 = 197;
+var c_UnitStat_ItemSkillOnHit1 = 198;
+var c_UnitStat_ItemSkillOnHit2 = 199;
+var c_UnitStat_ItemSkillOnHit3 = 200;
+var c_UnitStat_ItemSkillOnGetHit1 = 201;
+var c_UnitStat_ItemSkillOnGetHit2 = 202;
+var c_UnitStat_ItemSkillOnGetHit3 = 203;
+var c_UnitStat_ItemChargedSkill0 = 204;
+var c_UnitStat_ItemChargedSkill1 = 205;
+var c_UnitStat_ItemChargedSkill2 = 206;
+var c_UnitStat_ItemChargedSkill3 = 207;
+var c_UnitStat_ItemChargedSkill4 = 208;
+var c_UnitStat_ItemChargedSkill5 = 209;
+var c_UnitStat_ItemChargedSkill6 = 210;
+var c_UnitStat_ItemChargedSkill7 = 211;
+var c_UnitStat_ItemChargedSkill8 = 212;
+var c_UnitStat_ItemChargedSkill9 = 213;
+var c_UnitStat_ItemArmorPerLevel = 214;
+var c_UnitStat_ItemArmorPercentPerLevel = 215;
+var c_UnitStat_ItemHPPerLevel = 216;
+var c_UnitStat_ItemManaPerLevel = 217;
+var c_UnitStat_ItemMaxDamagePerLevel = 218;
+var c_UnitStat_ItemMaxDamagePercentPerLevel = 219;
+var c_UnitStat_ItemStrengthPerLevel = 220;
+var c_UnitStat_ItemDexterityPerLevel = 221;
+var c_UnitStat_ItemEnergyPerLevel = 222;
+var c_UnitStat_ItemVitalityPerLevel = 223;
+var c_UnitStat_ItemToHitPerLevel = 224;
+var c_UnitStat_ItemToHitPercentPerLevel = 225;
+var c_UnitStat_ItemColdDamageMaxPerLevel = 226;
+var c_UnitStat_ItemFireDamageMaxPerLevel = 227;
+var c_UnitStat_ItemLightningDamageMaxPerLevel = 228;
+var c_UnitStat_ItemPoisonDamageMaxPerLevel = 229;
+var c_UnitStat_ItemResistColdPerLevel = 230;
+var c_UnitStat_ItemResistFirePerLevel = 231;
+var c_UnitStat_ItemResistLightningPerLevel = 232;
+var c_UnitStat_ItemResistPoisonPerLevel = 233;
+var c_UnitStat_ItemAbsorbColdPerLevel = 234;
+var c_UnitStat_ItemAbsorbFirePerLevel = 235;
+var c_UnitStat_ItemAbsorbLightningPerLevel = 236;
+var c_UnitStat_ItemAbsorbPoisonPerLevel = 237;
+var c_UnitStat_ItemThornsPerLevel = 238;
+var c_UnitStat_ItemFindGoldPerLevel = 239;
+var c_UnitStat_ItemFindMagicPerLevel = 240;
+var c_UnitStat_ItemRegenStaminaPerLevel = 241;
+var c_UnitStat_ItemStaminaPerLevel = 242;
+var c_UnitStat_ItemDamageDemonPerLevel = 243;
+var c_UnitStat_ItemDamageUndeadPerLevel = 244;
+var c_UnitStat_ItemToHitDemonPerLevel = 245;
+var c_UnitStat_ItemToHitUndeadPerLevel = 246;
+var c_UnitStat_ItemCrushingBlowPerLevel = 247;
+var c_UnitStat_ItemOpenWoundsPerLevel = 248;
+var c_UnitStat_ItemKickDamagePerLevel = 249;
+var c_UnitStat_ItemDeadlyStrikePerLevel = 250;
+var c_UnitStat_ItemFindGemsPerLevel = 251;
+var c_UnitStat_ItemReplenishDurability = 252;
+var c_UnitStat_ItemReplenishQuantity = 253;
+var c_UnitStat_ItemExtraStack = 254;
+var c_UnitStat_ItemFindItem = 255;
+var c_UnitStat_ItemSlashDamage = 256;
+var c_UnitStat_ItemSlashDamagePercent = 257;
+var c_UnitStat_ItemCrushDamage = 258;
+var c_UnitStat_ItemCrushDamagePercent = 259;
+var c_UnitStat_ItemThrustDamage = 260;
+var c_UnitStat_ItemThrustDamagePercent = 261;
+var c_UnitStat_ItemAbsorbSlash = 262;
+var c_UnitStat_ItemAbsorbCrush = 263;
+var c_UnitStat_ItemAbsorbThrust = 264;
+var c_UnitStat_ItemAbsorbSlashPercent = 265;
+var c_UnitStat_ItemAbsorbCrushPercent = 266;
+var c_UnitStat_ItemAbsorbThrustPercent = 267;
+var c_UnitStat_ItemArmorByTime = 268;
+var c_UnitStat_ItemArmorPercentByTime = 269;
+var c_UnitStat_ItemHPByTime = 270;
+var c_UnitStat_ItemManaByTime = 271;
+var c_UnitStat_ItemMaxDamageByTime = 272;
+var c_UnitStat_ItemMaxDamagePercentByTime = 273;
+var c_UnitStat_ItemStrengthByTime = 274;
+var c_UnitStat_ItemDexterityByTime = 275;
+var c_UnitStat_ItemEnergyByTime = 276;
+var c_UnitStat_ItemVitalityByTime = 277;
+var c_UnitStat_ItemToHitByTime = 278;
+var c_UnitStat_ItemToHitPercentByTime = 279;
+var c_UnitStat_ItemColdDamageMaxByTime = 280;
+var c_UnitStat_ItemFireDamageMaxByTime = 281;
+var c_UnitStat_ItemLightningDamageMaxByTime = 282;
+var c_UnitStat_ItemPoisonDamageMaxByTime = 283;
+var c_UnitStat_ItemResistColdByTime = 284;
+var c_UnitStat_ItemResistFireByTime = 285;
+var c_UnitStat_ItemResistLightningByTime = 286;
+var c_UnitStat_ItemResistPoisonByTime = 287;
+var c_UnitStat_ItemAbsorbColdByTime = 288;
+var c_UnitStat_ItemAbsorbFireByTime = 289;
+var c_UnitStat_ItemAbsorbLightningByTime = 290;
+var c_UnitStat_ItemAbsorbPoisonByTime = 291;
+var c_UnitStat_ItemFindGoldByTime = 292;
+var c_UnitStat_ItemFindMagicByTime = 293;
+var c_UnitStat_ItemRegenStaminaByTime = 294;
+var c_UnitStat_ItemStaminaByTime = 295;
+var c_UnitStat_ItemDamageDemonByTime = 296;
+var c_UnitStat_ItemDamageUndeadByTime = 297;
+var c_UnitStat_ItemToHitDemonByTime = 298;
+var c_UnitStat_ItemToHitUndeadByTime = 299;
+var c_UnitStat_ItemCrushingBlowByTime = 300;
+var c_UnitStat_ItemOpenWoundsByTime = 301;
+var c_UnitStat_ItemKickDamageByTime = 302;
+var c_UnitStat_ItemDeadlyStrikeByTime = 303;
+var c_UnitStat_ItemFindGemsByTime = 304;
+var c_UnitStat_ItemPierceCold = 305;
+var c_UnitStat_ItemPierceFire = 306;
+var c_UnitStat_ItemPierceLightning = 307;
+var c_UnitStat_ItemPiercePoison = 308;
+var c_UnitStat_ItemDamageVsMonster = 309;
+var c_UnitStat_ItemDamagePercentVsMonster = 310;
+var c_UnitStat_ItemToHitVsMonster = 311;
+var c_UnitStat_ItemToHitPercentVsMonster = 312;
+var c_UnitStat_ItemACVsMonster = 313;
+var c_UnitStat_ItemACPercentVsMonster = 314;
+var c_UnitStat_FireLength = 315;
+var c_UnitStat_BurningMin = 316;
+var c_UnitStat_BurningMax = 317;
+var c_UnitStat_ProgressiveDamage = 318;
+var c_UnitStat_ProgressiveSteal = 319;
+var c_UnitStat_ProgressiveOther = 320;
+var c_UnitStat_ProgressiveFire = 321;
+var c_UnitStat_ProgressiveCold = 322;
+var c_UnitStat_ProgressiveLightning = 323;
+var c_UnitStat_ItemExtraCharges = 324;
+var c_UnitStat_ProgressiveToHit = 323;
+
+// room.getStat()
+
+var c_RoomStat_xStart = 0;
+var c_RoomStat_yStart = 1;
+var c_RoomStat_xSize1 = 2;
+var c_RoomStat_ySize1 = 3;
+var c_RoomStat_xPos = 4;
+var c_RoomStat_yPos = 5;
+var c_RoomStat_xSize2 = 6;
+var c_RoomStat_ySize2 = 7;
+var c_RoomStat_8 = 8;		// FIXME ... unknown
+var c_RoomStat_nPosGameX = 9;
+var c_RoomStat_nPosGameY = 10;
+var c_RoomStat_nSizeGameX = 11;
+var c_RoomStat_nSizeGameY = 12;
+var c_RoomStat_nPosRoomX = 13;
+var c_RoomStat_nPosRoomY = 14;
+var c_RoomStat_nSizeRoomX  = 15;
+var c_RoomStat_nSizeRoomY = 16;
+
+// unit.getState()
+
+var c_UnitState_None = 0;
+var c_UnitState_Freeze = 1;
+var c_UnitState_Poison = 2;
+var c_UnitState_ResistFire = 3;
+var c_UnitState_ResistCold = 4;
+var c_UnitState_ResistLight = 5;
+var c_UnitState_ResistMagic = 6;
+var c_UnitState_PlayerBody = 7;
+var c_UnitState_ResistAll = 8;
+var c_UnitState_AmplifyDamage = 9;
+var c_UnitState_FrozenArmor = 10;
+var c_UnitState_Cold = 11;
+var c_UnitState_Inferno = 12;
+var c_UnitState_Blaze = 13;
+var c_UnitState_BoneArmor = 14;
+var c_UnitState_Concentrate = 15;
+var c_UnitState_Enchant = 16;
+var c_UnitState_Innersight = 17;
+var c_UnitState_SkillMove = 18;
+var c_UnitState_Weaken = 19;
+var c_UnitState_ChillingArmor = 20;
+var c_UnitState_Stunned = 21;
+var c_UnitState_SpiderLay = 22;
+var c_UnitState_DimVision = 23;
+var c_UnitState_Slowed = 24;
+var c_UnitState_FetishAura = 25;
+var c_UnitState_Shout = 26;
+var c_UnitState_Taunt = 27;
+var c_UnitState_Conviction = 28;
+var c_UnitState_Convicted = 29;
+var c_UnitState_EnergyShield = 30;
+var c_UnitState_VenomClaws = 31;
+var c_UnitState_BattleOrders = 32;
+var c_UnitState_Might = 33;
+var c_UnitState_Prayer = 34;
+var c_UnitState_HolyFire = 35;
+var c_UnitState_Thorns = 36;
+var c_UnitState_Defiance = 37;
+var c_UnitState_ThunderStorm = 38;
+var c_UnitState_LightningBolt = 39;
+var c_UnitState_BlessedAim = 40;
+var c_UnitState_Stamina = 41;
+var c_UnitState_Concentration = 42;
+var c_UnitState_HolyWind = 43;
+var c_UnitState_HolyWindCold = 44;
+var c_UnitState_Cleansing = 45;
+var c_UnitState_HolyShock = 46;
+var c_UnitState_Sanctuary = 47;
+var c_UnitState_Meditation = 48;
+var c_UnitState_Fanaticism = 49;
+var c_UnitState_Redemption = 50;
+var c_UnitState_BattleCommand = 51;
+var c_UnitState_PreventHeal = 52;
+var c_UnitState_Conversion = 53;
+var c_UnitState_Uninterruptable = 54;
+var c_UnitState_IronMaiden = 55;
+var c_UnitState_Terror = 56;
+var c_UnitState_Attract = 57;
+var c_UnitState_Lifetap = 58;
+var c_UnitState_Confuse = 59;
+var c_UnitState_Decrepify = 60;
+var c_UnitState_LowerResist = 61;
+var c_UnitState_OpenWounds = 62;
+var c_UnitState_Dopplezon = 63;
+var c_UnitState_CriticalStrike = 64;
+var c_UnitState_Dodge = 65;
+var c_UnitState_Avoid = 66;
+var c_UnitState_Penetrate = 67;
+var c_UnitState_Evade = 68;
+var c_UnitState_Pierce = 69;
+var c_UnitState_Warmth = 70;
+var c_UnitState_FireMastery = 71;
+var c_UnitState_LightningMastery = 72;
+var c_UnitState_ColdMastery = 73;
+var c_UnitState_SwordMastery = 74;
+var c_UnitState_AxeMastery = 75;
+var c_UnitState_MaceMastery = 76;
+var c_UnitState_PolearmMastery = 77;
+var c_UnitState_ThrowingMastery = 78;
+var c_UnitState_SpearMastery = 79;
+var c_UnitState_IncreasedStamina = 80;
+var c_UnitState_IronSkin = 81;
+var c_UnitState_IncreasedSpeed = 82;
+var c_UnitState_NaturalResistance = 83;
+var c_UnitState_FingerMageCurse = 84;
+var c_UnitState_NoManaRegen = 85;
+var c_UnitState_JustHit = 86;
+var c_UnitState_SlowMissiles = 87;
+var c_UnitState_ShiverArmor = 88;
+var c_UnitState_BattleCry = 89;
+var c_UnitState_Blue = 90;
+var c_UnitState_Red = 91;
+var c_UnitState_DeathDelay = 92;
+var c_UnitState_Valkyrie = 93;
+var c_UnitState_Frenzy = 94;
+var c_UnitState_Berserk = 95;
+var c_UnitState_Revive = 96;
+var c_UnitState_ItemFullSet = 97;
+var c_UnitState_SourceUnit = 98;
+var c_UnitState_Redeemed = 99;
+var c_UnitState_HealthPot = 100;
+var c_UnitState_HolyShield = 101;
+var c_UnitState_JustPortaled = 102;
+var c_UnitState_MonFrenzy = 103;
+var c_UnitState_CorpseNodraw = 104;
+var c_UnitState_Alignment = 105;
+var c_UnitState_ManaPot = 106;
+var c_UnitState_Shatter = 107;
+var c_UnitState_SyncWarped = 108;
+var c_UnitState_ConversionSave = 109;
+var c_UnitState_Pregnant = 110;
+var c_UnitState_111 = 111;
+var c_UnitState_Rabies = 112;
+var c_UnitState_DefenseCurse = 113;
+var c_UnitState_BloodMana = 114;
+var c_UnitState_Burning = 115;
+var c_UnitState_DragonFlight = 116;
+var c_UnitState_Maul = 117;
+var c_UnitState_CorpseNoselect = 118;
+var c_UnitState_ShadowWarrior = 119;
+var c_UnitState_FeralRage = 120;
+var c_UnitState_SkillDelay = 121;
+var c_UnitState_ProgressiveDamage = 122;
+var c_UnitState_ProgressiveSteal = 123;
+var c_UnitState_ProgressiveOther = 124;
+var c_UnitState_ProgressiveFire = 125;
+var c_UnitState_ProgressiveCold = 126;
+var c_UnitState_ProgressiveLightning = 127;
+var c_UnitState_ShrineArmor = 128;
+var c_UnitState_ShrineCombat = 129;
+var c_UnitState_ShrineResistLightning = 130;
+var c_UnitState_ShrineResistFire = 131;
+var c_UnitState_ShrineResistCold = 132;
+var c_UnitState_ShrineResistPoison = 133;
+var c_UnitState_ShrineSkill = 134;
+var c_UnitState_ShrineManaRegen = 135;
+var c_UnitState_ShrineStamina = 136;
+var c_UnitState_ShrineExperience = 137;
+var c_UnitState_FenrisRage = 138;
+var c_UnitState_Wolf = 139;
+var c_UnitState_Bear = 140;
+var c_UnitState_Bloodlust = 141;
+var c_UnitState_ChangeClass = 142;
+var c_UnitState_Attached = 143;
+var c_UnitState_Hurricane = 144;
+var c_UnitState_Armageddon = 145;
+var c_UnitState_Invis = 146;
+var c_UnitState_Barbs = 147;
+var c_UnitState_Wolverine = 148;
+var c_UnitState_OakSage = 149;
+var c_UnitState_VineBeast = 150;
+var c_UnitState_CycloneArmor = 151;
+var c_UnitState_ClawMastery = 152;
+var c_UnitState_CloakOfShadows = 153;
+var c_UnitState_Recycled = 154;
+var c_UnitState_WeaponBlock = 155;
+var c_UnitState_Cloaked = 156;
+var c_UnitState_Quickness = 157;
+var c_UnitState_BladeShield = 158;
+var c_UnitState_Fade = 159;
+
+var c_StateNames = new Array(
+	"None",
+	"Freeze",
+	"Poison",
+	"Resist Fire",
+	"Resist Cold",
+	"Resist Light",
+	"Resist Magic",
+	"Player Body",
+	"Resist All",
+	"Amplify Damage",
+	"Frozen Armor",
+	"Cold",
+	"Inferno",
+	"Blaze",
+	"Bone Armor",
+	"Concentrate",
+	"Enchant",
+	"Innersight",
+	"Skill Move",
+	"Weaken",
+	"Chilling Armor",
+	"Stunned",
+	"Spider Lay",
+	"Dim Vision",
+	"Slowed",
+	"Fetish Aura",
+	"Shout",
+	"Taunt",
+	"Conviction",
+	"Convicted",
+	"Energy Shield",
+	"Venom Claws",
+	"Battle Orders",
+	"Might",
+	"Prayer",
+	"Holy Fire",
+	"Thorns",
+	"Defiance",
+	"Thunder Storm",
+	"Lightning Bolt",
+	"Blessed Aim",
+	"Stamina",
+	"Concentration",
+	"Holy Wind",
+	"Holy Wind Cold",
+	"Cleansing",
+	"Holy Shock",
+	"Sanctuary",
+	"Meditation",
+	"Fanaticism",
+	"Redemption",
+	"Battle Command",
+	"Prevent Heal",
+	"Conversion",
+	"Uninterruptable",
+	"Iron Maiden",
+	"Terror",
+	"Attract",
+	"Lifetap",
+	"Confuse",
+	"Decrepify",
+	"Lower Resist",
+	"Open Wounds",
+	"Dopplezon",
+	"Critical Strike",
+	"Dodge",
+	"Avoid",
+	"Penetrate",
+	"Evade",
+	"Pierce",
+	"Warmth",
+	"Fire Mastery",
+	"Lightning Mastery",
+	"Cold Mastery",
+	"Sword Mastery",
+	"Axe Mastery",
+	"Mace Mastery",
+	"Polearm Mastery",
+	"Throwing Mastery",
+	"Spear Mastery",
+	"Increased Stamina",
+	"Iron Skin",
+	"Increased Speed",
+	"Natural Resistance",
+	"Finger Mage Curse",
+	"No Mana Regen",
+	"Just Hit",
+	"Slow Missiles",
+	"Shiver Armor",
+	"Battle Cry",
+	"Blue",
+	"Red",
+	"Death Delay",
+	"Valkyrie",
+	"Frenzy",
+	"Berserk",
+	"Revive",
+	"Item Full Set",
+	"Source Unit",
+	"Redeemed",
+	"Health Pot",
+	"Holy Shield",
+	"Just Portaled",
+	"Mon Frenzy",
+	"Corpse Nodraw",
+	"Alignment",
+	"Mana Pot",
+	"Shatter",
+	"Sync Warped",
+	"Conversion Save",
+	"Pregnant",
+	"Unknown State 111",
+	"Rabies",
+	"Defense Curse",
+	"Blood Mana",
+	"Burning",
+	"Dragon Flight",
+	"Maul",
+	"Corpse Noselect",
+	"Shadow Warrior",
+	"Feral Rage",
+	"Skill Delay",
+	"Progressive Damage",
+	"Progressive Steal",
+	"Progressive Other",
+	"Progressive Fire",
+	"Progressive Cold",
+	"Progressive Lightning",
+	"Shrine Armor",
+	"Shrine Combat",
+	"Shrine Resist Lightning",
+	"Shrine Resist Fire",
+	"Shrine Resist Cold",
+	"Shrine Resist Poison",
+	"Shrine Skill",
+	"Shrine Mana Regen",
+	"Shrine Stamina",
+	"Shrine Experience",
+	"Fenris Rage",
+	"Wolf",
+	"Bear",
+	"Bloodlust",
+	"Change Class",
+	"Attached",
+	"Hurricane",
+	"Armageddon",
+	"Invis",
+	"Barbs",
+	"Wolverine",
+	"Oak Sage",
+	"Vine Beast",
+	"Cyclone Armor",
+	"Claw Mastery",
+	"Cloak Of Shadows",
+	"Recycled",
+	"Weapon Block",
+	"Cloaked",
+	"Quickness",
+	"Blade Shield",
+	"Fade" );
+
+// item.interact()
+
+// FIXME: TBD
+// does "unset" in http://www.d2jsp.org/docs/commands/item.interact.html mean null or 0?
+
+// item.move(x, y, StorageLocation)
+
+var c_ItemMove_PlayerInventory = 0;
+var c_ItemMove_Cube = 3;
+var c_ItemMove_Stash = 4;
+
+// item.move(BodyLocation)
+
+var c_BodyLocation_Head = 1;
+var c_BodyLocation_Amulet = 2;
+var c_BodyLocation_Armor = 3;
+var c_BodyLocation_RightWeapon = 4;
+var c_BodyLocation_LeftWeapon = 5;
+var c_BodyLocation_RightRing = 6;
+var c_BodyLocation_LeftRing = 7;
+var c_BodyLocation_Belt = 8;
+var c_BodyLocation_Boots = 9;
+var c_BodyLocation_Gloves = 10;
+
+// me.useStatPoint()
+
+var c_UseStatPoint_Strength = 0;
+var c_UseStatPoint_Energy = 1;
+var c_UseStatPoint_Dexterity = 2;
+var c_UseStatPoint_Vitality = 3;
+
+// me.useSkillPoint()
+
+var c_Skill_MagicArrow = 6;
+var c_Skill_FireArrow = 7;
+var c_Skill_InnerSight = 8;
+var c_Skill_CriticalStrike = 9;
+var c_Skill_Jab = 10;
+var c_Skill_ColdArrow = 11;
+var c_Skill_MultipleShot = 12;
+var c_Skill_Dodge = 13;
+var c_Skill_PowerStrike = 14;
+var c_Skill_PoisonJavelin = 15;
+var c_Skill_ExplodingArrow = 16;
+var c_Skill_SlowMissiles = 17;
+var c_Skill_Avoid = 18;
+var c_Skill_Impale = 19;
+var c_Skill_LightningBolt = 20;
+var c_Skill_IceArrow = 21;
+var c_Skill_GuidedArrow = 22;
+var c_Skill_Penetrate = 23;
+var c_Skill_ChargedStrike = 24;
+var c_Skill_PlagueJavelin = 25;
+var c_Skill_Strafe = 26;
+var c_Skill_ImmolationArrow = 27;
+var c_Skill_Dopplezon = 28;
+var c_Skill_Evade = 29;
+var c_Skill_Fend = 30;
+var c_Skill_FreezingArrow = 31;
+var c_Skill_Valkyrie = 32;
+var c_Skill_Pierce = 33;
+var c_Skill_LightningStrike = 34;
+var c_Skill_LightningFury = 35;
+var c_Skill_FireBolt = 36;
+var c_Skill_Warmth = 37;
+var c_Skill_ChargedBolt = 38;
+var c_Skill_IceBolt = 39;
+var c_Skill_FrozenArmor = 40;
+var c_Skill_Inferno = 41;
+var c_Skill_StaticField = 42;
+var c_Skill_Telekinesis = 43;
+var c_Skill_FrostNova = 44;
+var c_Skill_IceBlast = 45;
+var c_Skill_Blaze = 46;
+var c_Skill_FireBall = 47;
+var c_Skill_Nova = 48;
+var c_Skill_Lightning = 49;
+var c_Skill_ShiverArmor = 50;
+var c_Skill_FireWall = 51;
+var c_Skill_Enchant = 52;
+var c_Skill_ChainLightning = 53;
+var c_Skill_Teleport = 54;
+var c_Skill_GlacialSpike = 55;
+var c_Skill_Meteor = 56;
+var c_Skill_ThunderStorm = 57;
+var c_Skill_EnergyShield = 58;
+var c_Skill_Blizzard = 59;
+var c_Skill_ChillingArmor = 60;
+var c_Skill_FireMastery = 61;
+var c_Skill_Hydra = 62;
+var c_Skill_LightningMastery = 63;
+var c_Skill_FrozenOrb = 64;
+var c_Skill_ColdMastery = 65;
+var c_Skill_AmplifyDamage = 66;
+var c_Skill_Teeth = 67;
+var c_Skill_BoneArmor = 68;
+var c_Skill_SkeletonMastery = 69;
+var c_Skill_RaiseSkeleton = 70;
+var c_Skill_DimVison = 71;
+var c_Skill_Weaken = 72;
+var c_Skill_PoisonDagger = 73;
+var c_Skill_CorpseExplosion = 74;
+var c_Skill_ClayGolem = 75;
+var c_Skill_IronMaiden = 76;
+var c_Skill_Terror = 77;
+var c_Skill_BoneWall = 78;
+var c_Skill_GolemMastery = 79;
+var c_Skill_RaiseSkeletalMage = 80;
+var c_Skill_Confuse = 81;
+var c_Skill_LifeTap = 82;
+var c_Skill_PoisonExplosion = 83;
+var c_Skill_BoneSpear = 84;
+var c_Skill_BloodGolem = 85;
+var c_Skill_Attract = 86;
+var c_Skill_Decrepify = 87;
+var c_Skill_BonePrison = 88;
+var c_Skill_SummonResist = 89;
+var c_Skill_IronGolem = 90;
+var c_Skill_LowerResist = 91;
+var c_Skill_PoisonNova = 92;
+var c_Skill_BoneSpirit = 93;
+var c_Skill_FireGolem = 94;
+var c_Skill_Revive = 95;
+var c_Skill_Sacrifice = 96;
+var c_Skill_Smite = 97;
+var c_Skill_Might = 98;
+var c_Skill_Prayer = 99;
+var c_Skill_ResistFire = 100;
+var c_Skill_HolyBolt = 101;
+var c_Skill_HolyFire = 102;
+var c_Skill_Thorns = 103;
+var c_Skill_Defiance = 104;
+var c_Skill_ResistCold = 105;
+var c_Skill_Zeal = 106;
+var c_Skill_Charge = 107;
+var c_Skill_BlessedAim = 108;
+var c_Skill_Cleansing = 109;
+var c_Skill_ResistLightning = 110;
+var c_Skill_Vengeance = 111;
+var c_Skill_BlessedHammer = 112;
+var c_Skill_Concentration = 113;
+var c_Skill_HolyFreeze = 114;
+var c_Skill_Vigor = 115;
+var c_Skill_Conversion = 116;
+var c_Skill_HolyShield = 117;
+var c_Skill_HolyShock = 118;
+var c_Skill_Sanctuary = 119;
+var c_Skill_Meditation = 120;
+var c_Skill_FistOfTheHeavens = 121;
+var c_Skill_Fanaticism = 122;
+var c_Skill_Conviction = 123;
+var c_Skill_Redemption = 124;
+var c_Skill_Salvation = 125;
+var c_Skill_Bash = 126;
+var c_Skill_SwordMastery = 127;
+var c_Skill_AxeMastery = 128;
+var c_Skill_MaceMastery = 129;
+var c_Skill_Howl = 130;
+var c_Skill_FindPotion = 131;
+var c_Skill_Leap = 132;
+var c_Skill_DoubleSwing = 133;
+var c_Skill_PolearmMastery = 134;
+var c_Skill_ThrowingMastery = 135;
+var c_Skill_SpearMastery = 136;
+var c_Skill_Taunt = 137;
+var c_Skill_Shout = 138;
+var c_Skill_Stun = 139;
+var c_Skill_DoubleThrow = 140;
+var c_Skill_IncreasedStamina = 141;
+var c_Skill_FindItem = 142;
+var c_Skill_LeapAttack = 143;
+var c_Skill_Concentrate = 144;
+var c_Skill_IronSkin = 145;
+var c_Skill_BattleCry = 146;
+var c_Skill_Frenzy = 147;
+var c_Skill_IncreasedSpeed = 148;
+var c_Skill_BattleOrders = 149;
+var c_Skill_GrimWard = 150;
+var c_Skill_Whirlwind = 151;
+var c_Skill_Berserk = 152;
+var c_Skill_NaturalResistance = 153;
+var c_Skill_WarCry = 154;
+var c_Skill_BattleCommand = 155;
+var c_Skill_Werewolf = 223;
+var c_Skill_ShapeShifting = 224;
+var c_Skill_FireStorm = 225;
+var c_Skill_OakSage = 226;
+var c_Skill_SummonSpiritWolf = 227;
+var c_Skill_Werebear = 228;
+var c_Skill_MoltenBoulder = 229;
+var c_Skill_ArcticBlast = 230;
+var c_Skill_CycleOfLife = 231;
+var c_Skill_FeralRage = 232;
+var c_Skill_Maul = 233;
+var c_Skill_Eruption = 234;
+var c_Skill_CycloneArmor = 235;
+var c_Skill_HeartOfWolverine = 236;
+var c_Skill_SummonFenris = 237;
+var c_Skill_Rabies = 238;
+var c_Skill_FireClaws = 239;
+var c_Skill_Twister = 240;
+var c_Skill_Vines = 241;
+var c_Skill_Hunger = 242;
+var c_Skill_ShockWave = 243;
+var c_Skill_Volcano = 244;
+var c_Skill_Tornado = 245;
+var c_Skill_SpiritOfBarbs = 246;
+var c_Skill_SummonGrizzly = 247;
+var c_Skill_Fury = 248;
+var c_Skill_Armageddon = 249;
+var c_Skill_Hurricane = 250;
+var c_Skill_FireTrauma = 251;
+var c_Skill_ClawMastery = 252;
+var c_Skill_PsychicHammer = 253;
+var c_Skill_TigerStrike = 254;
+var c_Skill_DragonTalon = 255;
+var c_Skill_ShockField = 256;
+var c_Skill_BladeSentinel = 257;
+var c_Skill_Quickness = 258;
+var c_Skill_FistsOfFire = 259;
+var c_Skill_DragonClaw = 260;
+var c_Skill_ChargedBoltSentry = 261;
+var c_Skill_WakeOfFireSentry = 262;
+var c_Skill_WeaponBlock = 263;
+var c_Skill_CloakOfShadows = 264;
+var c_Skill_CobraStrike = 265;
+var c_Skill_BladeFury = 266;
+var c_Skill_Fade = 267;
+var c_Skill_ShadowWarrior = 268;
+var c_Skill_ClawsOfThunder = 269;
+var c_Skill_DragonTail = 270;
+var c_Skill_LightningSentry = 271;
+var c_Skill_InfernoSentry = 272;
+var c_Skill_MindBlast = 273;
+var c_Skill_BladesOfIce = 274;
+var c_Skill_DragonFlight = 275;
+var c_Skill_DeathSentry = 276;
+var c_Skill_BladeShield = 277;
+var c_Skill_Venom = 278;
+var c_Skill_ShadowMaster = 279;
+
+// me.useSkill(hand)
+
+var c_Hand_Right = 0;
+var c_Hand_Left = 1;
+
+// unit.act
+
+var c_Act_1 = 1;
+var c_Act_2 = 2;
+var c_Act_3 = 3;
+var c_Act_4 = 4;
+var c_Act_5 = 5;
+
+// unit.area
+// try: print(c_AreaNames[me.area]);
+
+var c_AreaNames = new Array(
+	"None",
+	"Rogue Encampment",
+	"Blood Moor",
+	"Cold Plains",
+	"Stony Field",
+	"Dark Wood",
+	"Black Marsh",
+	"Tamoe Highland",
+	"Den of Evil",
+	"Cave 1",
+	"Underground Passage 1",
+	"Hole 1",
+	"Pit 1",
+	"Cave 2",
+	"Underground Passage 2",
+	"Hole 2",
+	"Pit 2",
+	"Burial Grounds",
+	"Crypt",
+	"Mausoleum",
+	"Forgotten Tower",
+	"Tower Cellar 1",
+	"Tower Cellar 2",
+	"Tower Cellar 3",
+	"Tower Cellar 4",
+	"Tower Cellar 5",
+	"Monastery Gate",
+	"Outer Cloister",
+	"Barracks",
+	"Jail 1",
+	"Jail 2",
+	"Jail 3",
+	"Inner Cloister",
+	"Cathedral",
+	"Catacombs 1",
+	"Catacombs 2",
+	"Catacombs 3",
+	"Catacombs 4",
+	"Tristram",
+	"Moo Moo Farm",
+	"Lut Gholein",
+	"Rocky Waste",
+	"Dry Hills",
+	"Far Oasis",
+	"Lost City",
+	"Valley of Snakes",
+	"Canyon of the Magi",
+	"Sewers 1",
+	"Sewers 2",
+	"Sewers 3",
+	"Harem 1",
+	"Harem 2",
+	"Palace Cellar 1",
+	"Palace Cellar 2",
+	"Palace Cellar 3",
+	"Stony Tomb 1",
+	"Halls of the Dead 1",
+	"Halls of the Dead 2",
+	"Claw Viper Temple 1",
+	"Stony Tomb 2",
+	"Halls of the Dead 3",
+	"Claw Viper Temple 2",
+	"Maggot Lair 1",
+	"Maggot Lair 2",
+	"Maggot Lair 3",
+	"Ancient Tunnels",
+	"Tal Rashas Tomb1",
+	"Tal Rashas Tomb2",
+	"Tal Rashas Tomb3",
+	"Tal Rashas Tomb4",
+	"Tal Rashas Tomb5",
+	"Tal Rashas Tomb6",
+	"Tal Rashas Tomb7",
+	"Duriels Lair",
+	"Arcane Sanctuary",
+	"Kurast Docks",
+	"Spider Forest",
+	"Great Marsh",
+	"Flayer Jungle",
+	"Lower Kurast",
+	"Kurast Bazaar",
+	"Upper Kurast",
+	"Kurast Causeway",
+	"Travincal",
+	"Spider Cave",
+	"Spider Cavern",
+	"Swampy Pit 1",
+	"Swampy Pit 2",
+	"Flayer Dungeon 1",
+	"Flayer Dungeon 2",
+	"Swampy Pit 3",
+	"Flayer Dungeon 3",
+	"Sewers 1",
+	"Sewers 2",
+	"Ruined Temple",
+	"Disused Fane",
+	"Forgotten Reliquary",
+	"Forgotten Temple",
+	"Ruined Fane",
+	"Disused Reliquary",
+	"Durance of Hate 1",
+	"Durance of Hate 2",
+	"Durance of Hate 3",
+	"The Pandemonium Fortress",
+	"Outer Steppes",
+	"Plains of Despair",
+	"City of the Damned",
+	"River of Flame",
+	"Chaos Sanctuary",
+	"Harrogath",
+	"Bloody Foothills",
+	"Frigid Highlands",
+	"Arreat Plateau",
+	"Crystalized Cavern 1",
+	"Cellar of Pity",
+	"Crystalized Cavern 2",
+	"Echo Chamber",
+	"Tundra Wastelands",
+	"Glacial Caves 1",
+	"Glacial Caves 2",
+	"Rocky Summit",
+	"Nihlathaks Temple",
+	"Halls of Anguish",
+	"Halls of Deaths Calling",
+	"Halls of Vaught",
+	"Hell1",
+	"Hell2",
+	"Hell3",
+	"The Worldstone Keep 1",
+	"The Worldstone Keep 2",
+	"The Worldstone Keep 3",
+	"Throne of Destruction",
+	"The Worldstone Chamber" );
+
+// unit.classid
+
+var c_UnitClassID_Amazon = 0;
+var c_UnitClassID_Sorceress = 1;
+var c_UnitClassID_Necromancer = 2;
+var c_UnitClassID_Paladin = 3;
+var c_UnitClassID_Barbarian = 4;
+var c_UnitClassID_Druid = 5;
+var c_UnitClassID_Assassin = 6;
+
+// screen.color
+
+var c_ScreenColor_White = 0;
+var c_ScreenColor_Red = 1;
+var c_ScreenColor_Green1 = 2;
+var c_ScreenColor_Green = 2;
+var c_ScreenColor_Blue = 3;
+var c_ScreenColor_Brown = 4;
+var c_ScreenColor_Grey = 5;
+var c_ScreenColor_Gray = 5;
+var c_ScreenColor_Black = 6;
+var c_ScreenColor_Gold = 7;
+var c_ScreenColor_Orange = 8;
+var c_ScreenColor_Yellow = 9;
+var c_ScreenColor_Green2 = 10;
+var c_ScreenColor_Purple = 11;
+var c_ScreenColor_Green3 = 12;
+
+// corresponding color strings
+
+var c_ColorString_White = "ÿc0";
+var c_ColorString_Red = "ÿc1";
+var c_ColorString_Green1 = "ÿc2";
+var c_ColorString_Green = "ÿc2";
+var c_ColorString_Blue = "ÿc3";
+var c_ColorString_Gold1 = "ÿc4";
+var c_ColorString_Gold = "ÿc4";
+var c_ColorString_Grey = "ÿc5";
+var c_ColorString_Gray = "ÿc5";
+var c_ColorString_Black = "ÿc6";
+var c_ColorString_Gold2 = "ÿc7";
+var c_ColorString_Orange = "ÿc8";
+var c_ColorString_Yellow = "ÿc9";
+var c_ColorString_Green2 = "ÿc:";
+var c_ColorString_Purple = "ÿc;";
+var c_ColorString_Green3 = "ÿc<";
+
+var c_ColorChangeEscape = "ÿc";
+
+// Font faces for screen hooks
+var c_FontFace_12_Point_Bold = 0;
+var c_FontFace_12_Point_Caps = 1;
+var c_FontFace_20_Point_Caps = 2;
+var c_FontFace_32_Point_Caps = 3;
+var c_FontFace_12_Point = 4;
+var c_FontFace_16_Point = 5;
+var c_FontFace_9_Point = 6;
+var c_FontFace_18_Point_Caps = 7;
+var c_FontFace_14_Point_= 8;
+var c_FontFace_16_Point_Caps_Outline = 9;
+var c_FontFace_12_Point_Caps_Outline = 10;
+var c_FontFace_8_Point_Caps_Bold = 11;
+var c_FontFace_10_Point = 12;
+var c_FontFace_12_Point_Bold = 13;
+
+// obj.area for shrines
+
+var c_ShrineType_Refilling = 1;
+var c_ShrineType_Health = 2;
+var c_ShrineType_Mana = 3;
+var c_ShrineType_HealthExchange = 4;
+var c_ShrineType_ManaExchange = 5;
+var c_ShrineType_Armor = 6;
+var c_ShrineType_Combat = 7;
+var c_ShrineType_ResistFire = 8;
+var c_ShrineType_ResistCold = 9;
+var c_ShrineType_ResistLightning = 10;
+var c_ShrineType_ResistPoison = 11;
+var c_ShrineType_Skill = 12;
+var c_ShrineType_ManaRecharge = 13;
+var c_ShrineType_Stamina = 14;
+var c_ShrineType_Experience = 15;
+var c_ShrineType_Enirhs = 16;
+var c_ShrineType_Portal = 17;
+var c_ShrineType_Gem = 18;
+var c_ShrineType_Fire = 19;
+var c_ShrineType_Monster = 20;
+var c_ShrineType_Exploding = 21;
+var c_ShrineType_Poison = 22;
+
+var c_ShrineNames = new Array(
+	"null",
+	"refilling",
+	"health",
+	"mana",
+	"health exchange",
+	"mana exchange",
+	"armor",
+	"combat",
+	"resist fire",
+	"resist cold",
+	"resist lightning",
+	"resist poison",
+	"skill",
+	"mana recharge",
+	"stamina",
+	"experience",
+	"enirhs",
+	"portal",
+	"gem",
+	"fire",
+	"monster",
+	"exploding",
+	"poison"
+);
+
+// me.diff
+
+var c_Difficulty_Normal = 1;
+var c_Difficulty_Nightmare = 2;
+var c_Difficulty_Hell = 3;
+
+// me.gametype
+
+var c_GameType_Classic = 0;
+var c_GameType_Expansion = 1;
+
+// item.itemloc
+
+// FIXME -- TBD -- d2jsp documentation needs updating
+
+// item.itemclass
+
+var c_ItemClass_Normal = 0;
+var c_ItemClass_Exceptional = 1;
+var c_ItemClass_Elite = 2;
+
+// item.itemtype
+
+var c_ItemType_Shield = 2;
+var c_ItemType_Armor = 3;
+var c_ItemType_Gold = 4;
+var c_ItemType_BowQuiver = 5;
+var c_ItemType_CrossbowQuiver = 6;
+var c_ItemType_PlayerBodyPart = 7;
+var c_ItemType_Herb = 8;
+var c_ItemType_Potion = 9;
+var c_ItemType_Ring = 10;
+var c_ItemType_Elixir = 11;
+var c_ItemType_Amulet = 12;
+var c_ItemType_Charm = 13;
+var c_ItemType_Boots = 15;
+var c_ItemType_Gloves = 16;
+var c_ItemType_Book = 18;
+var c_ItemType_Belt = 19;
+var c_ItemType_Gem = 20;
+var c_ItemType_Torch = 21;
+var c_ItemType_Scroll = 22;
+var c_ItemType_Scepter = 24;
+var c_ItemType_Wand = 25;
+var c_ItemType_Staff = 26;
+var c_ItemType_Bow = 27;
+var c_ItemType_Axe = 28;
+var c_ItemType_Club = 29;
+var c_ItemType_Sword = 30;
+var c_ItemType_Hammer = 31;
+var c_ItemType_Knife = 32;
+var c_ItemType_Spear = 33;
+var c_ItemType_Polearm = 34;
+var c_ItemType_Crossbow = 35;
+var c_ItemType_Mace = 36;
+var c_ItemType_Helm = 37;
+var c_ItemType_MissilePotion = 38;
+var c_ItemType_Quest = 39;
+var c_ItemType_BodyPart = 40;
+var c_ItemType_Key = 41;
+var c_ItemType_ThrowingKnife = 42;
+var c_ItemType_ThrowingAxe = 43;
+var c_ItemType_Javelin = 44;
+var c_ItemType_Weapon = 45;
+var c_ItemType_MeleeWeapon = 46;
+var c_ItemType_MissileWeapon = 47;
+var c_ItemType_ThrownWeapon = 48;
+var c_ItemType_ComboWeapon = 49;
+var c_ItemType_AnyArmor = 50;
+var c_ItemType_AnyShield = 51;
+var c_ItemType_Miscellaneous = 52;
+var c_ItemType_SocketFiller = 53;
+var c_ItemType_SecondHand = 54;
+var c_ItemType_StavesAndRods = 55;
+var c_ItemType_Missile = 56;
+var c_ItemType_Blunt = 57;
+var c_ItemType_Jewel = 58;
+var c_ItemType_ClassSpecific = 59;
+var c_ItemType_AmazonItem = 60;
+var c_ItemType_BarbarianItem = 61;
+var c_ItemType_NecromancerItem = 62;
+var c_ItemType_PaladinItem = 63;
+var c_ItemType_SorceressItem = 64;
+var c_ItemType_AssassinItem = 65;
+var c_ItemType_DruidItem = 66;
+var c_ItemType_HandtoHand = 67;
+var c_ItemType_Orb = 68;
+var c_ItemType_VoodooHeads = 69;
+var c_ItemType_AuricShields = 70;
+var c_ItemType_PrimalHelm = 71;
+var c_ItemType_Pelt = 72;
+var c_ItemType_Cloak = 73;
+var c_ItemType_Rune = 74;
+var c_ItemType_Circlet = 75;
+var c_ItemType_HealingPotion = 76;
+var c_ItemType_ManaPotion = 77;
+var c_ItemType_RejuvPotion = 78;
+var c_ItemType_StaminaPotion = 79;
+var c_ItemType_AntidotePotion = 80;
+var c_ItemType_ThawingPotion = 81;
+var c_ItemType_SmallCharm = 82;
+var c_ItemType_MediumCharm = 83;
+var c_ItemType_LargeCharm = 84;
+var c_ItemType_AmazonBow = 85;
+var c_ItemType_AmazonSpear = 86;
+var c_ItemType_AmazonJavelin = 87;
+var c_ItemType_HandtoHand2 = 88;
+var c_ItemType_MagicBowQuiv = 89;
+var c_ItemType_MagicXbowQuiv = 90;
+var c_ItemType_ChippedGem = 91;
+var c_ItemType_FlawedGem = 92;
+var c_ItemType_StandardGem = 93;
+var c_ItemType_FlawlessGem = 94;
+var c_ItemType_PerfectGem = 95;
+var c_ItemType_Amethyst = 96;
+var c_ItemType_Diamond = 97;
+var c_ItemType_Emerald = 98;
+var c_ItemType_Ruby = 99;
+var c_ItemType_Sapphire = 100;
+var c_ItemType_Topaz = 101;
+var c_ItemType_Skull = 102;
+
+var c_ItemTypeNames = new Array(
+	"None",
+	"None",
+	"Shield",
+	"Armor",
+	"Gold",
+	"Bow Quiver",
+	"Crossbow Quiver",
+	"Player Body Part",
+	"Herb",
+	"Potion",
+	"Ring",
+	"Elixir",
+	"Amulet",
+	"Charm",
+	"Not Used",
+	"Boots",
+	"Gloves",
+	"Not Used",
+	"Book",
+	"Belt",
+	"Gem",
+	"Torch",
+	"Scroll",
+	"Not Used",
+	"Scepter",
+	"Wand",
+	"Staff",
+	"Bow",
+	"Axe",
+	"Club",
+	"Sword",
+	"Hammer",
+	"Knife",
+	"Spear",
+	"Polearm",
+	"Crossbow",
+	"Mace",
+	"Helm",
+	"Missile Potion",
+	"Quest",
+	"Body Part",
+	"Key",
+	"Throwing Knife",
+	"Throwing Axe",
+	"Javelin",
+	"Weapon",
+	"Melee Weapon",
+	"Missile Weapon",
+	"Thrown Weapon",
+	"Combo Weapon",
+	"Any Armor",
+	"Any Shield",
+	"Miscellaneous",
+	"Socket Filler",
+	"Second Hand",
+	"Staves And Rods",
+	"Missile",
+	"Blunt",
+	"Jewel",
+	"Class Specific",
+	"Amazon Item",
+	"Barbarian Item",
+	"Necromancer Item",
+	"Paladin Item",
+	"Sorceress Item",
+	"Assassin Item",
+	"Druid Item",
+	"Hand to Hand",
+	"Orb",
+	"Voodoo Heads",
+	"Auric Shields",
+	"Primal Helm",
+	"Pelt",
+	"Cloak",
+	"Rune",
+	"Circlet",
+	"Healing Potion",
+	"Mana Potion",
+	"Rejuv Potion",
+	"Stamina Potion",
+	"Antidote Potion",
+	"Thawing Potion",
+	"Small Charm",
+	"Medium Charm",
+	"Large Charm",
+	"Amazon Bow",
+	"Amazon Spear",
+	"Amazon Javelin",
+	"Hand to Hand 2",
+	"Magic Bow Quiv",
+	"Magic Xbow Quiv",
+	"Chipped Gem",
+	"Flawed Gem",
+	"Standard Gem",
+	"Flawless Gem",
+	"Perfect Gem",
+	"Amethyst",
+	"Diamond",
+	"Emerald",
+	"Ruby",
+	"Sapphire",
+	"Topaz",
+	"Skull" );
+
+var c_ItemTypeCodes = new Array(
+	"",
+	"",
+	"shie",
+	"tors",
+	"gold",
+	"bowq",
+	"xboq",
+	"play",
+	"herb",
+	"poti",
+	"ring",
+	"elix",
+	"amul",
+	"char",
+	"",
+	"boot",
+	"glov",
+	"",
+	"book",
+	"belt",
+	"gem ",
+	"torc",
+	"scro",
+	"",
+	"scep",
+	"wand",
+	"staf",
+	"bow ",
+	"axe ",
+	"club",
+	"swor",
+	"hamm",
+	"knif",
+	"spea",
+	"pole",
+	"xbow",
+	"mace",
+	"helm",
+	"tpot",
+	"ques",
+	"body",
+	"key ",
+	"tkni",
+	"taxe",
+	"jave",
+	"weap",
+	"mele",
+	"miss",
+	"thro",
+	"comb",
+	"armo",
+	"shld",
+	"misc",
+	"sock",
+	"seco",
+	"rod ",
+	"misl",
+	"blun",
+	"jewl",
+	"clas",
+	"amaz",
+	"barb",
+	"necr",
+	"pala",
+	"sorc",
+	"assn",
+	"drui",
+	"h2h ",
+	"orb ",
+	"head",
+	"ashd",
+	"phlm",
+	"pelt",
+	"cloa",
+	"rune",
+	"circ",
+	"hpot",
+	"mpot",
+	"rpot",
+	"spot",
+	"apot",
+	"wpot",
+	"scha",
+	"mcha",
+	"lcha",
+	"abow",
+	"aspe",
+	"ajav",
+	"h2h2",
+	"mboq",
+	"mxbq",
+	"gem0",
+	"gem1",
+	"gem2",
+	"gem3",
+	"gem4",
+	"gema",
+	"gemd",
+	"geme",
+	"gemr",
+	"gems",
+	"gemt",
+	"gemz" );
+
+// missile.ownertype
+
+var c_MissileOwnerType_Player = 0;
+var c_MissileOwnerType_MonsterNPC = 1;
+
+// me.playertype
+
+var c_PlayerType_Softcore = 0;
+var c_PlayerType_Hardcore = 1;
+
+// item.quality
+
+var c_ItemQuality_Low = 1;
+var c_ItemQuality_Normal = 2;
+var c_ItemQuality_Superior = 3;
+var c_ItemQuality_Magic = 4;
+var c_ItemQuality_Set = 5;
+var c_ItemQuality_Rare = 6;
+var c_ItemQuality_Unique = 7;
+var c_ItemQuality_Crafted = 8;
+
+// me.runwalk
+
+var c_MeRunWalk_Walking = 0;
+var c_MeRunWalk_Running = 1;
+
+// me.screensize
+
+var c_ScreenSize_640x480 = 0;
+var c_ScreenSize_800x600 = 1;
+
+// unit.mode
+
+//   unit.mode (player)
+
+var c_UnitMode_Player_Death = 0;
+var c_UnitMode_Player_StandingOutsideTown = 1;
+var c_UnitMode_Player_Walking = 2;
+var c_UnitMode_Player_Running = 3;
+var c_UnitMode_Player_GettingHit = 4;
+var c_UnitMode_Player_StandingInTown = 5;
+var c_UnitMode_Player_WalkingInTown = 6;
+var c_UnitMode_Player_Attack1 = 7;
+var c_UnitMode_Player_Attack2 = 8;
+var c_UnitMode_Player_Blocking = 9;
+var c_UnitMode_Player_Casting = 10;
+var c_UnitMode_Player_Throwing = 11;
+var c_UnitMode_Player_Kicking = 12;
+var c_UnitMode_Player_Skill1 = 13;
+var c_UnitMode_Player_Skill2 = 14;
+var c_UnitMode_Player_Skill3 = 15;
+var c_UnitMode_Player_Skill4 = 16
+var c_UnitMode_Player_Dead = 17;
+var c_UnitMode_Player_Sequence = 18;
+var c_UnitMode_Player_Knockback = 19;
+
+//   unit.mode (NPC/Monster/Hireling)
+
+var c_UnitMode_NPC_Death = 0;
+var c_UnitMode_NPC_Standing = 1;
+var c_UnitMode_NPC_Walking = 2;
+var c_UnitMode_NPC_GettingHit = 3;
+var c_UnitMode_NPC_Attack1 = 4;
+var c_UnitMode_NPC_Attack2 = 5;
+var c_UnitMode_NPC_Blocking = 6;
+var c_UnitMode_NPC_Casting = 7;
+var c_UnitMode_NPC_Skill1 = 8;
+var c_UnitMode_NPC_Skill2 = 9;
+var c_UnitMode_NPC_Skill3 = 10;
+var c_UnitMode_NPC_Skill4 = 11;
+var c_UnitMode_NPC_Dead = 12;
+var c_UnitMode_NPC_Knockback = 13;
+var c_UnitMode_NPC_Sequence = 14;
+
+//   unit.mode (Object)
+
+var c_UnitMode_Object_Idle = 0;
+var c_UnitMode_Object_Operating = 1;
+var c_UnitMode_Object_Opened = 2;
+var c_UnitMode_Object_Special1 = 3;
+var c_UnitMode_Object_Special2 = 4;
+var c_UnitMode_Object_Special3 = 5;
+var c_UnitMode_Object_Special4 = 6;
+var c_UnitMode_Object_Special5 = 7;
+
+//   unit.mode (Item)
+
+var c_UnitMode_Item_Held = 0; // in Inventory/stash/cube/store
+var c_UnitMode_Item_Equipped = 1;
+var c_UnitMode_Item_InBelt = 2;
+var c_UnitMode_Item_OnGround = 3;
+var c_UnitMode_Item_OnCursor = 4;
+var c_UnitMode_Item_BeingDropped = 5;
+var c_UnitMode_Item_SocketedInItem = 6;
+
+// unit.type
+
+var c_UnitType_Player = 0;
+var c_UnitType_Monster = 1;
+var c_UnitType_Object = 2;
+var c_UnitType_Missile = 3;
+var c_UnitType_Item = 4;
+var c_UnitType_RoomTile = 5;
+
+// me.weaponswitch
+
+var c_WeaponSwitch_I = 0;
+var c_WeaponSwitch_II = 1;
+
+// getUIFlag()
+
+var c_UIFlag_Inventory = 0x01;
+var c_UIFlag_Character = 0x02;
+var c_UIFlag_QuickSkill = 0x03;
+var c_UIFlag_Skills = 0x04;
+var c_UIFlag_TypingInChat = 0x05;
+var c_UIFlag_NPC = 0x08;
+var c_UIFlag_ESCMenu = 0x09;
+var c_UIFlag_Automap = 0x0A;
+var c_UIFlag_ConfigureControls = 0x0B;
+var c_UIFlag_Shop = 0x0C;
+var c_UIFlag_AltShowItems = 0x0D;
+var c_UIFlag_Cash = 0x0E;
+var c_UIFlag_Quest = 0x0F;
+var c_UIFlag_QuestLogButton = 0x11;
+var c_UIFlag_StatusArea = 0x12;
+var c_UIFlag_Waypoint = 0x14;
+var c_UIFlag_MiniPanel = 0x15;
+var c_UIFlag_Party = 0x16;
+var c_UIFlag_Trade = 0x17;
+var c_UIFlag_Messages = 0x18;
+var c_UIFlag_Stash = 0x19;
+var c_UIFlag_Cube = 0x1A;
+var c_UIFlag_ShowBelt = 0x1F;
+var c_UIFlag_Help = 0x21;
+var c_UIFlag_Mercenary = 0x24;
+var c_UIFlag_Scroll = 0x25;
+
+// npc.useMenu()
+
+var c_NPCMenu_Talk = 0x0D35;
+var c_NPCMenu_Trade = 0x0D44;
+var c_NPCMenu_Repair = 0x0D06;
+var c_NPCMenu_Imbue = 0x0FB1;
+var c_NPCMenu_Gamble = 0x0D46;
+var c_NPCMenu_Hire = 0x0D45;
+var c_NPCMenu_goEast = 0x0D36;
+var c_NPCMenu_goWest = 0x0D37;
+var c_NPCMenu_Identify = 0x0FB4;
+var c_NPCMenu_SailEast = 0x0D38;
+var c_NPCMenu_SailWest = 0x0D39;
+var c_NPCMenu_Resurrect = 0x1507;
+var c_NPCMenu_Socket = 0x58DC;
+var c_NPCMenu_Personalize = 0x58DD;
+var c_NPCMenu_Harrogath = 0x58D2;
+
+// waypoint IDs
+
+var c_WaypointIDs = [
+	[0x01,0x03,0x04,0x05,0x06,0x1b,0x1d,0x20,0x23],
+	[0x28,0x30,0x2a,0x39,0x2b,0x2c,0x34,0x4a,0x2e],
+	[0x4b,0x4c,0x4d,0x4e,0x4f,0x50,0x51,0x53,0x65],
+	[0x67,0x6a,0x6b],
+	[0x6d,0x6f,0x70,0x71,0x73,0x7b,0x75,0x76,0x81]
+];
+
+var c_QuestIDs = [
+		1, 2, 4, 5, 3, 6,
+		9, 10, 11, 12, 13, 14,
+		20, 19, 18, 17, 21, 22,
+		25, 27, 26, 0, 0, 0,
+		35, 36, 37, 38, 39, 40
+];
+

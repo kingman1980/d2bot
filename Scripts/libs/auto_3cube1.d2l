@@ -1,0 +1,157 @@
+
+var _cubeitem_code = ["glg", "glr", "gly", "gzv", "glw", "glb", "skl"];
+var _cube_list = new Array();
+var _cube = false;
+
+function my_try() {
+	return parseInt(me.ping/150) + 3;
+}
+
+function my_delay(intime) {
+	do {
+		delay(intime);
+	} while (me.ping > 1000);
+}
+
+function open_cube() {
+	if (getUIFlag(0x1A)) return true;
+	_cube = getUnit(4, "box", 0);
+	if (!_cube) return false;
+	clickItem(1, _cube);
+	while (!getUIFlag(0x1A)) my_delay(500);
+	return true;
+}
+
+function cube_it() {
+	for (var i=0; i<my_try(); i++) {
+		transmute();
+		for (var j=0; j<4; j++) {
+			my_delay(500);
+			var tmpid = getUnit(4, null, 103);
+			if (!check_itemuse(tmpid)) return true;
+		}
+		print("ÿc9Retry " + (i+1));
+	}
+	return false;
+}
+
+function close_cube() {
+	if (!getUIFlag(0x1A)) return true;
+	_cube.cancel(0);
+	while (getUIFlag(0x1A)) my_delay(500);
+	return true;
+}
+
+function check_itemuse(inid) {
+	for (var i=0; i<_cube_list.length; i++)
+		if (inid.gid == _cube_list[i][2]) return true;
+	return false;
+}
+
+function select_item0(initem, where) {
+	var tmpid = getUnit(4, initem, where);
+	if (tmpid) do {
+		if (!check_itemuse(tmpid)) {
+			_cube_list.push([initem, tmpid, tmpid.gid]);
+			return true;
+		}
+	} while (tmpid.getNext(initem, where));
+	return false;
+}
+function select_item(initem) {
+	if (select_item0(initem, 103)) return true;
+	if (select_item0(initem, 100)) return true;
+	if (select_item0(initem, 104)) return true;
+	return false;
+}
+function make_onecubelist(initem) {
+   while (_cube_list.length > 0) _cube_list.pop();
+	for (var i=0; i<3; i++)
+		if (!select_item(initem)) return false;
+	return true;
+}
+function make_cubelist() {
+	for (var i=0; i<_cubeitem_code.length; i++)
+		if (make_onecubelist(_cubeitem_code[i])) return true;
+	return false;
+}
+
+function test_can(inid, inx, iny, inspace) {
+	for (var y=iny; y<iny+inid.ysize; y++)
+		for (var x=inx; x<inx+inid.xsize; x++)
+			if ((y >= inspace.length) || (x >= inspace[y].length) || (inspace[y].charAt(x) == "1")) return false;
+	return true;
+}
+function move_item(inid, where) {
+	if (inid.itemloc == where-100) return true;
+	switch (where) {
+		case 100 : whereheight = 4; wherewidth = 10; break;
+		case 103 : whereheight = 4; wherewidth = 3;  break;
+		case 104 : whereheight = 8; wherewidth = 6;  break;
+		default : return false;
+	}
+	var tmpspace = new Array();
+	for (var y=0; y<whereheight; y++)
+		tmpspace.push("0000000000".substr(0, wherewidth));
+	var tmpid = getUnit(4, null, where);
+	if (tmpid) do {
+		for (var y=tmpid.y; y<tmpid.y+tmpid.ysize; y++)
+			tmpspace[y] = tmpspace[y].substr(0, tmpid.x) + "1111111111".substr(0, tmpid.xsize) + tmpspace[y].substr(tmpid.x+tmpid.xsize);
+	} while (tmpid.getNext(null, where));
+	for (var x=0; x<wherewidth; x++)
+		for (var y=0; y<whereheight; y++)
+			if (test_can(inid, x, y, tmpspace)) {
+				clickItem(0, inid);
+				while (inid.mode != 4) my_delay(500);
+				clickItem(0, x, y, where-100);
+				while (inid.mode == 4) my_delay(500);
+				return true;
+			}
+	return false;
+}
+
+function outmove_allother() {
+	var tmpid = getUnit(4, null, 103);
+	if (tmpid) do {
+		if (check_itemuse(tmpid)) continue;
+		if (!open_cube()) return false;
+		if (!move_item(tmpid, 100)) return false;
+	} while (tmpid.getNext(null, 103));
+	return true;
+}
+
+function inmove_allsource() {
+	for (var i=0; i<_cube_list.length; i++)
+		if (_cube_list[i][1].itemloc == 4) {
+			if (!close_cube()) return false;
+			if (!move_item(_cube_list[i][1], 100)) return false;
+		}
+	for (var i=0; i<_cube_list.length; i++) {
+		if (!open_cube()) return false;
+		if (!move_item(_cube_list[i][1], 103)) return false;
+	}
+	return true;
+}
+
+function cube_main() {
+	while (true) {
+		if (!make_cubelist()) {
+			print("ÿc2No more recipe or cube complete. OK!");
+			break;
+		}
+		if (!outmove_allother()) {
+			print("ÿc1Failed to move item from cube. Cancel!");
+			break;
+		}
+		if (!inmove_allsource()) {
+			print("ÿc1Failed to move item into cube. Cancel!");
+			break;
+		}
+		if	(!cube_it()) {
+			print("ÿc1Cube failed. Cancel!");
+			break;
+		}
+	}
+	close_cube();
+	my_delay(750);
+}

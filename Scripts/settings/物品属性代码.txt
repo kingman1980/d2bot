@@ -1,0 +1,394 @@
+tats-explained.txt
+
+back
+
+--------------------------------------------------------------------------------
+
+(Most) Item Stats explained
+by blue mind
+v1.21
+
+For more info, you can look at this thread :
+http://forums.d2jsp.org/index.php?act=ST&f=44&t=575&hl=
+
+About the damage stats
+----------------------
+
+On weapons, stats 21, 22, 23, 24, 159 and 160 will be equal to base damage plus
+any fixed modifier. For example if a weapon has base 1-handed min damage of 10
+and no damager modifiers, 21 will be equal to 10. If it has % enhanced damage,
+% enhanced damage per level, +min damage per level or anything that is not
+plain +min damage, it will still be 10. Now if it has +5 min damage, 21 will be
+equal to 15. Same goes for stats 22, 23, 24, 159 and 160.
+
+On anything that's not a weapon, this will be equal to plain +min/max damage.
+Considering that anything that is not a weapon has 0 min/max damage, this is the
+same formula as for weapons in a way.
+
+Also, as far as I know, there are no legit items that have different bonuses to
+1-handed, 2-handed or throw damage. There is a bugged jewel that does only
+1-handed damage bonus though IIRC (Havoc Mark with +45 max 1-handed damage),
+though the game display doesn't handle it correctly and displays simply
++45 max damage.
+
+About poison damage
+-------------------
+
+For poison damage, the stat returns the poison damage per frame multiplied by
+256. So for example 100 damage over 6 seconds would give :
+100*256/6/25 (multiplied by 256 for extra precision)
+100*256/6 (divided by the number of seconds -> damage by second)
+100*256/6/25 (divided by the number of frames -> damage per frame)
+
+-------------------------------------------------------------------------------
+
+STRENGTH 0 + strength
+ENERGY 1 + energy
+DEXTERITY 2 + dexterity
+VITALITY 3 + vitality
+STATPTS 4
+NEWSKILLS 5
+HITPOINTS 6
+MAXHP 7 + life (actually that is life x 256, so you have to take that into account to get the actual life)
+MANA 8
+MAXMANA 9 + mana (actually that is mana x 256, so you have to take that into account to get the actual mana)
+STAMINA 10
+MAXSTAMINA 11 + stamina (actually that is stamina x 256, so you have to take that into account to get the actual stamina)
+LEVEL 12
+EXPERIENCE 13
+GOLD 14
+GOLDBANK 15
+ITEM_ARMOR_PERCENT 16 +% enhanced defense
+ITEM_MAXDAMAGE_PERCENT 17 +% enhanced min damage (game always uses same for 17 and 18)
+ITEM_MINDAMAGE_PERCENT 18 +% enhanced max damage
+TOHIT 19 + to attack rating
+TOBLOCK 20 +% to block (not always shown as a magic modifier)
+MINDAMAGE 21 1-handed min damage
+MAXDAMAGE 22 1-handed max damage
+SECONDARY_MINDAMAGE 23 2-handed min damage
+SECONDARY_MAXDAMAGE 24 2-handed max damage
+DAMAGEPERCENT 25
+MANARECOVERY 26
+MANARECOVERYBONUS 27 regenerate mana %
+STAMINARECOVERYBONUS 28 heal stamina plus %
+LASTEXP 29
+NEXTEXP 30
+ARMORCLASS 31 BASE armor class
+ARMORCLASS_VS_MISSILE 32 + defense vs missiles
+ARMORCLASS_VS_HTH 33 + defense vs melee
+NORMAL_DAMAGE_REDUCTION 34 damage reduced by (not %)
+MAGIC_DAMAGE_REDUCTION 35 magic damage reduced by (not %)
+DAMAGERESIST 36 % damage reduce
+MAGICRESIST 37
+MAXMAGICRESIST 38
+FIRERESIST 39 +% fire resist
+MAXFIRERESIST 40 +% max fire resist
+LIGHTRESIST 41 +% lightning resist
+MAXLIGHTRESIST 42 +% max lightning resist
+COLDRESIST 43 +% cold resist
+MAXCOLDRESIST 44 +% max cold resist
+POISONRESIST 45 +% poison resist
+MAXPOISONRESIST 46 +% max poison resist
+DAMAGEAURA 47
+FIREMINDAM 48 min fire damage
+FIREMAXDAM 49 max fire damage
+LIGHTMINDAM 50 min lightning damage
+LIGHTMAXDAM 51 max lightning damage
+MAGICMINDAM 52 min magic damage
+MAGICMAXDAM 53 max magic damage
+COLDMINDAM 54 min cold damage
+COLDMAXDAM 55 max cold damage
+COLDLENGTH 56 cold duration
+POISONMINDAM 57 min poison damage (damage per frame x256)
+POISONMAXDAM 58 max poison damage (damage per frame x256)
+POISONLENGTH 59 poison length (number of frames = seconds x 25)
+LIFEDRAINMINDAM 60 % life stolen per hit
+LIFEDRAINMAXDAM 61
+MANADRAINMINDAM 62 % mana stolen per hit
+MANADRAINMAXDAM 63
+STAMDRAINMINDAM 64
+STAMDRAINMAXDAM 65
+STUNLENGTH 66
+VELOCITYPERCENT 67 speed factor on armors (not shown in-game)
+ATTACKRATE 68 attack speed (more like -attack speed, so the higher, the better), not set for all weapons
+OTHER_ANIMRATE 69
+QUANTITY 70 quantity (arrows,scrolls,...)
+VALUE 71
+DURABILITY 72 durability (indestructible items = this stat equals 0)
+MAXDURABILITY 73 maximum durability (indestructible items = this stat equals 0)
+HPREGEN 74 replenish life
+ITEM_MAXDURABILITY_PERCENT 75 increase maximum durability %
+ITEM_MAXHP_PERCENT 76 increase maximum life %
+ITEM_MAXMANA_PERCENT 77 increase maximum mana %
+ITEM_ATTACKERTAKESDAMAGE 78 attacker takes damage of
+ITEM_GOLDBONUS 79 % gold find
+ITEM_MAGICBONUS 80 % mf
+ITEM_KNOCKBACK 81 1 -> knockback
+ITEM_TIMEDURATION 82
+ITEM_ADDAMASKILLPOINTS 83 + ama skills
+ITEM_ADDPALSKILLPOINTS 84 + pal skills
+ITEM_ADDNECSKILLPOINTS 85 + nec skills
+ITEM_ADDSORSKILLPOINTS 86 + sorc skills
+ITEM_ADDBARSKILLPOINTS 87 + barb skills
+ITEM_DOUBLEHERBDURATION 88
+ITEM_LIGHTRADIUS 89 + to light radius
+ITEM_LIGHTCOLOR 90
+ITEM_REQ_PERCENT 91 % requirements (e.g. : -30% -> -30)
+ITEM_FASTATTACKRATE 92
+ITEM_FASTERATTACKRATE 93 xx% increased attack speed
+ITEM_FASTESTATTACKRATE 94
+ITEM_FASTMOVEVELOCITY 95
+ITEM_FASTERMOVEVELOCITY 96 % faster run/walk
+ITEM_FASTESTMOVEVELOCITY 97
+ITEM_FASTGETHITRATE 98
+ITEM_FASTERGETHITRATE 99 % faster hit recovery
+ITEM_FASTESTGETHITRATE 100
+ITEM_FASTBLOCKRATE 101
+ITEM_FASTERBLOCKRATE 102 % faster block rate
+ITEM_FASTESTBLOCKRATE 103
+ITEM_FASTCASTRATE 104
+ITEM_FASTERCASTRATE 105 % faster cast rate
+ITEM_FASTESTCASTRATE 106
+ITEM_SINGLESKILL1 107 + some skill - code = skill + level x512
+ITEM_SINGLESKILL2 108 | 783/774 = +1 wake of fire / lightning sentry (assn) - 1632 = +3 sacrifice (pal) - 1040 = +2 exploding arrow (ama) - 1570/1 = +3 lightning fury/strike (ama) - 1082 = +2 energy shield (sorc) - 1592 = +3 meteor (sorc)
+ITEM_SINGLESKILL3 109 / 1665 = +3 mace mastery (barb) - 1599 = +3 lightning mastery (sorc) - 548 = +1 fire bolt (sorc) - 3174 = +6 holy fire (pala) - 2707 = +5 frenzy (barb) 781 = +1 claws of thunder (assn) - 1083 = +2 blizzard (sorc) - 591 = +1 golem mastery (necro) - 1563 = +3 immolation arrow - 1139 = +2 vigor (pala) - 1582/1593/1600 = +3 frozen orb/thunder storm/blaze (sorc) - 573 = +1 fire mastery (sorc)
+ITEM_POISONLENGTHRESIST 110 poison length reduced by %
+ITEM_NORMALDAMAGE 111
+ITEM_HOWL 112 hit causes monster to flee (96=75%)
+ITEM_STUPIDITY 113 hit blinds target
+ITEM_DAMAGETOMANA 114 % damage taken goes to mana
+ITEM_IGNORETARGETAC 115 1 -> ignore target's defense
+ITEM_FRACTIONALTARGETAC 116 +% target defense (eg : eth = -25)
+ITEM_PREVENTHEAL 117 1 -> prevent monster heal
+ITEM_HALFFREEZEDURATION 118 1 -> half freeze duration
+ITEM_TOHIT_PERCENT 119 +% to attack rating
+ITEM_DAMAGETARGETAC 120
+ITEM_DEMONDAMAGE_PERCENT 121 +% enhanced damage against demons
+ITEM_UNDEADDAMAGE_PERCENT 122 +% enhanced damage against undead
+ITEM_DEMON_TOHIT 123 + attack rating against demons
+ITEM_UNDEAD_TOHIT 124 + attack rating against undead
+ITEM_THROWABLE 125
+ITEM_FIRESKILL 126 +x fire skills
+ITEM_ALLSKILLS 127
+ITEM_ATTACKERTAKESLIGHTDAMAGE 128 attacker takes lightning damage of x
+IRONMAIDEN_LEVEL 129
+LIFETAP_LEVEL 130
+THORNS_LEVEL 131
+BONEARMOR 132
+BONEARMORMAX 133
+ITEM_FREEZE 134 freezes target +x
+ITEM_OPENWOUNDS 135 % open wounds
+ITEM_CRUSHINGBLOW 136 % crushing blow
+ITEM_KICKDAMAGE 137
+ITEM_MANAAFTERKILL 138 + mana after each kill
+ITEM_HEALAFTERDEMONKILL 139
+ITEM_EXTRABLOOD 140 seen at value 5 on Swordback Hold (unique Spiked shield), effect unknown
+ITEM_DEADLYSTRIKE 141 % deadly strike
+ITEM_ABSORBFIRE_PERCENT 142 % fire absorb
+ITEM_ABSORBFIRE 143 +x fire absorb
+ITEM_ABSORBLIGHT_PERCENT 144 % lightning absorb
+ITEM_ABSORBLIGHT 145 +x lightning absorb
+ITEM_ABSORBMAGIC_PERCENT 146 % magic absorb
+ITEM_ABSORBMAGIC 147 +x magic absorb
+ITEM_ABSORBCOLD_PERCENT 148 % cold absorb
+ITEM_ABSORBCOLD 149 +x cold absorb
+ITEM_SLOW 150 slows target by %
+ITEM_BLESSEDAIM 151
+ITEM_DEFIANCE 152
+ITEM_CANNOTBEFROZEN 153 cannot be frozen
+ITEM_STAMINADRAINPCT 154 % slower stamina drain
+ITEM_REANIMATE 155
+ITEM_PIERCE 156 % pierce
+ITEM_MAGICARROW 157
+ITEM_EXPLOSIVEARROW 158 1 -> fires explosive arrows/bolts
+ITEM_THROW_MINDAMAGE 159 weapons : base min throw damage other : +min damage
+ITEM_THROW_MAXDAMAGE 160 weapons : base max throw damage other : +max damage
+SKILL_HANDOFATHENA 161
+SKILL_STAMINAPERCENT 162
+SKILL_PASSIVE_STAMINAPERCENT 163
+SKILL_CONCENTRATION 164
+SKILL_ENCHANT 165
+SKILL_PIERCE 166
+SKILL_CONVICTION 167
+SKILL_CHILLINGARMOR 168
+SKILL_FRENZY 169
+SKILL_DECREPIFY 170
+SKILL_ARMOR_PERCENT 171
+ALIGNMENT 172
+TARGET0 173
+TARGET1 174
+GOLDLOST 175
+CONVERSION_LEVEL 176
+CONVERSION_MAXHP 177
+UNIT_DOOVERLAY 178
+ITEM_ADDDRUSKILLPOINTS 179 + druid skills
+ITEM_ADDASSSKILLPOINTS 180 + assn skills
+ITEM_ADDSKILL_SINGLE4 181
+ITEM_ADDSKILL_SINGLE5 182
+ITEM_ADDSKILL_SINGLE6 183
+ITEM_ADDSKILL_SINGLE7 184
+ITEM_ADDSKILL_SINGLE8 185
+ITEM_ADDSKILL_SINGLE9 186
+ITEM_ADDSKILL_SINGLE10 187
+ITEM_ADDSKILL_TAB1 188 + to skill tree - code = tab + level x32
+ITEM_ADDSKILL_TAB2 189 |
+ITEM_ADDSKILL_TAB3 190 | e.g. : +3 barb warcries = 13 + 3x32 = 110
+ITEM_ADDSKILL_TAB4 191 |
+ITEM_ADDSKILL_TAB5 192 |
+ITEM_ADDSKILL_TAB6 193 /
+0 ama bow/xbow
+1 ama passive
+2 ama jav/spear
+3 sorc fire
+4 sorc lightning
+5 sorc cold
+7 necro bone/poison
+6 necro curses
+8 necro summoning
+9 pal combat
+10 pal offensive auras
+11 pal defensive auras
+12 barb combat
+13 barb masteries
+14 barb warcries
+15 druid summoning
+16 druid shape shifting
+17 druid elemental
+18 assn traps
+19 assn shadow disciplines
+20 assn martial arts
+ITEM_NUMSOCKETS 194 number of sockets
+ITEM_SKILLONATTACK1 195 % chance to cast on attack
+ITEM_SKILLONATTACK2 196 | code = spell + % x16834 + level x512
+ITEM_SKILLONATTACK3 197 /
+ITEM_SKILLONHIT1 198 % chance to cast on striking
+ITEM_SKILLONHIT2 199 | code = spell + % x16834 + level x512
+ITEM_SKILLONHIT3 200 /
+ITEM_SKILLONGETHIT1 201 % chance to cast on getting hit
+ITEM_SKILLONGETHIT2 202 | code = spell + % x16834 + level x512
+ITEM_SKILLONGETHIT3 203 /
+ITEM_CHARGED_SKILL0 204 spell charges - code = skill + level x512 + actual charge x16384 + max charges x4194304
+ITEM_CHARGED_SKILL1 205 |
+ITEM_CHARGED_SKILL2 206 |
+ITEM_CHARGED_SKILL3 207 |
+ITEM_CHARGED_SKILL4 208 |
+ITEM_CHARGED_SKILL5 209 |
+ITEM_CHARGED_SKILL6 210 |
+ITEM_CHARGED_SKILL7 211 |
+ITEM_CHARGED_SKILL8 212 |
+ITEM_CHARGED_SKILL9 213 /
+ITEM_ARMOR_PERLEVEL 214 + defense per level (actually defense per level x8)
+ITEM_ARMORPERCENT_PERLEVEL 215
+ITEM_HP_PERLEVEL 216 + life per level (actually life per level x8 x256, that is life per level x2048)
+ITEM_MANA_PERLEVEL 217 + mana per level (actually mana per level x8 x256, that is mana per level x2048)
+ITEM_MAXDAMAGE_PERLEVEL 218 + max damage per level (actually max damage per level x8)
+ITEM_MAXDAMAGE_PERCENT_PERLEVE 219 + %enhanced max damage per level (x8)
+ITEM_STRENGTH_PERLEVEL 220 + strength per level (x8)
+ITEM_DEXTERITY_PERLEVEL 221 + dexterity per level (x8)
+ITEM_ENERGY_PERLEVEL 222 + energy per level (x8)
+ITEM_VITALITY_PERLEVEL 223 + vitality per level (x8)
+ITEM_TOHIT_PERLEVEL 224 + attack rating per level (actually attack rating per level x2)
+ITEM_TOHITPERCENT_PERLEVEL 225
+ITEM_COLD_DAMAGEMAX_PERLEVEL 226
+ITEM_FIRE_DAMAGEMAX_PERLEVEL 227
+ITEM_LTNG_DAMAGEMAX_PERLEVEL 228
+ITEM_POIS_DAMAGEMAX_PERLEVEL 229
+ITEM_RESIST_COLD_PERLEVEL 230
+ITEM_RESIST_FIRE_PERLEVEL 231
+ITEM_RESIST_LTNG_PERLEVEL 232
+ITEM_RESIST_POIS_PERLEVEL 233
+ITEM_ABSORB_COLD_PERLEVEL 234 +x absorb cold per level (actually x8)
+ITEM_ABSORB_FIRE_PERLEVEL 235 +x absorb fire per level (actually x8)
+ITEM_ABSORB_LTNG_PERLEVEL 236 +x absorb lightning per level (actually x8)
+ITEM_ABSORB_POIS_PERLEVEL 237
+ITEM_THORNS_PERLEVEL 238 attacker takes damage of x per level (x8)
+ITEM_FIND_GOLD_PERLEVEL 239 % gold find per level (x8)
+ITEM_FIND_MAGIC_PERLEVEL 240 % magic find per level (x8)
+ITEM_REGENSTAMINA_PERLEVEL 241
+ITEM_STAMINA_PERLEVEL 242
+ITEM_DAMAGE_DEMON_PERLEVEL 243 +% enhanced damage to demons per level (x8)
+ITEM_DAMAGE_UNDEAD_PERLEVEL 244 +% enhanced damage to undead per level (x8)
+ITEM_TOHIT_DEMON_PERLEVEL 245 + attack rating against demons per level (x2)
+ITEM_TOHIT_UNDEAD_PERLEVEL 246 + attack rating against undead per level (x2)
+ITEM_CRUSHINGBLOW_PERLEVEL 247
+ITEM_OPENWOUNDS_PERLEVEL 248
+ITEM_KICK_DAMAGE_PERLEVEL 249
+ITEM_DEADLYSTRIKE_PERLEVEL 250 % deadly strike per level (x8)
+ITEM_FIND_GEMS_PERLEVEL 251
+ITEM_REPLENISH_DURABILITY 252 self-repair (self-repair = 100/seconds)
+ITEM_REPLENISH_QUANTITY 253
+ITEM_EXTRA_STACK 254 increased stack size
+ITEM_FIND_ITEM 255
+ITEM_SLASH_DAMAGE 256
+ITEM_SLASH_DAMAGE_PERCENT 257
+ITEM_CRUSH_DAMAGE 258
+ITEM_CRUSH_DAMAGE_PERCENT 259
+ITEM_THRUST_DAMAGE 260
+ITEM_THRUST_DAMAGE_PERCENT 261
+ITEM_ABSORB_SLASH 262
+ITEM_ABSORB_CRUSH 263
+ITEM_ABSORB_THRUST 264
+ITEM_ABSORB_SLASH_PERCENT 265
+ITEM_ABSORB_CRUSH_PERCENT 266
+ITEM_ABSORB_THRUST_PERCENT 267
+ITEM_ARMOR_BYTIME 268
+ITEM_ARMORPERCENT_BYTIME 269
+ITEM_HP_BYTIME 270
+ITEM_MANA_BYTIME 271
+ITEM_MAXDAMAGE_BYTIME 272
+ITEM_MAXDAMAGE_PERCENT_BYTIME 273
+ITEM_STRENGTH_BYTIME 274
+ITEM_DEXTERITY_BYTIME 275
+ITEM_ENERGY_BYTIME 276
+ITEM_VITALITY_BYTIME 277
+ITEM_TOHIT_BYTIME 278
+ITEM_TOHITPERCENT_BYTIME 279
+ITEM_COLD_DAMAGEMAX_BYTIME 280
+ITEM_FIRE_DAMAGEMAX_BYTIME 281
+ITEM_LTNG_DAMAGEMAX_BYTIME 282
+ITEM_POIS_DAMAGEMAX_BYTIME 283
+ITEM_RESIST_COLD_BYTIME 284
+ITEM_RESIST_FIRE_BYTIME 285
+ITEM_RESIST_LTNG_BYTIME 286
+ITEM_RESIST_POIS_BYTIME 287
+ITEM_ABSORB_COLD_BYTIME 288
+ITEM_ABSORB_FIRE_BYTIME 289
+ITEM_ABSORB_LTNG_BYTIME 290
+ITEM_ABSORB_POIS_BYTIME 291
+ITEM_FIND_GOLD_BYTIME 292
+ITEM_FIND_MAGIC_BYTIME 293
+ITEM_REGENSTAMINA_BYTIME 294
+ITEM_STAMINA_BYTIME 295
+ITEM_DAMAGE_DEMON_BYTIME 296
+ITEM_DAMAGE_UNDEAD_BYTIME 297
+ITEM_TOHIT_DEMON_BYTIME 298
+ITEM_TOHIT_UNDEAD_BYTIME 299
+ITEM_CRUSHINGBLOW_BYTIME 300
+ITEM_OPENWOUNDS_BYTIME 301
+ITEM_KICK_DAMAGE_BYTIME 302
+ITEM_DEADLYSTRIKE_BYTIME 303
+ITEM_FIND_GEMS_BYTIME 304
+ITEM_PIERCE_COLD 305
+ITEM_PIERCE_FIRE 306
+ITEM_PIERCE_LTNG 307
+ITEM_PIERCE_POIS 308
+ITEM_DAMAGE_VS_MONSTER 309
+ITEM_DAMAGE_PERCENT_VS_MONSTER 310
+ITEM_TOHIT_VS_MONSTER 311
+ITEM_TOHIT_PERCENT_VS_MONSTER 312
+ITEM_AC_VS_MONSTER 313
+ITEM_AC_PERCENT_VS_MONSTER 314
+FIRELENGTH 315
+BURNINGMIN 316
+BURNINGMAX 317
+PROGRESSIVE_DAMAGE 318
+PROGRESSIVE_STEAL 319
+PROGRESSIVE_OTHER 320
+PROGRESSIVE_FIRE 321
+PROGRESSIVE_COLD 322
+PROGRESSIVE_LIGHTNING 323
+ITEM_EXTRA_CHARGES 324
+PROGRESSIVE_TOHIT 323
+POISON_COUNT 324
+DAMAGE_FRAMERATE 325
+PIERCE_IDX 326

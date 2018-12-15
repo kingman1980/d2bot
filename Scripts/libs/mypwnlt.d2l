@@ -1,0 +1,1554 @@
+// ParseIt!
+// by blue mind
+// -----------------------------------------------------------------------------
+// History :
+//
+// 1.53 : Added in the ability to use | in the inis
+// 1.52 : Made the ini parsing one variable, and cleaned up code
+// 1.51 : Added in <autoid> support
+// 1.5c : Much easier to read logging
+// 1.5a : Fixed a possible memory leak...
+// 1.5 : Added in the ability to log items that are set not to be picked up
+// 1.4 : Bug fixes, added in distance code, and hopefully made it work with pickit
+// 1.3 : Added in belt management and ranged items
+// 1.2 : Added in a better method to deal with the ini in memory from FryGuy
+// 1.1a : Added in checking if items should be ided
+// 1.1 : Completed snagit
+// 1.0a : Added quote removal in the ini parsing
+// 1.0 : Added the start of the code for SnagIt!
+// 0.9a : Added better logging
+// 0.9 : Added quality checking for unique items
+// 0.8 : Added jewel checking method
+// 0.7e : Fixed a ton of bugs
+// 0.7d : Made the library universal to check mods of all items
+// 0.7c : stupid bug in 0.7b
+// 0.7b : removed the need to call getINI() from outside the script
+// 0.7 : items logging
+// 0.6 : standalone reusable library
+//       beta 20+ required for normal/exceptional/elite detection
+//       ini and mods parsing are working
+// 0.5 : ini parsing added
+// 0.4 : working and working fast already. anya support only
+// 0.3- : didn't bother to keep a history log
+
+/* ============================
+Do not edit anything past this point!
+============================ */
+
+// ** Logging related
+var logging=1;
+var fLog="output/"+me.name+"ItemLog.html";
+var writedesc=false;
+
+// ** The INI
+var INI = new Array();
+var WhichINI="temp";
+var idValid=false;
+
+// ** SnagIt variables
+var bitcheck=0;
+var DontLog=false;
+var SkipType=new Array();
+var snagrad=60;
+var SkipGID=new Array();
+
+// ** Mods parsing
+var itemQual=["none","lowquality","normal","superior","magic","set","rare","unique","craft"];
+
+/* ============================
+ShopIt! section:
+============================ */
+
+function ShopIt(who,npc)
+{
+	var checkprint=0;
+	var shopdesc="";
+
+	var shopitem = getUnit(4,null,0);
+	if (shopitem) do
+	{
+		var owner = shopitem.getParent();
+		if (owner) if (owner.name==who)
+		{
+			if (logging >= 1)
+				shopdesc=shopitem.fname;
+			if (logging >= 2)
+				shopdesc+=getAllStats(shopitem);
+
+			if(checkprint == 0)
+			{
+				print("Shopping at: " +who);
+				checkprint++;
+			}
+
+			if (CheckItem(shopitem, "settings/bmShopIt.ini"))
+			{
+				writedesc=shopdesc;
+				Slog(shopitem);
+				shopitem.shop(npc,2);
+				DoDel(1000);
+			}
+			if (logging >= 3) PrintFile(STime()+" | " +shopdesc);
+		}
+		shopitem.fname="";
+	} while(shopitem && shopitem.getNext(null,0));
+	if(checkprint == 0) print("Shopping at " +who +" failed!");
+}
+
+/* ============================
+SnagIt! section:
+============================ */
+
+function SnagIt(which) {
+	var reloop=true;
+
+	snagqual=5;
+	NormalItem=0;
+	while (reloop) {
+		clearcursor();
+		var snagitem = getUnit(4);
+		reloop=false;
+		if (snagitem) itemloop : do {
+			if ((snagitem.mode==3 || snagitem.mode==5) && snagitem.quality >= snagqual) {
+				for (m=0; m<SkipType.length; m++) {
+					if (SkipType[m]==snagitem.itemtype) continue itemloop;
+				}
+				for (var y=0; y<SkipGID.length; y++) {
+					if (SkipGID[y]==snagitem.gid) continue itemloop;
+				}
+				SkipGID.push(snagitem.gid);
+				if(snagitem.code!="gld" && snagitem.itemtype!=78) {
+					if(CheckItem(snagitem, which, snagqual)) {
+						if (calcrange(snagitem.x, snagitem.y) <= snagrad) {
+							reloop=true;
+							if(!PickUpItem(snagitem)) continue itemloop;
+							Slog(snagitem);
+						} else {
+							if(me.classid==1) GoToItem(snagitem);
+							Slog(snagitem);
+						}
+					}
+				}
+				if(calcrange(snagitem.x, snagitem.y) <= snagrad && snagqual==0 && NormalItem < 6) {
+					if(snagitem.code=="gld" && me.getStat(14) != (me.getStat(12) * 10000) && (bitcheck&2)) {		// Picking up gold
+						reloop=true;
+						NormalItem++
+						if(!DoCast("Telekinesis",0,snagitem)) {
+							MoveTo(snagitem.x, snagitem.y);
+							if(snagitem.mode==3 || snagitem.mode==5) snagitem.interact();
+							DoDel(500);
+						}
+					}
+					if(snagitem.code!="gld" && countpotions()) {
+						if(snagitem.code=="rvl" && (bitcheck&8)) {		// Picking up a Full Rejuv potion
+							reloop=true;
+							PickUpItem(snagitem);
+						}
+						if(snagitem.code=="rvs" && (bitcheck&4)) {		// Picking up a Rejuv potion
+							reloop=true;
+							PickUpItem(snagitem);
+						}
+					}
+				}
+			}
+		} while(snagitem && snagitem.getNext());
+		if(snagqual==5) reloop=true;
+		snagqual=0;
+	}
+}
+
+function AutoIDit(item) {
+	var itemColors=["ÿc0","ÿc0","ÿc0","ÿc0","ÿc3","ÿc2","ÿc9","ÿc4","ÿc8"];
+	if(item.quality==5) file = fileOpen("settings/snagset.ini", 0);
+	else if(item.quality==7) file = fileOpen("settings/snagunique.ini", 0);
+	else file=false;
+	if (file) {
+		while(!file.eof) {
+			line = file.readLine();
+			a = line.split("=");
+			if (a.length == 2) {
+				if (a[0] == item.code) {
+						file.close();
+						return a[1];
+				}
+			}
+		}
+		file.close();
+		return itemColors[item.quality]+" "+itemQual[item.quality]+" "+item.name;
+	} else return itemColors[item.quality]+" "+itemQual[item.quality]+" "+item.name;
+}
+
+
+function PickUpItem(snagitem) {
+	clearcursor();
+	MoveTo(snagitem.x, snagitem.y);
+	if (snagitem.mode==3 || snagitem.mode==5) snagitem.interact();
+	DoDel(50);
+	attemptnum=0;
+	tryagain=20;
+	while (snagitem.mode==3 || snagitem.mode==5) {
+		DoDel(20);
+		attemptnum++;
+		if (attemptnum>=200) return false;
+		if (attemptnum>=tryagain) {
+			tryagain+=20;
+			if (snagitem.mode==3 || snagitem.mode==5) {
+				clearcursor();
+				if (snagitem.mode==3 || snagitem.mode==5) snagitem.interact();
+			}
+		}
+	}
+	return true;
+}
+
+function GoToItem(item) {
+	ITEMxd=(item.x - me.x);
+	ITEMyd=(item.y - me.y);
+
+	HOPx=Math.abs(Math.ceil(ITEMxd / 30));
+	HOPy=Math.abs(Math.ceil(ITEMyd / 30));
+
+	if (HOPx < HOPy) {
+		checkx=Math.ceil(ITEMxd / HOPy);
+		checky=Math.ceil(ITEMyd / HOPy);
+	} else if (HOPx < HOPy) {
+		checkx=Math.ceil(ITEMxd / HOPx);
+		checky=Math.ceil(ITEMyd / HOPx);
+	} else {
+		checkx=Math.ceil(ITEMxd / HOPx);
+		checky=Math.ceil(ITEMyd / HOPy);
+	}
+
+	onitem=false;
+	while (!onitem) {
+		if (calcrange(item.x, item.y) <= 24) onitem=true;
+		else Telejump(HOPx,HOPy,checkx,checky);
+	}
+	PickUpItem(item);
+}
+
+function Telejump(HOPx,HOPy,checkx,checky) {
+	if (HOPx == 0 || checkx == NaN || checkx == "Infinity") moveTo(me.x, me.y + checky);
+	else if(HOPy == 0 || checky == NaN || checky == "Infinity") moveTo(me.x + checkx, me.y);
+	     else MoveTo(me.x + checkx, me.y + checky);
+	GoToItem();
+}
+
+/* ============================
+SnagIt! belt management section:
+============================ */
+/* ============================
+Taken from Sherpya's common library's
+============================ */
+
+function countpotions() {
+	if(bitcheck&16) return true;
+	count = 0;
+	start = getUnit(4,null,2);
+	if (start) do {
+		owner = start.getParent();
+		if (owner) {
+			if(start.mode==2 && owner.name==me.name)
+				count++;
+		}
+	} while (start.getNext(null,2));
+	if(FindBelt()>count) return true;
+	return false;
+}
+
+var beltscap = {
+	"lbl":   8, // Sash
+	"vbl":   8, // Light Belt
+	"mbl":   12, // Belt
+	"tbl":   12  // Heavy Belt
+}
+
+/* Returns the belt capability in rows */
+function BeltCapabilty(belt) {
+	if (beltscap[belt.code])
+		return beltscap[belt.code];
+	return 16;
+}
+
+/* Find the item of equiped belt */
+function FindBelt() {
+	belt = false;
+	item = getUnit(4,null,1);
+	if (item) do {
+		if (item.itemloc == 8) { // Belt
+			belt = item;
+			break;
+		}
+	} while (item && item.getNext(null,1));
+
+	if (!belt) return 4;
+	return BeltCapabilty(belt);
+}
+
+/* ============================
+ParseIt! section:
+============================ */
+
+function ParseIt(which, cx, cy, DoLog) {
+	var parseitem = getUnit(4,null,0);
+	if (parseitem) do {
+		var owner = parseitem.getParent();
+		if (owner && owner.name==me.name && parseitem.getFlag(0x10)) {
+			if ((parseitem.x == cx) && (parseitem.y == cy) && (parseitem.itemloc == 0)) {
+				KeepIt=CheckItem(parseitem, which);
+				if(parseitem.quality!=4) writedesc=parseitem.fname +" " +parseitem.name;
+				else writedesc=(parseitem.prefix==""?"":parseitem.prefix +" ") +parseitem.name +(parseitem.suffix==""?"":" "+parseitem.suffix);
+				if (logging >= 2) writedesc+=getAllStats(parseitem);
+				if(KeepIt) {
+					if (logging == 1)
+						Slog(parseitem);
+					if (logging >= 2)
+						Slog(parseitem);
+					return KeepIt;
+				}
+				if (DoLog>=1 && logging >= 3) {
+					PrintFile(STime()+" | " +writedesc);
+					print("Found and dropped a " +parseitem.fname);
+				}
+				return false;
+			}
+		}
+		parseitem.suffix=false; parseitem.prefix=false; parseitem.fname=false;
+	} while(parseitem && parseitem.getNext(null,0));
+}
+
+/* ============================
+SnagIt! and ParseIt! item parsing section:
+============================ */
+
+function CheckItem(item, which, snagqual) {
+	if(WhichINI!=which) getINI(which);
+
+	lloop : for(i=0;i<INI.length;i++) {
+		nKeys=INI[i].length;
+		idValid=false;
+		writedesc=false;
+		DontLog=false;
+		loganyhow=false;
+		var OrSkip=new Array();
+		for(j=1;j<nKeys;j++) {
+			type=INI[i][j][0];
+			key=INI[i][j][1];
+			val=INI[i][j][2];
+			if(type=="|") {
+				if(!OrCase(val,item,OrSkip))
+					continue lloop;
+			} else {
+				if(!KeyCase(type,key,val,item))
+					continue lloop;
+			}
+		}
+		if (loganyhow) {
+			if (writedesc!=false && snagqual==5) {
+				GetDesc(item);
+				print("Ignoring a "+writedesc+"!");
+				if (!DontLog) {
+					Rcolor();
+					PrintFile(STime()+" | " +writedesc);
+				}
+			}
+			continue;
+		}
+		debugprint("!!Keeping an item from section: " +INI[i][0],0);
+		return true;
+	}
+	return false;
+}
+
+function OrCase(string,item,OrSkip) {
+	LastOne=true;
+	divider=string.indexOf("|");
+	lastloop : while(LastOne) {
+		debugprint(string,0);
+		if(divider==-1) LastOne=false;
+		if(LastOne) {
+			cursub=string.substring(0,divider);
+			string=string.substring(divider+1);
+		} else cursub=string;
+		var TypeTable=["=",">","<","!"];
+		for (oi=0;oi<TypeTable.length;oi++) {
+			nEndOfKey = cursub.indexOf(TypeTable[oi]);
+			if (nEndOfKey!=-1) {
+				KeyName=cursub.substring(0,nEndOfKey);
+				KeyValue=StripQuotes(cursub.substring(nEndOfKey+1));
+				typeval=oi;
+				break;
+			}
+		}
+		debugprint("Argument: "+TypeTable[typeval]+" -- Entering KeyName: "+KeyName+" -- and KeyValue: "+KeyValue,0);
+		if(KeyCase(TypeTable[typeval],KeyName,KeyValue,item)) {
+			for (oi=0;oi<OrSkip.length;oi++) {
+				if(OrSkip[oi][0]==TypeTable[typeval] && OrSkip[oi][1]==KeyName && OrSkip[oi][2]==KeyValue) continue lastloop;
+			}
+			OrSkip.push(TypeTable[typeval],KeyName,KeyValue)
+			return true;
+		}
+		divider=string.indexOf("|");
+	}
+	return false;
+}
+
+function KeyCase(type,key,val,item) {
+	switch(key) {
+		case "description":	//Printed value for snagit
+			writedesc=val;
+			return true;
+		case "show":	// Place holder, in case someone uses the old command
+			writedesc=val;
+			return true;
+		case "pickup":	//If set to 0, it will log it but not pick it up
+			if (val==0) loganyhow=true;
+			return true;
+		case "iditem":	//If set to 1, will id the item if it is in your inventory
+			if (val==1) idValid=true;
+			return true;
+		case "log":	//If set to 0, the item will be picked up, but not logged
+			if (val==0) DontLog=true;
+			return true;
+		case "type":	//I have to set this up still
+			print("The option of picking up certain item types is not currently supported by SnagIt!");
+			return false;
+		case "mod":	//Specific mod names, like cruel
+			if(item.getFlag(0x10)) return true;
+			if(item.fname.toLowerCase().indexOf(val) == -1) return false;
+			return true;
+		case "isethereal":	//Ethereal check
+			if (val==1 && item.getFlag(0x400000) == 0) return false;
+			if (val==0 && item.getFlag(0x400000)) return false;
+			return true;
+		case "hassockets":	//Socket check
+			if (val==1 && !item.getFlag(0x800)) return false;
+			if (val==0 && item.getFlag(0x800)) return false;
+			return true;
+		case "identified":	//Identified check
+			if (val==0 && item.getFlag(0x10)) return false;
+			if (val==1 && item.getFlag(0x10) == 0) return false;
+			return true;
+		case "item":	//Item type, item code, or an items name
+			return CodeCase(type,val,item);
+		case "needprefix":
+			if (val==1 && !item.prefix) return false;
+			return true;
+		case "needsuffix":
+			if (val==1 && !item.suffix) return false;
+			return true;
+		case "code":	//Item type, item code, or an items name
+			return CodeCase(type,val,item);
+		case "qual":	//Item quality, Such as magic or unique.  Number or name accepted.
+			return QualCase(type,val,item);
+		case "level":	//Item quality, Such as magic or unique.  Number or name accepted.
+			return QualCase(type,val,item);
+		case "classlevel":	//Normal, elite, or exceptional.  Number or name accepted.
+			return ClassCase(type,val,item);
+		case "ilvl":	//The items ilvl.
+			return ilvlCase(type,val,item);
+		case "eval-pu":
+			return item.eval(val);
+		case "eval-id":
+			if (item.getFlag(0x10) == 0) return false; // not ID'd
+			return item.eval(val);
+		default:	//Specific mod values, in numeric form.
+			return TypeCase(type,val,key,item);
+	}
+	return false;
+}
+
+function CodeCase(type,val,item) {
+	switch(type) {
+		case "=":
+			if ((val!=item.code) && (val!=item.name.toLowerCase()) && (val!=String(item.itemtype))) return false;
+			return true;
+		case ">":
+			if (parseInt(val)<item.itemtype) return false;
+			return true;
+		case "<":
+			if (parseInt(val)>item.itemtype) return false;
+			return true;
+		case "!":
+			if ((val==item.code) || (val==item.name.toLowerCase()) || (val==String(item.itemtype))) return false;
+			return true;
+	}
+	return false;
+}
+
+function ilvlCase(type,val,item) {
+	switch(type) {
+		case "=":
+			if (item.ilvl != parseInt(val)) return false;
+			return true;
+		case ">":
+			if (item.ilvl < parseInt(val)) return false;
+			return true;
+		case "<":
+			if (item.ilvl > parseInt(val)) return false;
+			return true;
+		case "!":
+			if (item.ilvl == parseInt(val)) return false;
+			return true;
+	}
+	return false;
+}
+
+function TypeCase(type,val,key,item) {
+	if(isNaN(parseInt(key,10)) || isNaN(parseInt(val,10))) return false;
+	switch(type) {
+		case "=":
+			if (item.getStat(parseInt(key,10)) != parseInt(val,10)) return false;
+			return true;
+		case ">":
+			if (item.getStat(parseInt(key,10)) < parseInt(val,10)) return false;
+			return true;
+		case "<":
+			if (item.getStat(parseInt(key,10)) > parseInt(val,10)) return false;
+			return true;
+		case "!":
+			if (item.getStat(parseInt(key,10)) == parseInt(val,10)) return false;
+			return true;
+	}
+	return false;
+}
+
+function QualCase(type,val,item) {
+	QualPOS=getPosition(val,itemQual);
+	switch(type) {
+		case "=":
+			if (item.quality!=QualPOS) return false;
+			return true;
+		case ">":
+			if (item.quality<QualPOS) return false;
+			return true;
+		case "<":
+			if (item.quality>QualPOS || QualPOS==-1) return false;
+			return true;
+		case "!":
+			if (item.quality==QualPOS) return false;
+			return true;
+	}
+	return false;
+}
+
+function ClassCase(type,val,item) {
+	var itemClass=["normal","exceptional","elite"];
+	ClassPOS=getPosition(val,itemClass);
+	switch(type) {
+		case "=":
+			if (item.itemclass!=ClassPOS) return false;
+			return true;
+		case ">":
+			if (item.itemclass<ClassPOS) return false;
+			return true;
+		case "<":
+			if (item.itemclass>ClassPOS || ClassPOS==-1) return false;
+			return true;
+		case "!":
+			if (item.itemclass==ClassPOS) return false;
+			return true;
+	}
+	return false;
+}
+
+/* ============================
+Utility functions:
+============================ */
+
+function clearcursor() {
+	if (!me.itemoncursor) return false;
+	cursoritem = getUnit(4,null,4);
+	if (cursoritem) {
+		tryloop : for (mc = 1; mc <= 10; mc++) {
+			cursoritem.cancel();
+			for (cm = 0; cm < 25; cm++) {
+				if(!me.itemoncursor) return true;
+				DoDel(20);
+			}
+		}
+	}
+	return false;
+}
+
+/* ============================
+INI and logging section:
+============================ */
+
+function STime() {
+	timer=new Date();
+	newtime=timer.toString();
+	GMT = newtime.indexOf("GMT");
+	ptimer=newtime.substring(4, GMT-1);
+	ptimer=ptimer.substr(7,4)+"/"+(timer.getMonth()<9?"0":"")+(timer.getMonth()+1)+"/"+ptimer.substr(4,3)+ptimer.substr(12);
+	return ptimer;
+}
+
+function Slog(item) {
+	if (writedesc!=false) {
+		GetDesc(item);
+		print("Just found " +writedesc+" on "+STime());
+		if(!DontLog) {
+			Rcolor();
+			PrintFile("!!"+STime()+" | " +writedesc);
+		}
+	} else print("Just found a "+itemQual[item.quality]+" "+item.name+"!");
+}
+
+function Rcolor() {
+	Color = writedesc.indexOf("ÿ");
+	if(Color!=-1)
+		ConvertColors();
+}
+
+// convert a D2 color into an HTML color
+function ConvertColors() {
+	var htmlColors = ["FFFFFF", "FF00000", "00FF00", "0000FF", "B0B000", "A0A0A0", "000000", "B0B000", "FF9900", "FFFF00"];
+
+	while ((Color = writedesc.indexOf("ÿ")) != -1) {
+		var htmlColor = htmlColors[parseInt(writedesc[Color+2])];
+		writedesc = writedesc.substring(0,Color) +
+			"</font><font color=\"#"+htmlColor+"\">"+
+			writedesc.substring(Color+3)+"</font><font color=\"#000080\">"
+		Color = writedesc.indexOf("ÿ");
+	}
+}
+
+function GetDesc(item) {
+	rExp = /<autoid>/gi;
+	if(writedesc.search(rExp) == -1) rExp = /<auto-id>/gi;
+	if(writedesc.search(rExp) != -1)
+		writedesc=writedesc.replace(rExp, AutoIDit(item));
+}
+
+function calcrange(x, y) {
+	xdiff = Math.abs(me.x - x);
+	ydiff = Math.abs(me.y - y);
+	xyrange = Math.sqrt((Math.pow(xdiff,2)) + (Math.pow(ydiff,2)));
+	return parseInt(xyrange);
+}
+
+function PrintFile(string) {
+	FileWriteLog=fileOpen(fLog, 2);
+	if (FileWriteLog) {
+		FileWriteLog.writeLine(string +"<br> \n");
+		FileWriteLog.close();
+	}
+}
+
+function getINI(which) {
+	INI = new Array();
+	ipLoadFile(which);
+	if (INI && (INI.length)) {
+		for (i=0;i<INI.length;i++) {
+			for (j=1;j<INI[i].length;j++) {
+				if (INI[i][j].length>1) {
+					INI[i][j][1] = INI[i][j][1].toLowerCase();
+					if (INI[i][j][1]!="description")
+						INI[i][j][2] = INI[i][j][2].toLowerCase();
+				}
+			}
+		}
+		WhichINI=which;
+		initConfig();
+		return 0;
+	} else {
+		print("Error loading INI");
+		return 1;
+	}
+}
+
+function initConfig() {
+	var logLevels=["none","useful","all","full"];
+	for (i=0;i<INI.length;i++) {
+		keyloop : for (j=0;j<INI[i].length;j++) {
+			key=INI[i][j][1];
+			val=INI[i][j][2];
+			switch(key) {
+				case "loglevel":
+					logging=getPosition(val.toLowerCase(),logLevels);
+					continue keyloop;
+				case "logfile":
+					fLog="output/"+me.name+val;
+					continue keyloop;
+				case "goldenabled":
+					if(val==1) GrabGold=true;
+					continue keyloop;
+				case "skip":
+					SkipType.push(val);
+					continue keyloop;
+				case "pickupradius":
+					snagrad=val;
+					continue keyloop;
+				case "fillbelt":
+					if(val==0) bitcheck|=16;
+					continue keyloop;
+			}
+			switch(val) {
+				case "gld":
+					bitcheck|=2;
+					continue keyloop;
+				case "rvl":
+					bitcheck|=8;
+					continue keyloop;
+				case "rvs":
+					bitcheck|=4;
+					continue keyloop;
+			}
+		}
+	}
+}
+
+function debugprint(String,dlevel) {
+	if (dlevel == 1 || dlevel > 2) print(String);
+	if (dlevel >= 2) {
+		fDebug = fileOpen("output/parseit-debug.txt", 2);
+		if(fDebug) {
+			fDebug.writeLine(String);
+			fDebug.close
+		}
+	}
+}
+
+function getPosition(value,table) {
+	for (var k=0; k<table.length; k++) {
+		if (value==table[k]) return k;
+		if (value==String(k)) return k;
+	}
+	return -1;
+}
+
+function getAllStats(initem) {
+	var tmpstr = " | ";
+	for (var i=0; i<324; i++) tmpstr += xx_ONEmodstr(initem, i);
+	return tmpstr;
+}
+function xx_ONEmodstr(initem, inno) {
+	var s = initem.getStat(inno);
+	if (s == 0) return "";
+	return "(" + inno + ":" + [
+	/*  [0]*/	"Á¦Á¿=" + s,
+	/*  [1]*/	"¾«Á¦=" + s,
+	/*  [2]*/	"Ãô½Ý=" + s,
+	/*  [3]*/	"»îÁ¦=" + s,
+	/*  [4]*/	"×´Ì¬µã=" + s,
+	/*  [5]*/	"¼¼ÄÜµã=" + s,
+	/*  [6]*/	"ÉúÃü=" + parseInt(s/256)+ ":" + s,
+	/*  [7]*/	"ÉúÃü=" + parseInt(s/256)+ ":" + s,
+	/*  [8]*/	"·¨Á¦=" + parseInt(s/256)+ ":" + s,
+	/*  [9]*/	"·¨Á¦=" + parseInt(s/256)+ ":" + s,
+	/* [10]*/	"ÄÍÁ¦=" + parseInt(s/256)+ ":" + s,
+	/* [11]*/	"×î´óÄÍÁ¦=" + parseInt(s/256)+ ":" + s,
+	/* [12]*/	"µÈ¼¶=" + s,
+	/* [13]*/	"¾­ÑéÖµ=" + s,
+	/* [14]*/	"ËæÉí½ð±Ò=" + s,
+	/* [15]*/	"Ïä×ÓÀï½ð±Ò=" + s,
+	/* [16]*/	"ÔöÇ¿·ÀÓù=" + s + "%",
+	/* [17]*/	"ÔöÇ¿ÉËº¦=" + s + "%",
+	/* [18]*/	"ÔöÇ¿ÉËº¦=" + s + "%",
+	/* [19]*/	"¹¥»÷×¼È·ÂÊ=" + s,
+	/* [20]*/	"Ôö¼Ó¸ñµ²»úÂÊ=" + s,
+	/* [21]*/	"×îÐ¡µ¥ÊÖÉËº¦=" + s,
+	/* [22]*/	"×î´óµ¥ÊÖÉËº¦=" + s,
+	/* [23]*/	"×îÐ¡Ë«ÊÖÉËº¦=" + s,
+	/* [24]*/	"×î´óË«ÊÖÉËº¦=" + s,
+	/* [25]*/	"DAMAGEPERCENT" + s,
+	/* [26]*/	"MANARECOVERY" + s,
+	/* [27]*/	"¿ìËÙ»Ø¸´·¨Á¦=" + s + "%",
+	/* [28]*/	"¿ìËÙ»Ø¸´ÄÍÁ¦=" + s + "%",
+	/* [29]*/	"LASTEXP" + s,
+	/* [30]*/	"ÏÂÒ»µÈ¼¶ËùÐè¾­ÑéÖµ" + s,
+	/* [31]*/	"»ù´¡·ÀÓù=" + s,
+	/* [32]*/	"¶ÔÔ¶³Ì¹¥»÷µÄ·ÀÓù=" + s,
+	/* [33]*/	"¶Ô½üÉí´ò»÷µÄ·ÀÓù=" + s,
+	/* [34]*/	"ÎïÀíÉËº¦¼õÉÙ=" + s,
+	/* [35]*/	"·¨ÊõÉËº¦¼õÉÙ=" + s,
+	/* [36]*/	"ÎïÀíÉËº¦¼õÉÙ=" + s + "%",
+	/* [37]*/	"Ä§·¨µÖ¿¹=" + s + "%",
+	/* [38]*/	"×î´óÄ§·¨µÖ¿¹=" + s + "%",
+	/* [39]*/	"¿¹»ð=" + s + "%",
+	/* [40]*/	"¿¹»ðÉÏÏÞ=" + s + "%",
+	/* [41]*/	"¿¹µç=" + s + "%",
+	/* [42]*/	"¿¹µçÉÏÏÞ=" + s + "%",
+	/* [43]*/	"¿¹º®=" + s + "%",
+	/* [44]*/	"¿¹º®ÉÏÏÞ=" + s + "%",
+	/* [45]*/	"¿¹¶¾=" + s + "%",
+	/* [46]*/	"¿¹¶¾ÉÏÏÞ=" + s + "%",
+	/* [47]*/	"DAMAGEAURA",
+	/* [48]*/	"×îÐ¡»ðÑæÉËº¦=" + s,
+	/* [49]*/	"×î´ó»ðÑæÉËº¦=" + s,
+	/* [50]*/	"×îÐ¡ÉÁµçÉËº¦=" + s,
+	/* [51]*/	"×î´óÉÁµçÉËº¦=" + s,
+	/* [52]*/	"×îÐ¡Ä§·¨ÉËº¦=" + s,
+	/* [53]*/	"×î´óÄ§·¨ÉËº¦=" + s,
+	/* [54]*/	"×îÐ¡±ùÀäÉËº¦=" + s,
+	/* [55]*/	"×î´ó±ùÀäÉËº¦=" + s,
+	/* [56]*/	"±ù¶³³ÖÐøÊ±¼ä=" + parseInt(s/25) + "Ãë"+ ":" + s,
+	/* [57]*/	"×îÐ¡¶¾ËØÉËº¦=" + parseInt(s/256*initem.getStat(59))+ ":" + s,
+	/* [58]*/	"×î´ó¶¾ËØÉËº¦=" + parseInt(s/256*initem.getStat(59))+ ":" + s,
+	/* [59]*/	"¶¾ËØ³ÖÐøÊ±¼ä=" + parseInt(s/25) + "Ãë"+ ":" + s,
+	/* [60]*/	"ÍµÈ¡ÉúÃü=" + s + "%",
+	/* [61]*/	"LIFEDRAINMAXDAM",
+	/* [62]*/	"ÍµÈ¡·¨Á¦=" + s + "%",
+	/* [63]*/	"MANADRAINMAXDAM",
+	/* [64]*/	"ÄÍÁ¦ÏûºÄ=" + s + "%",
+	/* [65]*/	"STAMDRAINMAXDAM",
+	/* [66]*/	"STUNLENGTH",
+	/* [67]*/	"½µµÍËÙ¶È=" + s + "%",
+	/* [68]*/	"»ù´¡¹¥»÷ËÙ¶È=" + s,
+	/* [69]*/	"OTHER ANIMRATE",
+	/* [70]*/	"ÊýÁ¿: " + s,
+	/* [71]*/	"VALUE",
+	/* [72]*/	"ÄÍ¾Ã¶È=" + s,
+	/* [73]*/	"×î´óÄÍ¾Ã¶È=" + s,
+	/* [74]*/	"»Ø¸´ÉúÃü=" + s,
+	/* [75]*/	"Ôö¼ÓÄÍ¾ÃÉÏÏÞ=" + s + "%",
+	/* [76]*/	"Ôö¼ÓÉúÃüÉÏÏÞ=" + s + "%",
+	/* [77]*/	"Ôö¼Ó·¨Á¦ÉÏÏÞ=" + s + "%",
+	/* [78]*/	"¹¥»÷ÕßÊÜµ½ÉËº¦=" + s,
+	/* [79]*/	"»ñÈ¡½ð±Ò»úÂÊ=" + s + "%",
+	/* [80]*/	"»ñÈ¡Ä§·¨×°±¸»úÂÊ=" + s + "%",
+	/* [81]*/	"»÷ÍË",
+	/* [82]*/	"ITEM TIMEDURATION",
+	/* [83]*/	"ÑÇÂêÑ·¼¼ÄÜ=" + s,
+	/* [84]*/	"Ê¥ÆïÊ¿¼¼ÄÜ=" + s,
+	/* [85]*/	"ËÀÁé·¨Ê¦¼¼ÄÜ=" + s,
+	/* [86]*/	"·¨Ê¦¼¼ÄÜ=" + s,
+	/* [87]*/	"Ò°ÂùÈË¼¼ÄÜ=" + s,
+	/* [88]*/	"ITEM DOUBLEHERBDURATION",
+	/* [89]*/	"ÁÁ¶È·¶Î§=" + s,
+	/* [90]*/	"ITEM LIGHTCOLOR",
+	/* [91]*/	"ÐèÇó=" + s + "%",
+	/* [92]*/	"ITEM FASTATTACKRATE",
+	/* [93]*/	"ÌáÉý¹¥»÷ËÙ¶È=" + s + "%",
+	/* [94]*/	"ITEM FASTESTATTACKRATE",
+	/* [95]*/	"ITEM FASTMOVEVELOCITY",
+	/* [96]*/	"¸ßËÙÅÜ²½/ÐÐ×ß=" + s + "%",
+	/* [97]*/	"ITEM FASTESTMOVEVELOCITY",
+	/* [98]*/	"ITEM FASTGETHITRATE",
+	/* [99]*/	"¿ìËÙ´ò»÷»Ö¸´=" + s + "%",
+	/*[100]*/	"ITEM FASTESTGETHITRATE",
+	/*[101]*/	"ITEM FASTBLOCKRATE",
+	/*[102]*/	"¿ìËÙ¸ñµ²»úÂÊ=" + s + "%",
+	/*[103]*/	"ITEM FASTESTBLOCKRATE",
+	/*[104]*/	"ITEM FASTCASTRATE",
+	/*[105]*/	"¿ìËÙÊ©Õ¹ËÙ¶È=" + s + "%",
+	/*[106]*/	"ITEM FASTESTCASTRATE",
+	/*[107]*/	"µ¥Ïî¼¼ÄÜ=" + xx_skillname1(s)+ ":" + s,
+	/*[108]*/	"µ¥Ïî¼¼ÄÜ=" + xx_skillname1(s)+ ":" + s,
+	/*[109]*/	"µ¥Ïî¼¼ÄÜ=" + xx_skillname1(s)+ ":" + s,
+	/*[110]*/	"½µµÍ¶¾ËØ³ÖÐøÊ±¼ä=" + s + "%",
+	/*[111]*/	"ITEM NORMALDAMAGE" + s,
+	/*[112]*/	"»÷ÖÐÊ¹¹ÖÎïÌÓÅÜ»úÂÊ=" + parseInt((s/96) * 75) + "%"+ ":" + s,
+	/*[113]*/	"Ê¹Ä¿±êÖÂÃ¤=" + s,
+	/*[114]*/	"ÊÜËðÉúÃü×ª»»Îª·¨Á¦=" + s + "%",
+	/*[115]*/	"ºöÊÓÄ¿±ê·ÀÓù",
+	/*[116]*/	"¼õÉÙÄ¿±ê·ÀÓù=" + s + "%",
+	/*[117]*/	"·ÀÖ¹¹ÖÎï×ÔÁÆ",
+	/*[118]*/	"±ù¶³Ê±¼ä¼õ°ë",
+	/*[119]*/	"¹¥»÷×¼È·ÂÊ=" + s + "%",
+	/*[120]*/	"ITEM DAMAGETARGETAC",
+	/*[121]*/	"¶Ô¶ñÄ§µÄÉËº¦=" + s + "%",
+	/*[122]*/	"¶Ô²»ËÀÉúÎïµÄÉËº¦=" + s + "%",
+	/*[123]*/	"¶Ô¶ñÄ§µÄ¹¥»÷×¼È·ÂÊ=" + s,
+	/*[124]*/	"¶Ô²»ËÀÉúÎïµÄ¹¥»÷×¼È·ÂÊ=" + s,
+	/*[125]*/	"ITEM THROWABLE",
+	/*[126]*/	"»ðÑæ¼¼ÄÜ=" + s,
+	/*[127]*/	"ËùÓÐ¼¼ÄÜ=",
+	/*[128]*/	"¹¥»÷ÕßÊÜµ½ÉÁµçÉËº¦=" + s,
+	/*[129]*/	"IRONMAIDEN LEVEL",
+	/*[130]*/	"LIFETAP LEVEL",
+	/*[131]*/	"THORNS LEVEL",
+	/*[132]*/	"BONEARMOR",
+	/*[133]*/	"BONEARMORMAX",
+	/*[134]*/	"¶³½áÄ¿±ê",
+	/*[135]*/	"Ëº¿ªÉË¿Ú»úÂÊ=" + s + "%",
+	/*[136]*/	"Ñ¹ËéÐÔ´ò»÷»úÂÊ=" + s + "%",
+	/*[137]*/	"ITEM KICKDAMAGE",
+	/*[138]*/	"É±ËÀÒ»¸ö¹ÖÎïºóÔö¼Ó·¨Á¦=" + s,
+	/*[139]*/	"ITEM HEALAFTERDEMONKILL",
+	/*[140]*/	"ITEM EXTRABLOOD",
+	/*[141]*/	"ÖÂÃü´ò»÷»úÂÊ=" + s + "%",
+	/*[142]*/	"»ðÑæÎüÊÕ=" + s + "%",
+	/*[143]*/	"»ðÑæÎüÊÕ=" + s,
+	/*[144]*/	"ÉÁµçÎüÊÕ=" + s + "%",
+	/*[145]*/	"ÉÁµçÎüÊÕ=" + s,
+	/*[146]*/	"Ä§·¨ÎüÊÕ=" + s + "%",
+	/*[147]*/	"Ä§·¨ÎüÊÕ=" + s,
+	/*[148]*/	"±ùÀäÎüÊÕ=" + s + "%",
+	/*[149]*/	"±ùÀäÎüÊÕ=" + s,
+	/*[150]*/	"¼õÂýÄ¿±êËÙ¶È=" + s + "%",
+	/*[151]*/	"ITEM BLESSEDAIM",
+	/*[152]*/	"ITEM DEFIANCE",
+	/*[153]*/	"ÎÞ·¨±ù¶³",
+	/*[154]*/	"¼õ»ºÄÍÁ¦ÏûºÄ=" + s + "%",
+	/*[155]*/	"ITEM REANIMATE",
+	/*[156]*/	"´©Í¸¹¥»÷",
+	/*[157]*/	"Fires Magic Arrows or Bolts",
+	/*[158]*/	"Fires Exploding Arrows or Bolts",
+	/*[159]*/	"×îÐ¡Í¶ÖÀÉËº¦=" + s,
+	/*[160]*/	"×î´óÍ¶ÖÀÉËº¦=" + s,
+	/*[161]*/	"SKILL HANDOFATHENA",
+	/*[162]*/	"SKILL STAMINAPERCENT",
+	/*[163]*/	"SKILL PASSIVE STAMINAPERCENT",
+	/*[164]*/	"SKILL CONCENTRATION",
+	/*[165]*/	"SKILL ENCHANT",
+	/*[166]*/	"SKILL PIERCE",
+	/*[167]*/	"SKILL CONVICTION",
+	/*[168]*/	"SKILL CHILLINGARMOR",
+	/*[169]*/	"SKILL FRENZY",
+	/*[170]*/	"SKILL DECREPIFY",
+	/*[171]*/	"SKILL ARMOR PERCENT",
+	/*[172]*/	"ALIGNMENT",
+	/*[173]*/	"TARGET0",
+	/*[174]*/	"TARGET1",
+	/*[175]*/	"GOLDLOST",
+	/*[176]*/	"CONVERSION LEVEL",
+	/*[177]*/	"CONVERSION MAXHP",
+	/*[178]*/	"UNIT DOOVERLAY",
+	/*[179]*/	"µÂÂ³ÒÀ¼¼ÄÜ=" + s,
+	/*[180]*/	"´Ì¿Í¼¼ÄÜ=" + s,
+	/*[181]*/	"µ¥Ïî¼¼ÄÜ=" + xx_skillname1(s)+ ":" + s,
+	/*[182]*/	"µ¥Ïî¼¼ÄÜ=" + xx_skillname1(s),
+	/*[183]*/	"µ¥Ïî¼¼ÄÜ=" + xx_skillname1(s),
+	/*[184]*/	"µ¥Ïî¼¼ÄÜ=" + xx_skillname1(s),
+	/*[185]*/	"µ¥Ïî¼¼ÄÜ=" + xx_skillname1(s),
+	/*[186]*/	"µ¥Ïî¼¼ÄÜ=" + xx_skillname1(s),
+	/*[187]*/	"µ¥Ïî¼¼ÄÜ=" + xx_skillname1(s),
+	/*[188]*/	"µ¥Ïµ¼¼ÄÜ=" + xx_skillname2(s)+ ":" + s,
+	/*[189]*/	"µ¥Ïµ¼¼ÄÜ=" + xx_skillname2(s),
+	/*[190]*/	"µ¥Ïµ¼¼ÄÜ=" + xx_skillname2(s),
+	/*[191]*/	"µ¥Ïµ¼¼ÄÜ=" + xx_skillname2(s),
+	/*[192]*/	"µ¥Ïµ¼¼ÄÜ=" + xx_skillname2(s),
+	/*[193]*/	"µ¥Ïµ¼¼ÄÜ=" + xx_skillname2(s),
+	/*[194]*/	"°¼²ÛÊý=" + s,
+	/*[195]*/	"¹¥»÷Ê±Ê©Õ¹¼¼ÄÜ=" + xx_skillname4(s)+ ":" + s,
+	/*[196]*/	"¹¥»÷Ê±Ê©Õ¹¼¼ÄÜ=" + xx_skillname4(s),
+	/*[197]*/	"¹¥»÷Ê±Ê©Õ¹¼¼ÄÜ=" + xx_skillname4(s),
+	/*[198]*/	"»÷ÖÐÊ±Ê©Õ¹¼¼ÄÜ=" + xx_skillname4(s)+ ":" + s,
+	/*[199]*/	"»÷ÖÐÊ±Ê©Õ¹¼¼ÄÜ=" + xx_skillname4(s),
+	/*[200]*/	"»÷ÖÐÊ±Ê©Õ¹¼¼ÄÜ=" + xx_skillname4(s),
+	/*[201]*/	"±»»÷ÖÐÊ±Ê©Õ¹¼¼ÄÜ=" + xx_skillname4(s)+ ":" + s,
+	/*[202]*/	"±»»÷ÖÐÊ±Ê©Õ¹¼¼ÄÜ=" + xx_skillname4(s),
+	/*[203]*/	"±»»÷ÖÐÊ±Ê©Õ¹¼¼ÄÜ=" + xx_skillname4(s),
+	/*[204]*/	"¾ÛÆø¼¼ÄÜ=" + xx_skillname3(s)+ ":" + s,
+	/*[205]*/	"¾ÛÆø¼¼ÄÜ=" + xx_skillname3(s),
+	/*[206]*/	"¾ÛÆø¼¼ÄÜ=" + xx_skillname3(s),
+	/*[207]*/	"¾ÛÆø¼¼ÄÜ=" + xx_skillname3(s),
+	/*[208]*/	"¾ÛÆø¼¼ÄÜ=" + xx_skillname3(s),
+	/*[209]*/	"¾ÛÆø¼¼ÄÜ=" + xx_skillname3(s),
+	/*[210]*/	"¾ÛÆø¼¼ÄÜ=" + xx_skillname3(s),
+	/*[211]*/	"¾ÛÆø¼¼ÄÜ=" + xx_skillname3(s),
+	/*[212]*/	"¾ÛÆø¼¼ÄÜ=" + xx_skillname3(s),
+	/*[213]*/	"¾ÛÆø¼¼ÄÜ=" + xx_skillname3(s),
+	/*[214]*/	"Ã¿µÈ¼¶¼Ó·ÀÓù=" + (s/8)+ ":" + s,
+	/*[215]*/	"Ã¿µÈ¼¶¼Ó·ÀÓù=" + s,
+	/*[216]*/	"Ã¿µÈ¼¶¼ÓÉúÃü=" + (s/2048)+ ":" + s,
+	/*[217]*/	"Ã¿µÈ¼¶¼Ó·¨Á¦=" + (s/2048)+ ":" + s,
+	/*[218]*/	"Ã¿µÈ¼¶¼Ó×î´óÉËº¦=" + (s/8)+ ":" + s,
+	/*[219]*/	"Ã¿µÈ¼¶¼Ó×î´óÉËº¦=" + (s/8)+ ":" + s,
+	/*[220]*/	"Ã¿µÈ¼¶¼ÓÁ¦Á¿=" + (s/8)+ ":" + s,
+	/*[221]*/	"Ã¿µÈ¼¶¼ÓÃô½Ý=" + (s/8)+ ":" + s,
+	/*[222]*/	"Ã¿µÈ¼¶¼Ó¾«Á¦=" + (s/8)+ ":" + s,
+	/*[223]*/	"Ã¿µÈ¼¶¼Ó»îÁ¦=" + (s/8)+ ":" + s,
+	/*[224]*/	"Ã¿µÈ¼¶¼Ó¹¥»÷×¼È·ÂÊ=" + (s/2)+ ":" + s,
+	/*[225]*/	"Ã¿µÈ¼¶¼Ó¹¥»÷×¼È·ÂÊ=" + s,
+	/*[226]*/	"Ã¿µÈ¼¶¼Ó×î´ó±ùÀäÉËº¦=" + s,
+	/*[227]*/	"Ã¿µÈ¼¶¼Ó×î´ó»ðÑæÉËº¦=" + s,
+	/*[228]*/	"Ã¿µÈ¼¶¼Ó×î´óÉÁµçÉËº¦=" + s,
+	/*[229]*/	"Ã¿µÈ¼¶¼Ó×î´ó¶¾ËØÉËº¦=" + s,
+	/*[230]*/	"Ã¿µÈ¼¶¼Ó¿¹º®=" + s,
+	/*[231]*/	"Ã¿µÈ¼¶¼Ó¿¹»ð=" + s,
+	/*[232]*/	"Ã¿µÈ¼¶¼Ó¿¹µç=" + s,
+	/*[233]*/	"Ã¿µÈ¼¶¼Ó¿¹¶¾=" + s,
+	/*[234]*/	"Ã¿µÈ¼¶¼Ó±ùÀäÎüÊÕ=" + (s/8)+ ":" + s,
+	/*[235]*/	"Ã¿µÈ¼¶¼Ó»ðÑæÎüÊÕ=" + (s/8)+ ":" + s,
+	/*[236]*/	"Ã¿µÈ¼¶¼ÓÉÁµçÎüÊÕ=" + (s/8)+ ":" + s,
+	/*[237]*/	"Ã¿µÈ¼¶¼Ó¶¾ËØÎüÊÕ=" + (s/8)+ ":" + s,
+	/*[238]*/	"Ã¿µÈ¼¶¼Ó¹¥»÷ÕßÊÜµ½ÉËº¦=" + (s/8)+ ":" + s,
+	/*[239]*/	"Ã¿µÈ¼¶¼Ó»ñÈ¡½ð±Ò»ú»á=" + (s/8)+ ":" + s,
+	/*[240]*/	"Ã¿µÈ¼¶¼Ó»ñÈ¡Ä§·¨×°±¸»ú»á=" + (s/8)+ ":" + s,
+	/*[241]*/	"Ã¿µÈ¼¶¼ÓÄÍÁ¦»Ø¸´=" + s,
+	/*[242]*/	"Ã¿µÈ¼¶¼ÓÄÍÁ¦×î´óÖµ=" + s,
+	/*[243]*/	"Ã¿µÈ¼¶¼Ó¶Ô¶ñÄ§µÄÉËº¦=" + (s/8)+ ":" + s,
+	/*[244]*/	"Ã¿µÈ¼¶¼Ó¼Ó¶Ô²»ËÀÉúÎïµÄÉËº¦=" + (s/8)+ ":" + s,
+	/*[245]*/	"Ã¿µÈ¼¶¼Ó¶Ô¶ñÄ§µÄ×¼È·ÂÊ=" + (s/2)+ ":" + s,
+	/*[246]*/	"Ã¿µÈ¼¶¼Ó¶Ô²»ËÀÉúÎïµÄ×¼È·ÂÊ=" + (s/2)+ ":" + s,
+	/*[247]*/	"Ã¿µÈ¼¶¼ÓÑ¹ËéÐÔ´ò»÷»úÂÊ=" + s,
+	/*[248]*/	"Ã¿µÈ¼¶¼ÓËº¿ªÉË¿Ú»úÂÊ=" + s,
+	/*[249]*/	"ITEM KICK DAMAGE PERLEVEL",
+	/*[250]*/	"Ã¿µÈ¼¶¼ÓÖÂÃü´ò»÷»úÂÊ=" + (s/8)+ ":" + s,
+	/*[251]*/	"ITEM FIND GEMS PERLEVEL",
+	/*[252]*/	"»Ø¸´ÄÍ¾Ã¶È 1 ÔÚ " + s + " ÃëÄÚ",
+	/*[253]*/	"»Ø¸´ÊýÁ¿ 1 ÔÚ " + s + " ÃëÄÚ",
+	/*[254]*/	"Ôö¼Ó¿Õ¼ä",
+	/*[255]*/	"ITEM FIND ITEM",
+	/*[256]*/	"ITEM SLASH DAMAGE",
+	/*[257]*/	"ITEM SLASH DAMAGE PERCENT",
+	/*[258]*/	"ITEM CRUSH DAMAGE",
+	/*[259]*/	"ITEM CRUSH DAMAGE PERCENT",
+	/*[260]*/	"ITEM THRUST DAMAGE",
+	/*[261]*/	"ITEM THRUST DAMAGE PERCENT",
+	/*[262]*/	"ITEM ABSORB SLASH",
+	/*[263]*/	"ITEM ABSORB CRUSH",
+	/*[264]*/	"ITEM ABSORB THRUST",
+	/*[265]*/	"ITEM ABSORB SLASH PERCENT",
+	/*[266]*/	"ITEM ABSORB CRUSH PERCENT",
+	/*[267]*/	"ITEM ABSORB THRUST PERCENT",
+	/*[268]*/	"ITEM ARMOR BYTIME",
+	/*[269]*/	"ITEM ARMORPERCENT BYTIME",
+	/*[270]*/	"ITEM HP BYTIME",
+	/*[271]*/	"ITEM MANA BYTIME",
+	/*[272]*/	"ITEM MAXDAMAGE BYTIME",
+	/*[273]*/	"ITEM MAXDAMAGE PERCENT BYTIME",
+	/*[274]*/	"ITEM STRENGTH BYTIME",
+	/*[275]*/	"ITEM DEXTERITY BYTIME",
+	/*[276]*/	"ITEM ENERGY BYTIME",
+	/*[277]*/	"ITEM VITALITY BYTIME",
+	/*[278]*/	"ITEM TOHIT BYTIME",
+	/*[279]*/	"ITEM TOHITPERCENT BYTIME",
+	/*[280]*/	"ITEM COLD DAMAGEMAX BYTIME",
+	/*[281]*/	"ITEM FIRE DAMAGEMAX BYTIME",
+	/*[282]*/	"ITEM LTNG DAMAGEMAX BYTIME",
+	/*[283]*/	"ITEM POIS DAMAGEMAX BYTIME",
+	/*[284]*/	"ITEM RESIST COLD BYTIME",
+	/*[285]*/	"ITEM RESIST FIRE BYTIME",
+	/*[286]*/	"ITEM RESIST LTNG BYTIME",
+	/*[287]*/	"ITEM RESIST POIS BYTIME",
+	/*[288]*/	"ITEM ABSORB COLD BYTIME",
+	/*[289]*/	"ITEM ABSORB FIRE BYTIME",
+	/*[290]*/	"ITEM ABSORB LTNG BYTIME",
+	/*[291]*/	"ITEM ABSORB POIS BYTIME",
+	/*[292]*/	"ITEM FIND GOLD BYTIME",
+	/*[293]*/	"ITEM FIND MAGIC BYTIME",
+	/*[294]*/	"ITEM REGENSTAMINA BYTIME",
+	/*[295]*/	"ITEM STAMINA BYTIME",
+	/*[296]*/	"ITEM DAMAGE DEMON BYTIME",
+	/*[297]*/	"ITEM DAMAGE UNDEAD BYTIME",
+	/*[298]*/	"ITEM TOHIT DEMON BYTIME",
+	/*[299]*/	"ITEM TOHIT UNDEAD BYTIME",
+	/*[300]*/	"ITEM CRUSHINGBLOW BYTIME",
+	/*[301]*/	"ITEM OPENWOUNDS BYTIME",
+	/*[302]*/	"ITEM KICK DAMAGE BYTIME",
+	/*[303]*/	"ITEM DEADLYSTRIKE BYTIME",
+	/*[304]*/	"ITEM FIND GEMS BYTIME",
+	/*[305]*/	"ITEM PIERCE COLD",
+	/*[306]*/	"ITEM PIERCE FIRE",
+	/*[307]*/	"ITEM PIERCE LTNG",
+	/*[308]*/	"ITEM PIERCE POIS",
+	/*[309]*/	"ITEM DAMAGE VS MONSTER",
+	/*[310]*/	"ITEM DAMAGE PERCENT VS MONSTER",
+	/*[311]*/	"ITEM TOHIT VS MONSTER",
+	/*[312]*/	"ITEM TOHIT PERCENT VS MONSTER",
+	/*[313]*/	"ITEM AC VS MONSTER",
+	/*[314]*/	"ITEM AC PERCENT VS MONSTER",
+	/*[315]*/	"FIRELENGTH",
+	/*[316]*/	"BURNINGMIN",
+	/*[317]*/	"BURNINGMAX",
+	/*[318]*/	"PROGRESSIVE DAMAGE",
+	/*[319]*/	"PROGRESSIVE STEAL",
+	/*[320]*/	"PROGRESSIVE OTHER",
+	/*[321]*/	"PROGRESSIVE FIRE",
+	/*[322]*/	"PROGRESSIVE COLD",
+	/*[323]*/	"PROGRESSIVE LIGHTNING"
+	             ][inno] + ")";
+}
+
+/* --------------------------------------------------------------- */
+
+function xx_skillname1(inno) {
+	var tmplevel = (inno >>> 9);
+	var tmpskill = (inno & 0x1ff);
+	if (tmpskill > 318) return "";
+	return "µÈ¼¶" + tmplevel + [
+	/*  [0]*/	"SKILL_ATTACK",
+	/*  [1]*/	"SKILL_KICK",
+	/*  [2]*/	"SKILL_THROW",
+	/*  [3]*/	"SKILL_UNSUMMON",
+	/*  [4]*/	"SKILL_LEFT_HAND_THROW",
+	/*  [5]*/	"SKILL_LEFT_HAND_SWING",
+
+	/*  [6]*/	"Ä§·¨¼ý",
+	/*  [7]*/	"»ðÑæ¼ý",
+	/*  [8]*/	"ÄÚÊÓ",
+	/*  [9]*/	"Ë«±¶´ò»÷",
+	/* [10]*/	"´Á´Ì",
+	/* [11]*/	"±ù¼ý",
+	/* [12]*/	"¶àÖØ¼ý",
+	/* [13]*/	"ÉÁ±Ü",
+	/* [14]*/	"ÍþÁ¦Ò»»÷",
+	/* [15]*/	"¶¾Ç¹",
+	/* [16]*/	"±¬ÁÑ¼ý",
+	/* [17]*/	"ÂýËÙ¼ý",
+	/* [18]*/	"¶ã±Ü",
+	/* [19]*/	"´Ì±¬",
+	/* [20]*/	"ÉÁµçÇò",
+	/* [21]*/	"¼±¶³¼ý",
+	/* [22]*/	"µ¼Òý¼ý",
+	/* [23]*/	"´ÌÈë",
+	/* [24]*/	"³äÄÜÒ»»÷",
+	/* [25]*/	"ÎÁÒß±êÇ¹",
+	/* [26]*/	"ÅÚºä",
+	/* [27]*/	"ÎþÉüÖ®¼ý",
+	/* [28]*/	"ÓÕ¶ü",
+	/* [29]*/	"»Ø±Ü",
+	/* [30]*/	"»÷ÍË",
+	/* [31]*/	"¶³½áÖ®¼ý",
+	/* [32]*/	"Å®ÎäÉñ",
+	/* [33]*/	"´©Í¸",
+	/* [34]*/	"ÉÁµç¹¥»÷",
+	/* [35]*/	"ÉÁµçÖ®Å­",
+
+	/* [36]*/	"»ðµ¯",
+	/* [37]*/	"ÎÂÅ¯",
+	/* [38]*/	"³äÄÜµ¯",
+	/* [39]*/	"±ùµ¯",
+	/* [40]*/	"±ù·â¼×",
+	/* [41]*/	"µØÓüÖ®»ð",
+	/* [42]*/	"¾²µç³¡",
+	/* [43]*/	"ÐÄÁé´«¶¯",
+	/* [44]*/	"ËªÖ®ÐÂÐÇ",
+	/* [45]*/	"±ù·ç±©",
+	/* [46]*/	"ÁÒÑ×Ö®¾¶",
+	/* [47]*/	"»ðÇò",
+	/* [48]*/	"ÐÂÐÇ",
+	/* [49]*/	"ÉÁµç",
+	/* [50]*/	"Ëé±ù¼×",
+	/* [51]*/	"»ðÇ½",
+	/* [52]*/	"»ðÑæÇ¿»¯",
+	/* [53]*/	"Á¬ËøÉÁµç",
+	/* [54]*/	"´«ËÍ",
+	/* [55]*/	"¼â±ùÖù",
+	/* [56]*/	"ÔÉÊ¯",
+	/* [57]*/	"À×ÔÆ·ç±©",
+	/* [58]*/	"ÄÜÁ¿»¤¶Ü",
+	/* [59]*/	"±©·çÑ©",
+	/* [60]*/	"º®±ù×°¼×",
+	/* [61]*/	"Ö§ÅäÖ®Ñæ",
+	/* [62]*/	"¾ÅÍ·Éß",
+	/* [63]*/	"Ö§ÅäÉÁµç",
+	/* [64]*/	"±ù·âÇò",
+	/* [65]*/	"Ö§Åä±ùÀä",
+
+	/* [66]*/	"¼ÓÉîÉËº¦",
+	/* [67]*/	"ÑÀ",
+	/* [68]*/	"°×¹Ç×°¼×",
+	/* [69]*/	"Ö§Åä÷¼÷Ã",
+	/* [70]*/	"÷¼÷Ã¸´Éú",
+	/* [71]*/	"»Õ°µÁéÊÓ",
+	/* [72]*/	"Ï÷Èõ",
+	/* [73]*/	"´ã¶¾Ø°Ê×",
+	/* [74]*/	"Ê¬Ìå±¬Õ¨",
+	/* [75]*/	"Õ³ÍÁÊ¯Ä§",
+	/* [76]*/	"¹¥»÷·´ÊÉ",
+	/* [77]*/	"¿Ö¾å",
+	/* [78]*/	"¹ÇÇ½",
+	/* [79]*/	"Ö§Åä÷¼÷Ã",
+	/* [80]*/	"¸´Éú÷¼÷Ã·¨Ê¦",
+	/* [81]*/	"ÃÔÂÒ",
+	/* [82]*/	"ÍµÈ¡ÉúÃü",
+	/* [83]*/	"¶¾±¬",
+	/* [84]*/	"¹ÇÃ¬",
+	/* [85]*/	"ÏÊÑªÊ¯Ä§",
+	/* [86]*/	"ÎüÒý",
+	/* [87]*/	"Ë¥ÀÏ",
+	/* [88]*/	"¹ÇÀÎ",
+	/* [89]*/	"ÕÙ»½µÖ¿¹",
+	/* [90]*/	"¸ÖÌúÊ¯Ä§",
+	/* [91]*/	"½µµÍµÖ¿¹",
+	/* [92]*/	"¾Þ¶¾ÐÂÐÇ",
+	/* [93]*/	"°×¹ÇÖ®»ê",
+	/* [94]*/	"»ðÑæÊ¯Ä§",
+	/* [95]*/	"ÖØÉú",
+
+	/* [96]*/	"ÎþÉü",
+	/* [97]*/	"ÖØ»÷",
+	/* [98]*/	"Á¦Á¿",
+	/* [99]*/	"Æíµ»",
+	/*[100]*/	"µÖ¿¹»ðÑæ",
+	/*[101]*/	"Ê¥¹âµ¯",
+	/*[102]*/	"Ê¥»ð",
+	/*[103]*/	"¾£¼¬",
+	/*[104]*/	"·´¿¹",
+	/*[105]*/	"µÖ¿¹±ùÀä",
+	/*[106]*/	"ÈÈ³Ï",
+	/*[107]*/	"³å·æ",
+	/*[108]*/	"×£¸£Ãé×¼",
+	/*[109]*/	"¾»»¯",
+	/*[110]*/	"µÖ¿¹ÉÁµç",
+	/*[111]*/	"¸´³ð",
+	/*[112]*/	"×£¸£Ö®´¸",
+	/*[113]*/	"×¨×¢",
+	/*[114]*/	"ÉñÊ¥±ù¶³",
+	/*[115]*/	"»îÁ¦",
+	/*[116]*/	"×ª»»",
+	/*[117]*/	"ÉñÊ¥Ö®¶Ü",
+	/*[118]*/	"ÉñÊ¥³å»÷",
+	/*[119]*/	"±Ó»¤Ëù",
+	/*[120]*/	"Ú¤Ë¼",
+	/*[121]*/	"ÌìÌÃÖ®È­",
+	/*[122]*/	"¿ñÈÈ",
+	/*[123]*/	"ÐÅÄî",
+	/*[124]*/	"¾ÈÊê",
+	/*[125]*/	"¾ÈÖú",
+
+	/*[126]*/	"ÖØ»÷",
+	/*[127]*/	"Ö§Åä³¤½£",
+	/*[128]*/	"Ö§Åä¸«Í·",
+	/*[129]*/	"Ö§Åä¶¤Í·´¸",
+	/*[130]*/	"¿ñàÆ",
+	/*[131]*/	"Ñ°ÕÒÒ©¼Á",
+	/*[132]*/	"ÌøÔ¾",
+	/*[133]*/	"Ë«ÊÖ»Ó»÷",
+	/*[134]*/	"Ö§Åä³¤±úÎäÆ÷",
+	/*[135]*/	"Ö§Åä·ÉÖÀ",
+	/*[136]*/	"Ö§Åä³¤Ã¬",
+	/*[137]*/	"³°Åª",
+	/*[138]*/	"´ó½Ð",
+	/*[139]*/	"»÷»è",
+	/*[140]*/	"Ë«ÊÖÍ¶ÖÀ",
+	/*[141]*/	"Ôö¼ÓÄÍÁ¦",
+	/*[142]*/	"Ñ°ÕÒÎïÆ·",
+	/*[143]*/	"ÌøÔ¾¹¥»÷",
+	/*[144]*/	"×¨ÐÄ",
+	/*[145]*/	"Ìú²¼ÉÀ",
+	/*[146]*/	"Õ½àÆ",
+	/*[147]*/	"¿ñÂÒ",
+	/*[148]*/	"¼ÓËÙ",
+	/*[149]*/	"Õ½¶·ÌåÖÆ",
+	/*[150]*/	"²Ð¿áßê×è",
+	/*[151]*/	"Ðý·ç",
+	/*[152]*/	"¿ñÕ½Ê¿",
+	/*[153]*/	"×ÔÈ»µÖ¿¹",
+	/*[154]*/	"Õ½¶·¿ñàÆ",
+	/*[155]*/	"Õ½¶·Ö¸»Ó",
+
+	/*[156]*/	"SKILL_FIRE_HIT",
+	/*[157]*/	"SKILL_UNHOLYBOLT",
+	/*[158]*/	"SKILL_SKELETONRAISE",
+	/*[159]*/	"SKILL_MAGGOTEGG",
+	/*[160]*/	"SKILL_SHAMANFIRE",
+	/*[161]*/	"SKILL_MAGOTTUP",
+	/*[162]*/	"SKILL_MAGOTTDOWN",
+	/*[163]*/	"SKILL_MAGOTTLAY",
+	/*[164]*/	"SKILL_ANDRIALSPRAY",
+	/*[165]*/	"SKILL_JUMP",
+	/*[166]*/	"SKILL_SWARM_MOVE",
+	/*[167]*/	"SKILL_NEST",
+	/*[168]*/	"SKILL_QUICK_STRIKE",
+	/*[169]*/	"SKILL_VAMPIREFIREBALL",
+	/*[170]*/	"SKILL_VAMPIREFIREWALL",
+	/*[171]*/	"SKILL_VAMPIREMETEOR",
+	/*[172]*/	"SKILL_GARGOYLETRAP",
+	/*[173]*/	"SKILL_SPIDERLAY",
+	/*[174]*/	"SKILL_VAMPIREHEAL",
+	/*[175]*/	"SKILL_VAMPIRERAISE",
+	/*[176]*/	"SKILL_SUBMERGE",
+	/*[177]*/	"SKILL_FETISHAURA",
+	/*[178]*/	"SKILL_FETISHINFERNO",
+	/*[179]*/	"SKILL_ZAKARUMHEAL",
+	/*[180]*/	"SKILL_EMERGE",
+	/*[181]*/	"SKILL_RESURRECT",
+	/*[182]*/	"SKILL_BESTOW",
+	/*[183]*/	"SKILL_MISSILESKILL1",
+	/*[184]*/	"SKILL_MONTELEPORT",
+	/*[185]*/	"SKILL_PRIMELIGHTNING",
+	/*[186]*/	"SKILL_PRIMEBOLT",
+	/*[187]*/	"SKILL_PRIMEBLAZE",
+	/*[188]*/	"SKILL_PRIMEFIREWALL",
+	/*[189]*/	"SKILL_PRIMESPIKE",
+	/*[190]*/	"SKILL_PRIMEICENOVA",
+	/*[191]*/	"SKILL_PRIMEPOISONBALL",
+	/*[192]*/	"SKILL_PRIMEPOISONNOVA",
+	/*[193]*/	"SKILL_DIABLIGHT",
+	/*[194]*/	"SKILL_DIABCOLD",
+	/*[195]*/	"SKILL_DIABFIRE",
+	/*[196]*/	"SKILL_FINGERMAGESPIDER",
+	/*[197]*/	"SKILL_DIABWALL",
+	/*[198]*/	"SKILL_DIABRUN",
+	/*[199]*/	"SKILL_DIABPRISON",
+	/*[200]*/	"SKILL_POISONBALLTRAP",
+	/*[201]*/	"SKILL_ANDYPOISONBOLT",
+	/*[202]*/	"SKILL_HIREABLEMISSILE",
+	/*[203]*/	"SKILL_DESERTTURRET",
+	/*[204]*/	"SKILL_ARCANETOWER",
+	/*[205]*/	"SKILL_MONBLIZZARD",
+	/*[206]*/	"SKILL_MOSQUITO",
+	/*[207]*/	"SKILL_CURSEDBALLTRAPRIGHT",
+	/*[208]*/	"SKILL_CURSEDBALLTRAPLEFT",
+	/*[209]*/	"SKILL_MONFROZENARMOR",
+	/*[210]*/	"SKILL_MONBONEARMOR",
+	/*[211]*/	"SKILL_MONBONESPIRIT",
+	/*[212]*/	"SKILL_MONCURSECAST",
+	/*[213]*/	"SKILL_HELLMETEOR",
+	/*[214]*/	"SKILL_REGURGITATOREAT",
+	/*[215]*/	"SKILL_MONFRENZY",
+	/*[216]*/	"SKILL_QUEENDEATH",
+	/*[217]*/	"SKILL_SCROLL_OF_IDENTIFY",
+	/*[218]*/	"SKILL_BOOK_OF_IDENTIFY",
+	/*[219]*/	"SKILL_SCROLL_OF_TOWNPORTAL",
+	/*[220]*/	"SKILL_BOOK_OF_TOWNPORTAL",
+
+	/*[221]*/	"ÎÚÑ»",
+	/*[222]*/	"ÃÍ¶¾»¨ÌÙ",
+	/*[223]*/	"ÀÇÈË±ä»¯",
+	/*[224]*/	"±äÐÍÊõ",
+	/*[225]*/	"»ð·ç±©",
+	/*[226]*/	"ÏðÄ¾ÖÇÕß",
+	/*[227]*/	"ÕÙ»½ÀÇÁé",
+	/*[228]*/	"ÐÜÈË±ä»¯",
+	/*[229]*/	"ÈÛ½¬¾ÞÑÒ",
+	/*[230]*/	"¼«µØ·ç±©",
+	/*[231]*/	"Ê³Ê¬ÌÙ",
+	/*[232]*/	"Ò°ÐÔ¿ñ±©",
+	/*[233]*/	"×²´¸",
+	/*[234]*/	"»ðÉ½±¬",
+	/*[235]*/	"ì«·ç×°¼×",
+	/*[236]*/	"ÀÇâµÖ®ÐÄ",
+	/*[237]*/	"ÕÙ»½¿ñÀÇ",
+	/*[238]*/	"¿ñÈ®²¡",
+	/*[239]*/	"Ñæ×¦",
+	/*[240]*/	"Ð¡Ðý·ç",
+	/*[241]*/	"Ì«ÑôÌÙ",
+	/*[242]*/	"¼¢¶ö",
+	/*[243]*/	"Õð²¨",
+	/*[244]*/	"»ðÉ½",
+	/*[245]*/	"Áú¾í·ç",
+	/*[246]*/	"¼¬Áé",
+	/*[247]*/	"ÕÙ»½»ÒÐÜ",
+	/*[248]*/	"¿ñÅ­",
+	/*[249]*/	"»ÙÌìÃðµØ",
+	/*[250]*/	"±©·ç",
+
+	/*[251]*/	"»ðÑæ±¬Õð",
+	/*[252]*/	"Ö§ÅäÀû×¦",
+	/*[253]*/	"ÐÄÁéÕ½´¸",
+	/*[254]*/	"»¢»÷",
+	/*[255]*/	"Áú×¦",
+	/*[256]*/	"À×µçÍø",
+	/*[257]*/	"ÈÐÖ®ÊØÎÀ",
+	/*[258]*/	"ËÙ¶È±¬·¢",
+	/*[259]*/	"ÑæÈ­",
+	/*[260]*/	"Ë«Áú×¦",
+	/*[261]*/	"µçÄÜÊØÎÀ",
+	/*[262]*/	"»ðÑæ¸´Éú",
+	/*[263]*/	"ÎäÆ÷¸ñµ²",
+	/*[264]*/	"Ä§Ó°¶·Åî",
+	/*[265]*/	"ÑÛ¾µÉß¹¥»÷",
+	/*[266]*/	"ÈÐÖ®Å­",
+	/*[267]*/	"ÄÜÁ¿Ïû½â",
+	/*[268]*/	"Ó°×ÓÕ½Ê¿",
+	/*[269]*/	"À×µç×¦",
+	/*[270]*/	"ÉñÁú°ÚÎ²",
+	/*[271]*/	"À×¹âÊØÎÀ",
+	/*[272]*/	"¸´ÉúÓü»ð",
+	/*[273]*/	"ÐÄÁé±¬Õð",
+	/*[274]*/	"º®±ùÈÐ",
+	/*[275]*/	"·ÉÁúÔÚÌì",
+	/*[276]*/	"ËÀÍöÊØÎÀ",
+	/*[277]*/	"µ¶ÈÐÖ®¶Ü",
+	/*[278]*/	"¶¾ÑÀ",
+	/*[279]*/	"Ó°×Ó´óÊ¦",
+	/*[280]*/	"·ï»Ë¹¥»÷",
+
+	/*[281]*/	"SKILL_WAKE_OF_DESTRUCTION_SENTRY",
+	/*[282]*/	"SKILL_IMP_INFERNO",
+	/*[283]*/	"SKILL_IMP_FIREBALL",
+	/*[284]*/	"SKILL_BAAL_TAUNT",
+	/*[285]*/	"SKILL_BAAL_CORPSE_EXPLODE",
+	/*[286]*/	"SKILL_BAAL_MONSTER_SPAWN",
+	/*[287]*/	"SKILL_CATAPULT_CHARGED_BALL",
+	/*[288]*/	"SKILL_CATAPULT_SPIKE_BALL",
+	/*[289]*/	"SKILL_SUCK_BLOOD",
+	/*[290]*/	"SKILL_CRY_HELP",
+	/*[291]*/	"SKILL_HEALING_VORTEX",
+	/*[292]*/	"SKILL_TELEPORT_2",
+	/*[293]*/	"SKILL_SELFRESURRECT",
+	/*[294]*/	"SKILL_VINE_ATTACK",
+	/*[295]*/	"SKILL_OVERSEER_WHIP",
+	/*[296]*/	"SKILL_BARBS_AURA",
+	/*[297]*/	"SKILL_WOLVERINE_AURA",
+	/*[298]*/	"SKILL_OAK_SAGE_AURA",
+	/*[299]*/	"SKILL_IMP_FIRE_MISSILE",
+	/*[300]*/	"SKILL_IMPREGNATE",
+	/*[301]*/	"SKILL_SIEGE_BEAST_STOMP",
+	/*[302]*/	"SKILL_MINIONSPAWNER",
+	/*[303]*/	"SKILL_CATAPULTBLIZZARD",
+	/*[304]*/	"SKILL_CATAPULTPLAGUE",
+	/*[305]*/	"SKILL_CATAPULTMETEOR",
+	/*[306]*/	"SKILL_BOLTSENTRY",
+	/*[307]*/	"SKILL_CORPSECYCLER",
+	/*[308]*/	"SKILL_DEATHMAUL",
+	/*[309]*/	"SKILL_DEFENSE_CURSE",
+	/*[310]*/	"SKILL_BLOOD_MANA",
+	/*[311]*/	"SKILL_INFERNO_SENTRY",
+	/*[312]*/	"SKILL_DEATH_SENTRY",
+	/*[313]*/	"SKILL_SENTRY_LIGHTNING",
+	/*[314]*/	"SKILL_FENRIS_RAGE",
+	/*[315]*/	"SKILL_BAAL_TENTACLE",
+	/*[316]*/	"SKILL_BAAL_NOVA",
+	/*[317]*/	"SKILL_BAAL_INFERNO",
+	/*[318]*/	"SKILL_BAAL_COLD_MISSILES"
+	                           ][tmpskill];
+}
+function xx_skillname2(inno) {
+	var tmplevel = (inno >>> 5);
+	var tmpskill = (inno & 0x1f);
+	if (tmpskill > 20) return "";
+	return "µÈ¼¶" + tmplevel + [
+	/* [0]*/	"¹­ºÍÊ®×Ö¹­¼¼ÄÜ[ÑÇÂêÑ·]",
+	/* [1]*/	"±»¶¯ºÍÄ§·¨¼¼ÄÜ[ÑÇÂêÑ·]",
+	/* [2]*/	"±êÇ¹ºÍ³¤Ã¬¼¼ÄÜ[ÑÇÂêÑ·]",
+	/* [3]*/	"»ðÑæÏµ¼¼ÄÜ[·¨Ê¦]",
+	/* [4]*/	"ÉÁµçÏµ¼¼ÄÜ[·¨Ê¦]",
+	/* [5]*/	"±ù¶³Ïµ¼¼ÄÜ[·¨Ê¦]",
+	/* [7]*/	"¶¾ËØÓë°×¹Ç·¨Êõ[ËÀÁé·¨Ê¦]",
+	/* [6]*/	"×çÖä[ËÀÁé·¨Ê¦]",
+	/* [8]*/	"ÕÙ»½·¨Êõ[ËÀÁé·¨Ê¦]",
+	/* [9]*/	"×÷Õ½¼¼ÄÜ[Ê¥ÆïÊ¿]",
+	/*[10]*/	"¹¥»÷ÁéÆø[Ê¥ÆïÊ¿]",
+	/*[11]*/	"·ÀÓùÐÔÁéÆø[Ê¥ÆïÊ¿]",
+	/*[12]*/	"Õ½¶·¼¼ÄÜ[Ò°ÂùÈË]",
+	/*[13]*/	"Õ½¶·×¨¼Ò[Ò°ÂùÈË]",
+	/*[14]*/	"ÄÅº°[Ò°ÂùÈË]",
+	/*[15]*/	"ÕÙ»½[µÂÂ³ÒÀ]",
+	/*[16]*/	"ÍâÐÍ±äÐÎ[µÂÂ³ÒÀ]",
+	/*[17]*/	"ÔªËØ[µÂÂ³ÒÀ]",
+	/*[18]*/	"ÏÝÚå[´Ì¿Í]",
+	/*[19]*/	"Ó°×ÓÑµÁ·[´Ì¿Í]",
+	/*[20]*/	"ÎäÑ§ÒÕÊõ[´Ì¿Í]"
+	                           ][tmpskill];
+}
+function xx_skillname3(inno) {
+	var tmpmaxcharge = (inno >>> 22);
+	var tmpno = (inno & 0x3fffff);
+	var tmpcurcharge = (tmpno >>> 14);
+	tmpno = (tmpno & 0x3fff);
+	return (xx_skillname1(tmpno) + "[" + tmpcurcharge + "/" + tmpmaxcharge + "]");
+}
+function xx_skillname4(inno) {
+	var tmppercent = (inno >>> 14);
+	var tmpno = (inno & 0x3fff);
+	return (xx_skillname1(tmpno) + "[" + tmppercent + "%»úÂÊ]");
+}
+
+
+
+// Ini library v0.2 - by blue mind
+// -----------------------------------------------------------------------------
+// History :
+//
+// s.2 : accepts > and <, not only =
+//       returns a slightly different structure
+// 0.2 : bug corrections, now it works ;)
+// 0.1 : first draft, should get the job done at least. it only returns one big
+//       array containing all the info
+
+// The actual parsed content of the INI
+// this contains one array per section nItem in the ini
+// each section array is formed like this :
+// INI[0]=["Section Name",[TYPE,"First key name","First key value"],...]
+
+////////////////////////////////////////////////////////////////////////////////
+// ipLoadFile(strFileName)                                                    //
+////////////////////////////////////////////////////////////////////////////////
+// Loads the ini and fills INI with it                                        //
+// Will consider ; or // on the beginning of lines as a comment               //
+////////////////////////////////////////////////////////////////////////////////
+function ipLoadFile(strFileName) {
+	nDebug=0;
+	var nLines=0;
+
+	ipFile=fileOpen(strFileName, 0);
+	if (!ipFile) {
+		for (oi=0;oi<10;oi++) print("ÿc1Failed to open "+strFileName+" for reading");
+		delay(10000);
+		return;
+	}
+
+	FileLoop : while (!ipFile.eof) {
+		strCurrentLine = ipStripSpaces(ipFile.readLine());
+		nLines++;
+		debugprint("ÿc7Line "+nLines+" ÿc@"+strCurrentLine,nDebug);
+
+		// Check to see if this line is actually a comment, or is empty
+		if ((strCurrentLine=="") || (strCurrentLine[0]==";") || (strCurrentLine.indexOf("//")==0)) {
+			debugprint("ÿc9Skipping useless line, line n°"+nLines,nDebug);
+			continue;
+		}
+
+		// Check to see if it's a new section
+		if (strCurrentLine[0]=="[") {
+			// check if section name is actually valid
+			nEndOfSection = strCurrentLine.lastIndexOf("]");
+
+			// invalid section name, skip to next line and warn user
+			if (nEndOfSection < 2) {
+				print("Error at line "+nLines+" in "+strFileName+" : invalid section name");
+				continue;
+			}
+
+			nIniLen=INI.length;
+			debugprint("ÿc/Starting section "+nIniLen+" at line "+nLines,nDebug);
+			INI[nIniLen] = new Array();
+			INI[nIniLen].push(strCurrentLine.substring(1,nEndOfSection));
+			continue;
+		}
+
+		if(strCurrentLine.indexOf("|")!=-1)
+		{
+			nIniLen=INI.length;
+			debugprint("ÿc\"Entering new or block: ("+strCurrentLine+") at line "+nLines+", inserting in section "+INI[nIniLen-1][0],nDebug);
+			INI[nIniLen-1].push(["|","orblock",strCurrentLine]);
+			continue;
+		}
+
+		// Then it must be a key
+		// Four types of keys : =, >, <, and !
+		var TypeTable=["=",">","<","!"];
+		for (oi=0;oi<TypeTable.length;oi++)
+		{
+			nEndOfKey = strCurrentLine.indexOf(TypeTable[oi]);
+			if (nEndOfKey!=-1) {
+				FillINI(nEndOfKey,strCurrentLine,nLines,TypeTable[oi]);
+				continue FileLoop;
+			}
+		}
+
+		print("Some parsing error occurred at line "+nLines+" in "+strFileName+" : unknown case");
+	}
+	ipFile.close();
+}
+
+function FillINI(nEndOfKey,cString,nLines,keyval) {
+	nIniLen=INI.length;
+	strKeyName=cString.substring(0,nEndOfKey);
+	strKeyValue=StripQuotes(cString.substring(nEndOfKey+1),nLines);
+	if (strKeyName.substring(0,4) == "eval")
+		strKeyValue = PreparseEvalString(strKeyValue);
+	debugprint("ÿc\"Entering new key ("+strKeyName+" "+keyval+" "+strKeyValue+") at line "+nLines+", inserting in section "+INI[nIniLen-1][0],0);
+	INI[nIniLen-1].push([keyval,strKeyName,strKeyValue]);
+}
+
+function StripQuotes(string,nLines) {
+	Quotes = string.indexOf("\"");
+	if (Quotes!=-1) {
+		EndQuotes=string.lastIndexOf("\"");
+		if(EndQuotes==-1) {
+			if(arguments.length>=2) print("ÿc1Invalid quotes at line #"+nLines+"!!!");
+			return string;
+		}
+		return string.substring(Quotes+1,EndQuotes);
+	}
+	return string;
+}
+
+// Removes the spaces and tabs at the beginning of the string
+function ipStripSpaces(strLine) {
+	var nLength=strLine.length;
+	var nPos=0;
+	while (nPos<nLength && ((strLine[nPos]==" ") || (strLine[nPos]=="	"))) {
+		nPos++;
+	}
+	return strLine.substring(nPos);
+}

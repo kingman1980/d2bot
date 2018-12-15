@@ -1,0 +1,3 @@
+function main() {
+	load("bots/MarsBrandMeph.d2j");
+}

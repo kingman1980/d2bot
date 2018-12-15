@@ -1,0 +1,826 @@
+// D2JSP, MarsPindleScript.d2j
+//====================================================================
+// Pindleskin Bot script for ANY Character
+// Authors: LordOfMars, FruitBar, and HPB_Forever
+// Extra thanks to nJaguar, Sydasti and Smoke
+
+//Please edit your settings, located in your settings folder and pwnsettings.d2l in the libs folder
+//Change the below file to point to different settings.
+//If you need to run 2 bots, and have 2 characters with different setups of the same class:
+//Make a copy of the settings.d2l, and change the below character selection to that character and file.
+
+// This is only needed if you have 2 characters of the same type!  Copy your settings, and point the characters to the right files.
+if(me.name=="your char name") charsetfile="pwn_soc_setting.d2l";
+else charsetfile="pwn_soc_setting.d2l";
+
+/* ææææææææææææææææææææææææææææææææææææææææææææææææ
+ADVANCED USERS ONLY BELOW THIS POINT
+ææææææææææææææææææææææææææææææææææææææææææææææææ */
+/* ææææææææææææææææææææææææææææææææææææææææææææææææ
+Don't edit below this point, unless you know what you are doing!
+ææææææææææææææææææææææææææææææææææææææææææææææææ */
+
+var RunLog="output\\" +me.name+"_RunLog.html";
+var position="start";
+var MainLoad=0;
+
+/* ææææææææææææææææææææææææææææ
+Credits
+ææææææææææææææææææææææææææææ */
+
+function credits()
+{
+	if(!SkipCredits)
+	{
+		print("ÿc9d2jsp PwnagePindleBot script by LordOfMars, FruitBar, and HPB_Forever.");
+		print("ÿc8bmpwnit By BlueMind.  Logging done by Scavenger, Rayzer, Serotonin and DaveF!");
+		print("ÿc5Potion usage by Syadasti && Swedish Power.  Maintained by HPB_Forever.  Coding from Sherpya!");
+		print("ÿc7Extra thanks to Syadasti and Smoke.  Autoiding done by Xizeta!  Testing and coding help from Raam!");
+		print("ÿc1D2JSP.d2h core created and coded by nJaguar!  GUI completed by Sherpya and njaguar!");
+	}
+	SucNumber=String((l_kills / (l_total-1)) * 100).substring(0,5);
+	if(l_kills==0) print("ÿc9Pwnage Pindle Version 1.59h");
+	//else print("ÿc9Pwnage Pindle Version 1.59h ÿc1Total runs:  " +(l_total-1) +"  Total kills:  " +l_kills +"  With a " +SucNumber +"% success rate!");
+}
+
+/* ææææææææææææææææææææææææææææ
+Event triggers
+ææææææææææææææææææææææææææææ */
+
+//Function by mattlant
+function managepotions()
+{
+	load("tools/pwnlifewatch.d2j");
+	var potgid= new Object();
+	potion = getUnit(4,null,100);
+	
+	if(potion) do
+	{
+		outif : if(potion.itemtype==76 || potion.itemtype==77 || potion.itemtype==78)
+		{
+			if(potgid[potion.gid])
+				break outif;
+			potgid[potion.gid]=true;
+			clickItem(1,potion);
+			DoDel(250);
+			potion = getUnit(4,null,100);
+			continue;
+		}
+	} while(potion.getNext(null,100));
+	DropEM++;
+	if(needstash) checkinventory();
+}
+
+function pindletaunt()
+{
+	if (taunts)
+	{
+		switch (parseInt(Math.random() * 11)) {
+			case 0: print("ÿc4Pindleskin: ÿc@You'll never get a Windforce out of me!!"); break;
+			case 1: print("ÿc4Pindleskin: ÿc@Windforce?  Ha!  The only force you'll feel is my foot in your ass!"); break;
+			case 2: print("ÿc4Pindleskin: ÿc@Tell your mom I said hi!"); break;
+			case 3: print("ÿc4Pindleskin: ÿc@PKPKPKPK COME COME POTAL!"); break;
+			case 4: print("ÿc4Pindleskin: ÿc@Bring it beotch!"); break;
+			case 5: print("ÿc4Pindleskin: ÿc@You want a grandfather, go bother cain, you want a POS +1 light radius charm then we'll talk business"); break;
+			case 6: print("ÿc4Pindleskin: ÿc@If I weren't already dead, I might care!"); break;
+			case 7: print("ÿc4Pindleskin: ÿc@I'm gonna pwn your a$$!  If I don't though, please forward these gifts to FruitBar for me"); break;
+			case 8: print("ÿc4Pindleskin: ÿc@Kiss my shriveled undead posterior!"); break;
+			case 9: print("ÿc4Pindleskin: ÿc@Come on down and give uncle Pindle a big hug!"); break;
+			default: print("ÿc4Pindleskin: ÿc@I am the Alpha and the Omega!!!"); break;
+		}
+	}
+	//print(me.getStat(80)+me.getStat(240) + "% Magic Find and " + me.getStat(79) + "% Gold Find detected!  Time to pwn Pindle!");
+}
+
+/* ææææææææææææææææææææææææææææ
+Interaction
+ææææææææææææææææææææææææææææ */
+
+function NPCinteract(who)
+{
+	if(who==stash)
+		npc = getUnit(2,stash);
+	else
+		npc = getUnit(1,who);
+	if (npc)
+	{
+		EnterInteraction(npc);
+		if (ShopIton && who!=qual && who!=stash)
+		{
+			EnterTrade(npc);
+			ShopIt(who,npc);
+		}
+		switch (who)
+		{
+			case qual:
+				npc.useMenu(0x1507);
+				for(var m=0; m<20; m++)
+				{
+					if(!checkmerc())
+						break;
+					DoDel(50);
+				}
+				print("Mercenary revived!");
+				break;
+			case larzuk:
+				if ((needrepair || needammo) && !ShopIton)
+					EnterTrade(npc);
+				if (needrepair)
+				{
+					npc.repair();
+					for(var m=0; m<20; m++)
+					{
+						checkrepair();
+						if(!needrepair)
+							break;
+						DoDel(50);
+					}
+					print("Equipment repaired!");
+				}
+				if (needammo)
+					buyammo(npc);
+				break;
+			case malah:
+				if(!FullINV && Uniditem)
+				{
+					if(!ShopIton) EnterTrade(npc);
+					NumItems=0;
+					do
+					{
+						if(!SellBackItems && NumItems>0)
+						{
+							EnterInteraction(npc);
+							EnterTrade(npc);
+						}
+						Niceitem=false;
+						IDitem(npc);
+						if(ParseIt("settings/"+charbmitems, itemx, itemy, 1))
+						{
+							needstash=true;
+							Niceitem=true;
+						}
+						if(!SellBackItems)
+						{
+							MenuCancel(npc,1);
+							DoDel(100);
+							DropItem(npc);
+						}
+						else
+							SellIdeditem(npc);
+						DoDel(100);
+						NumItems++;
+						if(NumItems>16)
+							break;
+					} while(Checkitems())
+				}
+				break;
+			case stash:
+		managestash(1); 
+                                  	cubepg_main();
+                                  	managestash(1);
+                                         	break;
+		}
+
+		if(who==stash)
+			MenuCancel(npc,0);
+		else
+			MenuCancel(npc,1);
+	}
+}
+
+function ItemtoCursor(item)
+{
+	clickItem(0,item);
+	for (up = 0; up < 30; up++)
+	{
+		if(me.itemoncursor) return true;
+		DoDel(20);
+	}
+	return false;
+}
+
+function DropItem(npc)
+{
+	if(Niceitem || !itemID)
+	{
+		print("Returning");
+		return false;
+	}
+
+	item = getUnit(4,itemc,100);
+	if(item) do
+	{
+		if(item.x==itemx && item.y==itemy && itemc == item.code)
+			break;
+	} while (item.getNext(itemc,100));
+	if(item.getFlag(0x10)==0 || item.x!=itemx || item.y!=itemy || itemc!=item.code)
+		return false;
+
+	if(ParseIt("settings/"+charbmitems, itemx, itemy, 0))
+		print("Oops, something is wrong here...  We won't be dropping the item!");
+	else
+	{
+		if(!ItemtoCursor(item))
+			print("We had a problem getting the item on your cursor");
+		clearcursor();
+		if(needstash)
+		{
+			print("Rechecking inventory!");
+			checkinventory();
+		}
+	}
+	TossItem(100, "isc");
+}
+
+function EnterInteraction(npc)
+{
+	var interwait=(npc.name==stash)?0x19:0x08;
+	if(getUIFlag(interwait))
+		return;
+
+	TryLoop : for(var trys=0; trys<3; trys++)
+	{
+		walkto(npc.x, npc.y);
+		npc.interact();
+		for(var can=0; can<50; can++)
+		{
+			if(getUIFlag(interwait))
+				break TryLoop;
+			DoDel(10);
+		}
+	}
+}
+
+function EnterTrade(npc)
+{
+	if(getUIFlag(0x0c) && getUnit(4,null,101))
+		return;
+
+	if(npc.name==larzuk)
+		npc.useMenu(0x0D06);
+	else
+		npc.useMenu(0x0D44);
+
+	for(var can=0; can<50; can++)
+	{
+		if(getUIFlag(0x0c))
+			break;
+		DoDel(10);
+	}
+
+	for(var can=0; can<50; can++)
+	{
+		if(getUnit(4,null,101))
+			break;
+		DoDel(10);
+	}
+
+	DoDel(100);
+}
+
+function MenuCancel(which,how)
+{
+	if(!CheckUI())
+		return false;
+	which.cancel(how);
+
+	for(var can=0; can<50; can++)
+	{
+		if(!CheckUI())
+			break;
+		DoDel(10);
+	}
+}
+
+// Remove Function by mattlant
+// CheckUI([Extra flags to check in an array - can be null],Remove all other arguments from the flag list)
+function CheckUI(AddFlags)
+{
+	//Default flags
+	var UIFlags=[0x08,0x0c,0x0d,0x14,0x19,0x1a];
+	var Flags=false;
+
+	//Add the flags passed over an array from the user
+	if(AddFlags)
+		for(var i=0; i<AddFlags.length; i++)
+			UIFlags.push(AddFlags[i]);
+
+	//For the number of arguments, check the flags, and if found, remove it.
+	for(var arg=1; arg<arguments.length; arg++)
+	{
+		for(var h=0; h<UIFlags.length; h++)
+		{
+			if (String(arguments[arg])==String(h))
+			{
+				if(!h)
+					UIFlags.shift();
+				else if(h == UIFlags.length-1)
+					UIFlags.pop();
+				else
+					UIFlags = UIFlags.splice(h, 1);
+			}
+		}
+	}
+
+	//Check if the flags are present, then push them into the array
+	for(var h=0; h<UIFlags.length; h++)
+	{
+		if(getUIFlag(UIFlags[h]))
+		{
+			if(!Flags)
+				Flags=new Array();
+			Flags.push(UIFlags[h]);
+		}
+	}
+
+	//If false, return 0
+	if(!Flags)
+		return 0;
+	//If a single entry, return just that entry
+	if(Flags.length<2)
+		return String(Flags[0]);
+	//If it is an array, make it to a string and return it
+	else
+		return Flags.toString();
+}
+
+/* ææææææææææææææææææææææææææææ
+Act correction : pathing by flechette
+ææææææææææææææææææææææææææææ */
+
+function checkact()
+{
+	if (me.act < 5)
+	{
+		print("You are not in act 5!  Going from act #" + me.act + " to act #5");
+		if (!nooverheads) me.overhead("Walking to Waypoint");
+		switch (me.act)
+		{
+			case 1: roguechange(); break;
+			case 2:
+				walkto(5127, 5175);
+				walkto(5120, 5133);
+				walkto(5094, 5113);
+				walkto(5069, 5086);
+				break;
+			case 3:
+				walkto(5131, 5168);
+				walkto(5133, 5151);
+				walkto(5133, 5136);
+				walkto(5133, 5122);
+				walkto(5132, 5104);
+				walkto(5133, 5092);
+				walkto(5147, 5093);
+				walkto(5149, 5079);
+				walkto(5154, 5066);
+				walkto(5160, 5054);
+				walkto(5159, 5049);
+				break;
+			case 4: walkto(5044, 5019); break;
+		}
+		ChangeArea("Waypoint",109,0x6d)
+		position = "waypoint";
+	} else return true;
+	if (me.act != 5) quitmessage("You're not in act 5!");
+}
+
+function roguechange()
+{
+	waypoint=getUnit(2,"Waypoint");
+	i=0;
+	while(!waypoint)
+	{
+		DoDel(100);
+		waypoint=getUnit(2,"Waypoint");
+		i++
+		if(i>=100) quitmessage("Unable to find waypoint!");
+	}
+
+	if (waypoint.x - me.x == 26 && waypoint.y - me.y == -19)
+	{
+		walkto(me.x + 16, me.y + -1);
+		walkto(me.x + 8, me.y + -15);
+	} else if (waypoint.x - me.x == 21 && waypoint.y - me.y == -24)
+	{
+		walkto(me.x + 1, me.y + -16);
+		walkto(me.x + 16, me.y + -5);
+	} else if (waypoint.x - me.x == -19 && waypoint.y - me.y == -29)
+	{
+		walkto(me.x + -5, me.y + -12);
+		walkto(me.x + -13, me.y + -16);
+	} else if (waypoint.x - me.x == -14 && waypoint.y - me.y == -29)
+	{
+		walkto(me.x + -2, me.y + -14);
+		walkto(me.x + -12, me.y + -15);
+	} else quitmessage("We had an error.  I wonder what I did wrong?");
+}
+
+function InteractWP(oldwp,where)
+{
+	oldwp.interact();
+	DoDel(100);
+	oldwp.useMenu();
+	DoDel(100);
+	oldwp.interact(where);
+	DoDel(100);
+	oldwp.cancel();
+	DoDel(100);
+	//newwp = getUnit(2,"Waypoint");
+	//DoDel(100);
+	//newwp.interact();
+	//DoDel(100);	
+	//newwp.cancel(0);
+	//DoDel(100);
+}
+
+function ChangeArea(how,des,where)	//How to change, your destination area, and for waypoints the area to change to
+{
+	portal = getUnit(2,how);
+
+	i = 0;
+	while (!portal && i++ < 3)
+	{
+		print("Waiting to detect the " +how);
+		DoDel(100);
+		portal = getUnit(2,how);
+	}
+
+	if (!portal) quitmessage(how +" Not found");
+	walkto(portal.x, portal.y);
+	if(how=="Waypoint") InteractWP(portal,where);
+	else portal.interact();
+	
+	i=0;
+	while(me.area != des)
+	{
+		DoDel(20);
+		if (i == 50)
+		{
+			walkto(portal.x, portal.y);
+			if(how=="Waypoint") InteractWP(portal,where);
+			else portal.interact();
+		}
+		if (i >= 100) quitmessage("Use of " +how +" failed!");
+		i++
+	}
+	if(how=="Waypoint") MenuCancel(portal,0);
+	DoDel(100);
+	//print("Area changed in " +parseInt(i*20+100) +" ms!");
+}
+
+/* ææææææææææææææææææææææææææææ
+Paths
+ææææææææææææææææææææææææææææ */
+
+function clearjug()
+{
+	//print("clearing jug")
+	jug= getUnit(2,"jug");
+	do {
+		//print("jug position is: "+jug.x + "/" + jug.y);
+		if(jug.x >= 5104 && jug.x <= 5108
+		&& jug.y >=5038 && jug.y <=5040)
+		{
+			jug.interact();
+			delay(200);
+		}
+	}while(jug && jug.getNext());
+}
+
+function clearbarrel() {
+	barrel = getUnit(2,"barrel");
+	do {
+		//print("barrel position is: "+barrel.x + "/" + barrel.y);
+		if(barrel.x >= 5072 && barrel.x <= 5078 
+		&& barrel.y >= 5023 && barrel.y <= 5025)
+		{
+			barrel.interact();
+			delay(200);
+		}
+	}while(barrel && barrel.getNext());
+}
+
+function PathToMalah()
+{
+	
+	if (!nooverheads) me.overhead("Walking to Malah");
+	
+	switch(position)
+	{
+		case "start":
+			walkto(5080, 5031);
+			walkto(5075, 5023);
+			clearbarrel();
+			return;
+		case "waypoint":
+			//print(me.x,me.y);
+			walkto(5111, 5063);
+			walkto(5105, 5046);
+			walkto(5106, 5040);//below jug
+			clearjug();
+			walkto(5093,5023);
+			walkto(5080, 5031);
+			walkto(5075, 5023);
+			clearbarrel();
+			return;
+	}
+}
+
+function PathToLarzuk()
+{
+	if (!nooverheads) me.overhead("Walking to Larzuk");
+	switch(position)	//Starting position
+	{
+		case "start":
+			walkto(5106, 5038);//above jug
+			if(corpsecollect()) walkto(5106, 5038);
+			//print("(5106, 5038)")
+			clearjug();
+			walkto(5105, 5046);
+			walkto(5111,5063);
+			walkto(5123,5059);
+			return;
+		case "waypoint":
+			walkto(5111,5063);
+			walkto(5123,5059);
+			return;
+		case "malah":
+			//print("malah")
+			walkto(5080,5031);
+			walkto(5093,5023);
+			walkto(5106, 5038);//above jug
+			clearjug();
+			walkto(5105, 5046);
+			walkto(5111,5063);
+			walkto(5123,5059);
+			return;
+		case "qualkehk":
+			walkto(5080,5031);
+			walkto(5093,5023);
+			walkto(5106, 5038);//above jug
+			clearjug();
+			walkto(5105, 5046);
+			walkto(5111,5063);
+			walkto(5123,5059);
+			return;
+	}
+}
+
+function starttowaypoint()
+{
+	if (!nooverheads) 
+		me.overhead("Walking to Red Portal");
+	walkto(5106, 5038);//above jug
+	if(corpsecollect()) 
+		walkto(5106, 5038);
+	//print("(5106, 5038)")
+	clearjug()
+	walkto(5105, 5046);
+	walkto(5111, 5063);
+	//walkto(5115, 5070);
+}
+
+function PathToStash()
+{
+	if (!nooverheads) me.overhead("Walking to stash");
+	switch(position)	//Starting position
+	{
+		case "waypoint":
+			walkto(5111, 5063);
+			walkto(5123,5059);
+			return;
+		case "malah":
+			walkto(5080, 5031);
+			walkto(5093, 5023);
+			walkto(5106, 5038);//above jug
+			//print("(5106, 5038)")
+			clearjug()
+			walkto(5105, 5046);
+			walkto(5111, 5063);
+			walkto(5123,5059);
+			return;
+		case "larzuk":
+			walkto(5123,5059);
+			return;
+		case "qualkehk":
+			walkto(5080,5031);
+			walkto(5093,5023);
+			walkto(5106, 5038);//above jug
+			clearjug();
+			walkto(5105, 5046);
+			walkto(5111,5063);
+			walkto(5123,5059);
+			return;
+	}
+}
+
+function PathToQual()
+{
+	if (!nooverheads) me.overhead("Walking to Qual-Kehk");
+	if(position=="stash") position="waypoint";  //These paths are the same
+	switch(position)	//Starting position
+	{
+		case "start":
+			walkto(5080, 5031);
+			return;
+		case "waypoint":
+			walkto(5111, 5063);
+			walkto(5105, 5046);
+			walkto(5106, 5040);//below jug
+			clearjug();
+			walkto(5093, 5023);
+			walkto(5080, 5031);
+			return;
+		case "malah":
+			walkto(5080, 5031);
+			//walkto(5072, 5042);
+			//walkto(5081, 5062);
+			//walkto(5081, 5078);
+			return;
+		case "larzuk":
+			walkto(5123, 5059);
+			walkto(5111, 5063);
+			walkto(5105, 5046);
+			walkto(5106, 5040);//below jug
+			clearjug();
+			walkto(5093, 5023);
+			walkto(5080, 5031);
+			return;
+	}
+}
+
+function PathToPort()
+{
+	if (!nooverheads) me.overhead("Walking to Red Portal");
+	//print(position + " to portal");
+	switch(position)	//Starting position
+	{
+		case "waypoint":
+			//walkto(5121, 5085);
+			//walkto(5131, 5108);
+			//walkto(5126, 5115);
+			walkto(5123,5059);
+			return;
+		case "malah":
+			walkto(5080, 5031);
+			walkto(5093, 5023);
+			walkto(5106, 5038);//above jug
+			//print("(5106, 5038)")
+			clearjug()
+			walkto(5105, 5046);
+			walkto(5111, 5063);
+			walkto(5123,5059);
+			return;
+		case "stash":
+			walkto(5123,5059);
+			return;
+		case "larzuk":
+			walkto(5123,5059);
+			return;
+		case "qualkehk":
+			walkto(5080, 5031);
+			walkto(5093, 5023);
+			walkto(5106, 5038);//above jug
+			//print("(5106, 5038)")
+			clearjug()
+			walkto(5105, 5046);
+			walkto(5111, 5063);
+			walkto(5123,5059);
+			return;
+	}
+}
+
+function walktopindle()
+{
+	if (!nooverheads) me.overhead("Walking to Pindleskin");
+	walkto(10060,13302);
+	walkto(10061,13280);
+	walkto(10061,13252);
+	walkto(10057,13247);
+	if (!RangedAtt) walkto(10058,13234);
+}
+
+/* ææææææææææææææææææææææææææææ
+Before Portal
+ææææææææææææææææææææææææææææ */
+
+function preportalmanager()
+{
+	//print(position);
+	if(RandomNPC) 
+		NPCnum=parseInt(Math.random() * 11);
+	else 
+		NPCnum=0;
+	needmalah=false;
+	checkinventory();
+	Checkitems();
+	//AlwaysMalah  = true;
+	if (AlwaysMalah || Uniditem || checkheal() || NPCnum>=rnd(2,9))
+	{
+		//print(position);
+		needmalah=true;
+		PathToMalah();
+		if(corpsecollect()) PathToMalah();
+		position = "malah";
+		NPCinteract(malah);
+	}
+	checkmerc();
+	if (needmerc)
+	{
+		print("Mercenary is dead!!!");
+		PathToQual();
+		position = "qualkehk";
+		NPCinteract(qual);
+		checkmerc();
+	}
+	if (position == "start")
+	{
+		starttowaypoint();
+		position = "waypoint";
+	}
+	checkammo();
+	if(!needrepair) 
+		checkrepair();
+	
+	if (needrepair || needammo || (AlwaysLarzuk && !MalahNotLarzuk) || (AlwaysLarzuk && !needmalah) || NPCnum>=rnd(2,9))
+	{
+		print("Need to repair");
+		PathToLarzuk();
+		position = "larzuk";
+		NPCinteract(larzuk);
+	}
+	if (needstash || Niceitem)
+	{
+		PathToStash();
+		position="stash";
+		NPCinteract(stash);
+		CheckDrop();
+	}
+	//pindletaunt();
+	PathToPort();
+	if(GoToAnya || NPCnum>=rnd(2,9)) NPCinteract(anya);
+}
+
+/* ææææææææææææææææææææææææææææ
+Loading Includes:
+ææææææææææææææææææææææææææææ */
+
+function LoadIncludes()
+{
+        	include("autocubepg.31.d2l");
+        	include(charsetfile);
+        	include("pwnchars.d2l");
+	include("PwnageInclude.d2l");
+	include("mypwnlt.d2l");
+	include("snagit-dictionary.d2l");
+}
+
+/* ææææææææææææææææææææææææææææ
+Main Switchboard
+ææææææææææææææææææææææææææææ */
+
+function main()
+{
+	//print("my area is: " + me.area);
+	if(parseFloat(me.version)<.29)
+	{
+		print("This is only for donators!  Please redownload and install d2jsp!");
+		stop();
+	}
+	LoadIncludes();
+	//print("includes loaded");
+	LoadRun();
+	//print("run loaded");
+	credits();
+	if (begingamedelay > 0)
+	{
+		//print(begingamedelay);
+		print("Waiting " + (begingamedelay / 1000) + " seconds for initialization...");
+		DoDel(begingamedelay);
+		//print("DoDel");
+	}
+	corpsecollect();
+	//print("clearing cursor()");
+	clearcursor();
+	//print("clear cursor()");
+	//stop();
+	checkact();
+
+	TossItem(100, "isc");
+	TossItem(100, "aqv");
+	TossItem(100, "cqv");
+
+	preportalmanager();
+
+	characterpreportal();
+	ChangeArea("Portal",121)
+	characterpostportal();
+
+	attackpindle();
+
+	if (attackzombies) zombieattack();
+	if(me.classid == 3 && UseVigor) me.setSkill("Vigor", 0);
+
+	print("ÿc1Done!");
+	plus_kills();
+}

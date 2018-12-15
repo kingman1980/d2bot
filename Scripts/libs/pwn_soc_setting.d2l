@@ -1,0 +1,1236 @@
+// General configs can be found at the bottom, only needed if you are having problems
+// This is the file you should be editing!!!
+// Note: all skill names are case sensitive!  Frozen Orb is not the same thing as frozen orb.
+
+// For potion settings, edit pwnlifewatch.d2j
+
+
+
+
+
+
+/* ææææææææææææææææææææææææææææ
+Sorceress Variables
+ææææææææææææææææææææææææææææ */
+
+
+
+
+
+
+
+
+function Sorcvariables() {
+/* ææææææææææææææææææææææææææææ
+Sorceress Variables
+ææææææææææææææææææææææææææææ */
+
+// Precastable defensive spells
+//====================================================================
+// prelist.push("skill")	Select the precasts you want here.  Remove // to turn them on
+
+//prelist.push("Energy Shield");
+//prelist.push("Frozen Armor");
+prelist.push("Shiver Armor");
+//prelist.push("Chilling Armor");
+//prelist.push("Thunder Storm");
+
+
+// Attack configuration
+//====================================================================
+// timedfirst=true/false	If set true, will cast your first listed timed spell before casting static field
+//				Recommended with Frozen Orb or Blizzard, spells which freeze and slow Pindle
+// statictimes=x		This is the number of times you want static field to be cast
+//				If set to 0, it will not be cast.
+// spelllist.push"xxxxx"	The first attack in the list will be used first
+// spelllist.push("Hydra");	To use a new skill, remove the comments, like nova and orb are setup
+// 				//Put comments like the one at the start of this line in front of spells to disclude them
+//
+// You can use any number of timed and untimed spells.  The script will alternate between them in the order
+// that you list them, in a pattern of first timed, first untimed, second timed, second untimed, etc...
+// So you can list any number of spells but the order in which you list them will determine which timed
+// spell goes off in what order, and likewise for untimed spells.  For instance, if you list Frozen Orb,
+// Meteor, Blizzard and Nova, the script will cast Frozen Orb, Nova, Meteor, Nova, Blizzard, Nova etc...
+//
+// untimedrepeat=x		This is the number of times to cast each untimed spell when only using untimed spells
+// maxattacks=xx		This is the maximum number of attack sequences used to attack Pindleskin
+//				If he is still alive after this many attacks, the game will abort
+// teledistance=x		This is the coordinates of the last teleport before attacking Pindleskin
+//				teledistance=0 puts you a good ways away.  The higher you make this number,
+//				the closer you will teleport to Pindleskin.
+//				Only 0-10 would be an advisable number to use here, higher than 10 makes ya REAL close.
+// SwitchOnKill/true/false	Set this to true to switch to the weapon with the greatest magic find upon killing Pindle
+// SwitchHP=xx			This is the amount of Pindle's hp out of 128 that is remaining.
+// StallKill=true/false		Set this to true to let your merc get the last hit
+// StallHP=xx			This is the amount of hp of 128 that you will stall for pindle to die on
+// MercSkipPhys=true/false	Set this to true along with StallKill and you won't stall if pindle is immune to phys
+
+timedfirst=true;
+statictimes=3;
+
+spelllist.push("Frozen Orb");
+//spelllist.push("Nova");
+//spelllist.push("Hydra");
+//spelllist.push("Meteor");
+//spelllist.push("Charged Bolt");
+//spelllist.push("Frozen Orb");
+//spelllist.push("Fire Ball");
+//spelllist.push("Fire Wall");
+//spelllist.push("Glacial Spike");
+//spelllist.push("Blizzard");
+//spelllist.push("Chain Lightning");
+untimedrepeat=1;
+maxattacks=40;
+teledistance=3;
+SwitchOnKill=true;
+SwitchHP=50;
+StallKill=false;
+StallHP=40;
+MercSkipPhys=true;
+
+
+/* ææææææææææææææææææææææææææææ
+Mercenary Variables
+ææææææææææææææææææææææææææææ */
+// usemerc=true/false		Set to true if you use a merc, will revive merc at Qual-Kehk if necessary
+// merccost=xxxxx		Set this to the amount of gold it costs for you to revive your merc at Qual-Kehk
+// enchantmerc=true/false	Set to true if you want to cast Enchant on your merc with other precasts
+
+usemerc=true;
+merccost=10;
+enchantmerc=false;
+
+
+/* ææææææææææææææææææææææææææææ
+ShopIt!
+ææææææææææææææææææææææææææææ */
+// ShopIton=true/false		Set this to true to shop every npc you talk to, false to skip this
+// AlwaysMalah=true/false	Set this to true to shop Malah every run
+// AlwaysLarzuk=true/false	Set this to true to shop Larzuk every run
+// MalahNotLarzuk=true/false	Set this to true, and you won't visit Larzuk after going to Anya
+// GoToAnya=true/false		Set this to true to shop at Anya
+
+ShopIton=true;
+AlwaysMalah=false;
+AlwaysLarzuk=false;
+MalahNotLarzuk=false;	//This is for use with Always Larzuk.  See above
+GoToAnya=false;
+
+
+/* ææææææææææææææææææææææææææææ
+Other configurations
+ææææææææææææææææææææææææææææ */
+// repairpercent=xx		You will visit Larzuk for repair if any of your items fall below this percent of durability
+// taunts=true/false		Set to true to have Pindleskin sling random taunts your direction
+// FreeSpace=x			This is the number of columns you must have at the start of the run before stashing
+// charsnag="which"		Set this to the ini you want used for snagit
+// charbmitems="which"		Set this to the ini you want used for the bmitems file you want to use
+// skipheallife=xx		If you have more than this percent of your life, you won't go to Malah
+// skiphealmana=xx		If you have more than this percent of your mana, you won't go to Malah
+//
+// Note:			These whole integer numbers represent a percent value
+// Example:			"skipheallife=90" means "Skip going to Malah if you have at least %90
+//				of your total maximum life", etc...
+// walkdel=xx			This is the delay between steps.  Change this if you are having problems with black walls
+
+repairpercent=25;
+taunts=false;
+FreeSpace=4;
+charsnag="snagit.ini";
+charbmitems="bmitems.ini";
+skipheallife=80;
+skiphealmana=80;
+walkdel=150;
+
+
+/* ææææææææææææææææææææææææææææ
+Zombie attack!
+ææææææææææææææææææææææææææææ */
+// attackzombies=true/false	Set to true if you want to attack the Zombies in the courtyard.  Requires Nova
+// zombieusestatic=true/false	Set to false if you don't want to use static field on the Zombies
+// zombiestatictimes=x		This is the number of times to cast Static Field at each attack stop for the Zombies
+// zombieSkill=x		Skill to attack zombies with
+// zombieStand=true/false	If true, stand still to attack (strafe/traps/...)
+
+attackzombies=false;
+zombieusestatic=false;
+zombiestatictimes=3;
+zombieSkill="Nova";
+zombieStand=true;
+
+
+/* ææææææææææææææææææææææææææææææææææææææææ?
+Immunities/Resistances/Enchantments to skip
+ææææææææææææææææææææææææææææææææææææææææ?*/
+
+//Set each to true to chicken out if pindle is immune to that kind of damage
+
+immunities[1]=false;			// Physical
+immunities[2]=false;			// Magic
+immunities[3]=false;			// Fire
+immunities[4]=false;			// Lightning
+immunities[5]=true;			// Cold
+immunities[6]=false;			// Poison
+
+// Immunities Combinations
+// Method:  if set to true, will chicken with that immunities# / immunities# combination
+// immunecombos[next number] = new Array(immunities#,immunities#,true/false);
+
+//immunecombos[1]=new Array(1,2,false);	// Immune to Physical and Immune to Magic
+//immunecombos[2]=new Array(4,5,true);	// Immune to Lightning and Immune to Cold
+
+//Set each to true to chicken out if pindle has that enchantment
+
+enchantments[1]=false;		//Extra Strong
+enchantments[2]=false;		//Extra Fast
+enchantments[3]=false;		//Cursed
+enchantments[4]=false;		//Magic Resistant
+enchantments[5]=false;		//Fire Enchanted
+enchantments[6]=false;		//Lightning Enchanted
+enchantments[7]=false;		//Cold Enchanted
+enchantments[8]=false;		//Mana Burn
+enchantments[9]=false;		//Teleportation
+enchantments[10]=false;		//Spectral Hit
+enchantments[11]=false;		//Stone Skin
+enchantments[12]=false;		//Multiple Shot
+
+// Enchantment Combinations
+// Method:  if set to true, will chicken with that enchantment# / enchantment# combination
+// enchantcombos[next number] = new Array(enchantment#,enchantment#,true/false);
+
+enchantcombos[1]=new Array(6,12,false);	// Multiple Shot Lightning
+enchantcombos[2]=new Array(2,8,false);	// Extra Fast Mana Burn
+
+// Set each to true to chicken out if pindle has that aura
+
+auras[1]=false;			//Conviction
+auras[2]=false;			//Might
+auras[3]=false;			//Holy Fire
+auras[4]=false;			//Blessed Aim
+auras[5]=false;			//Holy Freeze
+auras[6]=false;			//Holy Shock
+auras[7]=false;			//Fanaticism
+
+// Enchantment / Aura Combinations
+// Method:  if set to true, will chicken with that enchantment# / aura# combination
+// enchantauracombos[next number] = new Array(enchantment#,aura#,true/false);
+
+//enchantauracombos[1]=new Array(2,2,false);	// Extra Fast Might
+//enchantauracombos[2]=new Array(2,5,false);	// Extra Fast Holy Freeze
+//enchantauracombos[3]=new Array(2,7,false);	// Extra Fast Fanaticism
+//enchantauracombos[4]=new Array(6,1,false);	// LE Conviction
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ææææææææææææææææææææææææææææ
+Barbarian Variables
+ææææææææææææææææææææææææææææ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function Barbvariables() {
+/* ææææææææææææææææææææææææææææ
+Barb Variables
+ææææææææææææææææææææææææææææ */
+
+// Precastable defensive spells
+//====================================================================
+// shout=true/false		Set this to true to use Shout
+// Bcommand=true/false		Set this to true to use battle command
+// Border=true/false		Set this to true to use battle orders
+
+shout=false;
+BCommand=false;
+Border=true;
+
+
+// Attack configuration
+//====================================================================
+// FindItem=true/false		Set this to true to use finditem on pindles body
+// ChangeWeapon=true/false	Set this to true to switch weapons to cast precasts or use finditem
+// UseBerserk=true/false	Set this to true to use berserk when pindleskin is immune to physical
+// wwdistance=x			Set this higher to ww further, smaller to whirlwind shorter
+// attackzombies=true/false	Set this to true to attack the zombies after killing Pindleskin
+// zombieSkill=x		Skill to attack zombies with
+// zombieStand=true/false	If true, stand still to attack (strafe/traps/...)
+
+FindItem=true;
+ChangeWeaponPre=false;
+ChangeWeaponHork=false;
+UseBerserk=true;
+wwdistance=5;
+attackzombies=false;
+zombieSkill="Whirlwind";
+zombieStand=false;
+
+// Options for configuring you character to perform ranged attacks
+//====================================================================
+// BowAmount=xx			Set this to the number you want to buy fresh ammo on
+// JavAmount=xx			Set this to the number you want to fix your javs on
+// RangedAtt=true/false		Set this to true to attack from the entrance to pindle's temple
+BowAmount=45;
+JavAmount=31;
+RangedAtt=false;
+
+
+/* ææææææææææææææææææææææææææææ
+Mercenary Variables
+ææææææææææææææææææææææææææææ */
+// usemerc=true/false		Set to true if you use a merc, will revive merc at Qual-Kehk if necessary
+// merccost=xxxxx		Set this to the amount of gold it costs for you to revive your merc at Qual-Kehk
+
+usemerc=false;
+merccost=50000;
+
+
+/* ææææææææææææææææææææææææææææ
+ShopIt!
+ææææææææææææææææææææææææææææ */
+// ShopIton=true/false		Set this to true to shop every npc you talk to, false to skip this
+// AlwaysMalah=true/false	Set this to true to shop Malah every run
+// AlwaysLarzuk=true/false	Set this to true to shop Larzuk every run
+// MalahNotLarzuk=true/false	Set this to true, and you won't visit Larzuk after going to Anya
+// GoToAnya=true/false		Set this to true to shop at Anya
+
+ShopIton=true;
+AlwaysMalah=false;
+AlwaysLarzuk=false;
+MalahNotLarzuk=false;	//This is for use with Always Larzuk.  See above
+GoToAnya=false;
+
+
+/* ææææææææææææææææææææææææææææ
+Other configurations
+ææææææææææææææææææææææææææææ */
+// repairpercent=xx		You will visit Larzuk for repair if any of your items fall below this percent of durability
+// taunts=true/false		Set to true to have Pindleskin sling random taunts your direction
+// FreeSpace=x			This is the number of columns you must have at the start of the run before stashing
+// charsnag="which"		Set this to the ini you want used for snagit
+// charbmitems="which"		Set this to the ini you want used for the bmitems file you want to use
+// skipheallife=xx		If you have more than this percent of your life, you won't go to Malah
+// skiphealmana=xx		If you have more than this percent of your mana, you won't go to Malah
+//
+// Note:			These whole integer numbers represent a percent value
+// Example:			"skipheallife=90" means "Skip going to Malah if you have at least %90
+//				of your total maximum life", etc...
+// walkdel=xx			This is the delay between steps.  Change this if you are having problems with black walls
+
+repairpercent=25;
+taunts=true;
+FreeSpace=3;
+charsnag="snagit.ini";
+charbmitems="bmitems.ini";
+skipheallife=80;
+skiphealmana=80;
+walkdel=150;
+
+
+/* ææææææææææææææææææææææææææææææææææææææææ?
+Immunities/Resistances/Enchantments to skip
+ææææææææææææææææææææææææææææææææææææææææ?*/
+
+//Set each to true to chicken out if pindle is immune to that kind of damage
+
+immunities[1]=false;			// Physical
+immunities[2]=false;			// Magic
+immunities[3]=false;			// Fire
+immunities[4]=false;			// Lightning
+immunities[5]=false;			// Cold
+immunities[6]=false;			// Poison
+
+// Immunities Combinations
+// Method:  if set to true, will chicken with that immunities# / immunities# combination
+// immunecombos[next number] = new Array(immunities#,immunities#,true/false);
+
+immunecombos[1]=new Array(1,2,false);	// Immune to Physical and Immune to Magic
+immunecombos[2]=new Array(4,5,false);	// Immune to Lightning and Immune to Cold
+
+//Set each to true to chicken out if pindle has that enchantment
+
+enchantments[1]=false;		//Extra Strong
+enchantments[2]=false;		//Extra Fast
+enchantments[3]=false;		//Cursed
+enchantments[4]=false;		//Magic Resistant
+enchantments[5]=false;		//Fire Enchanted
+enchantments[6]=false;		//Lightning Enchanted
+enchantments[7]=false;		//Cold Enchanted
+enchantments[8]=false;		//Mana Burn
+enchantments[9]=false;		//Teleportation
+enchantments[10]=false;		//Spectral Hit
+enchantments[11]=false;		//Stone Skin
+enchantments[12]=false;		//Multiple Shot
+
+// Enchantment Combinations
+// Method:  if set to true, will chicken with that enchantment# / enchantment# combination
+// enchantcombos[next number] = new Array(enchantment#,enchantment#,true/false);
+
+enchantcombos[1]=new Array(6,12,true);	// Multiple Shot Lightning
+enchantcombos[2]=new Array(2,8,false);	// Extra Fast Mana Burn
+
+// Set each to true to chicken out if pindle has that aura
+
+auras[1]=false;			//Conviction
+auras[2]=false;			//Might
+auras[3]=false;			//Holy Fire
+auras[4]=false;			//Blessed Aim
+auras[5]=false;			//Holy Freeze
+auras[6]=false;			//Holy Shock
+auras[7]=false;			//Fanaticism
+
+// Enchantment / Aura Combinations
+// Method:  if set to true, will chicken with that enchantment# / aura# combination
+// enchantauracombos[next number] = new Array(enchantment#,aura#,true/false);
+
+enchantauracombos[1]=new Array(2,2,false);	// Extra Fast Might
+enchantauracombos[2]=new Array(2,5,false);	// Extra Fast Holy Freeze
+enchantauracombos[3]=new Array(2,7,false);	// Extra Fast Fanaticism
+}
+
+
+
+
+
+
+
+
+/* ææææææææææææææææææææææææææææ
+Amazon Variables
+ææææææææææææææææææææææææææææ */
+
+
+
+
+
+
+
+
+
+function amazonvariables() {
+/* ææææææææææææææææææææææææææææ
+Amazon Variables
+ææææææææææææææææææææææææææææ */
+
+// This script is originally built for a hybridazon with both Bow and Javelin. If you got both it will automatically use Bow when Pindle is Lightning Immune and Javelin with Lightning Fury when he is Physical Immune.
+
+// For pure Bowazon you set JavFirst, SwitchPhys and SwitchLit to false while BowFirst should be set to true - then make a BowAttack sequence including cold and/or fire damage to handle Physical Immune Pindle.
+
+// For pure Javazon you set BowFirst, SwitchPhys and SwitchLit to false while JavFirst should be set to true - JavAttack sequence is probably best left at Lightning Fury only since it do both Lightning and Physical damage.
+
+// Character skill configuration
+//====================================================================
+// PrecastValk=true/false	Set this to true to cast a valk before going down the portal
+// CastValkOn=true/false	Set this to true to cast a valk on PindleSkin
+// CastDecoyOn=true/false	Set this to true to cast a decoy on PindleSkin
+// BowFirst=true/false		Set this to true to force the bow to be used first
+// JavFirst=true/false		Set this to true to force the use of the javelins first
+// SwitchPhys=true/false	Set this to true to switch attack types on high phys resists
+// PhysAmount=xx		Set this to the physical resistance number you want to switch on
+// SwitchLit=true/false		Set this to true to switch attack types on high lit resists
+// LitAmount=xx			Set this to the lightning resistance number you want to switch on
+// StartIt=x			This is the number of attacks to start off with first weapon, then switch to second
+// maxattacks=4			The maximum number of times to repeat the Attack sequence before aborting
+// PickupShield=true/false	If this is true, you'll switch to a shield before picking up items
+// BowAmount=xx			Set this to the number you want to buy fresh ammo on
+// JavAmount=xx			Set this to the number you want to fix your javs on
+// RangedAtt=true/false		Set this to true to attack from the entrance to pindle's temple
+
+PrecastValk=true;
+CastValkOn=false;
+CastDecoyOn=true;
+BowFirst=true;
+JavFirst=false;
+SwitchPhys=false;
+PhysAmount=50;		//set to 99 for only switching when Pindle is immune
+SwitchLit=false;
+LitAmount=50;		//set to 99 for only switching when Pindle is immune
+StartIt=0;			//Set this to 0 to skip this "timed" weapon switch. See above for more info.
+maxattacks=6;
+PickupShield=false;
+BowAmount=45;
+JavAmount=31;
+RangedAtt=true;
+
+// Attack Configuration
+//====================================================================
+// Attack.push"xxxxx"		The first attack in the list will be used first
+// Number.push=x;		To use a new skill, replace the skill name with the one you want to use
+// 				Select the number of skills in the BowNumber array
+// This will use the skills in the order you list them.  For instance, if you list Multiple Shot,
+// Guided Arrow, and Freezing Arrow, the script will use Multiple Shot, Guided Arrow, Freezing Arrow, Multiple etc...
+
+BowAttack.push("Multiple Shot");	BowNumber.push(3);
+BowAttack.push("Freezing Arrow");	BowNumber.push(4);
+BowAttack.push("Guided Arrow");		BowNumber.push(2);
+
+JavAttack.push("Lightning Fury");	JavNumber.push(6);
+
+/*ææææææææææææææææææææææææææææ
+Zombie attack!
+ææææææææææææææææææææææææææææ*/
+// attackzombies=true/false	Set to true if you want to attack the Zombies in the courtyard.  Requires Nova
+// zombieSkill=x			Skill to attack zombies with
+// zombieStand=true/false	If true, stand still to attack (strafe/traps/...)
+
+attackzombies=false;
+zombieSkill="Multiple Shot";
+zombieStand=true;
+
+
+/* ææææææææææææææææææææææææææææ
+Mercenary Variables
+ææææææææææææææææææææææææææææ */
+// usemerc=true/false		Set to true if you use a merc, will revive merc at Qual-Kehk if necessary
+// merccost=xxxxx		Set this to the amount of gold it costs for you to revive your merc at Qual-Kehk
+
+usemerc=true;
+merccost=50000;
+
+
+/* ææææææææææææææææææææææææææææ
+ShopIt!
+ææææææææææææææææææææææææææææ */
+// ShopIton=true/false		Set this to true to shop every npc you talk to, false to skip this
+// AlwaysMalah=true/false	Set this to true to shop Malah every run
+// AlwaysLarzuk=true/false	Set this to true to shop Larzuk every run
+// MalahNotLarzuk=true/false	Set this to true, and you won't visit Larzuk after going to Anya
+// GoToAnya=true/false		Set this to true to shop at Anya
+
+ShopIton=true;
+AlwaysMalah=false;
+AlwaysLarzuk=false;
+MalahNotLarzuk=false;	//This is for use with Always Larzuk.  See above
+GoToAnya=false;
+
+
+/* ææææææææææææææææææææææææææææ
+Other configurations
+ææææææææææææææææææææææææææææ */
+// repairpercent=xx		You will visit Larzuk for repair if any of your items fall below this percent of durability
+// taunts=true/false		Set to true to have Pindleskin sling random taunts your direction
+// FreeSpace=x			This is the number of columns you must have at the start of the run before stashing
+// charsnag="which"		Set this to the ini you want used for snagit
+// charbmitems="which"		Set this to the ini you want used for the bmitems file you want to use
+// skipheallife=xx		If you have more than this percent of your life, you won't go to Malah
+// skiphealmana=xx		If you have more than this percent of your mana, you won't go to Malah
+//
+// Note:			These whole integer numbers represent a percent value
+// Example:			"skipheallife=90" means "Skip going to Malah if you have at least %90
+//				of your total maximum life", etc...
+// walkdel=xx			This is the delay between steps.  Change this if you are having problems with black walls
+
+repairpercent=25;
+taunts=true;
+FreeSpace=3;
+charsnag="snagit.ini";
+charbmitems="bmitems.ini";
+skipheallife=80;
+skiphealmana=80;
+walkdel=150;
+
+
+/* ææææææææææææææææææææææææææææææææææææææææ?
+Immunities/Resistances/Enchantments to skip
+ææææææææææææææææææææææææææææææææææææææææ?*/
+
+//Set each to true to chicken out if pindle is immune to that kind of damage
+
+immunities[1]=false;			// Physical
+immunities[2]=false;			// Magic
+immunities[3]=false;			// Fire
+immunities[4]=false;			// Lightning
+immunities[5]=false;			// Cold
+immunities[6]=false;			// Poison
+
+// Immunities Combinations
+// Method:  if set to true, will chicken with that immunities# / immunities# combination
+// immunecombos[next number] = new Array(immunities#,immunities#,true/false);
+
+immunecombos[1]=new Array(1,2,false);	// Immune to Physical and Immune to Magic
+immunecombos[2]=new Array(4,5,false);	// Immune to Lightning and Immune to Cold
+
+//Set each to true to chicken out if pindle has that enchantment
+
+enchantments[1]=false;		//Extra Strong
+enchantments[2]=false;		//Extra Fast
+enchantments[3]=false;		//Cursed
+enchantments[4]=false;		//Magic Resistant
+enchantments[5]=false;		//Fire Enchanted
+enchantments[6]=false;		//Lightning Enchanted
+enchantments[7]=false;		//Cold Enchanted
+enchantments[8]=false;		//Mana Burn
+enchantments[9]=false;		//Teleportation
+enchantments[10]=false;		//Spectral Hit
+enchantments[11]=false;		//Stone Skin
+enchantments[12]=false;		//Multiple Shot
+
+// Enchantment Combinations
+// Method:  if set to true, will chicken with that enchantment# / enchantment# combination
+// enchantcombos[next number] = new Array(enchantment#,enchantment#,true/false);
+
+enchantcombos[1]=new Array(6,12,true);	// Multiple Shot Lightning
+enchantcombos[2]=new Array(2,8,false);	// Extra Fast Mana Burn
+
+// Set each to true to chicken out if pindle has that aura
+
+auras[1]=false;			//Conviction
+auras[2]=false;			//Might
+auras[3]=false;			//Holy Fire
+auras[4]=false;			//Blessed Aim
+auras[5]=false;			//Holy Freeze
+auras[6]=false;			//Holy Shock
+auras[7]=false;			//Fanaticism
+
+// Enchantment / Aura Combinations
+// Method:  if set to true, will chicken with that enchantment# / aura# combination
+// enchantauracombos[next number] = new Array(enchantment#,aura#,true/false);
+
+enchantauracombos[1]=new Array(2,2,false);	// Extra Fast Might
+enchantauracombos[2]=new Array(2,5,false);	// Extra Fast Holy Freeze
+enchantauracombos[3]=new Array(2,7,false);	// Extra Fast Fanaticism
+}
+
+
+
+
+
+/* ææææææææææææææææææææææææææææ
+Druid Variables
+ææææææææææææææææææææææææææææ */
+
+
+
+
+
+
+
+
+function druidvariables() {
+/* ææææææææææææææææææææææææææææ
+Druid Variables
+ææææææææææææææææææææææææææææ */
+
+// Precastable defensive spells
+//====================================================================
+// DruidShift="skill"		Set this as the form of the druid you wish to take
+//				"Wearbear", "Wearwolf"
+// DruidSummon="skill"		Set this as the summonable creature you wish to use
+//				"Summon Spirit Wolf", "Summon Grizzly", "Summon Fenris"
+// SummonNumber=x		This is the number of doggies you'll summon.  Leave this at 0 if you are using a bear
+// CastonPindle=true/false	Set this to true to cast a summonable on PindleSkin.
+// Barbs=true/false		Set this to true to cast Spirit of Barbs
+// Heart=true/false		Set this to true to cast Heart of Wolverine
+// OakSage=true/false		Set this to true to cast OakSage
+
+DruidShift="Wearwolf";
+DruidSummon="Summon Grizzly";
+SummonNumber=0;
+CastonPindle=true;
+Barbs=false;
+Heart=false;
+OakSage=true;
+
+
+// Attack configuration
+//====================================================================
+// DruidSkill="skill"		Set this to the skill you want to attack Pindleskin with
+// maxattacks=xx		This is the maximum number of attack sequences used to attack Pindleskin
+//				If he is still alive after this many attacks, the game will abort
+
+DruidSkill="Fury";
+maxattacks=30;
+
+
+// Options for configuring you character to perform ranged attacks
+//====================================================================
+// BowAmount=xx			Set this to the number you want to buy fresh ammo on
+// JavAmount=xx			Set this to the number you want to fix your javs on
+// RangedAtt=true/false		Set this to true to attack from the entrance to pindle's temple
+BowAmount=45;
+JavAmount=31;
+RangedAtt=false;
+
+
+/* ææææææææææææææææææææææææææææ
+Mercenary Variables
+ææææææææææææææææææææææææææææ */
+// usemerc=true/false		Set to true if you use a merc, will revive merc at Qual-Kehk if necessary
+// merccost=xxxxx		Set this to the amount of gold it costs for you to revive your merc at Qual-Kehk
+
+usemerc=true;
+merccost=50000;
+
+
+/* ææææææææææææææææææææææææææææ
+ShopIt!
+ææææææææææææææææææææææææææææ */
+// ShopIton=true/false		Set this to true to shop every npc you talk to, false to skip this
+// AlwaysMalah=true/false	Set this to true to shop Malah every run
+// AlwaysLarzuk=true/false	Set this to true to shop Larzuk every run
+// MalahNotLarzuk=true/false	Set this to true, and you won't visit Larzuk after going to Anya
+// GoToAnya=true/false		Set this to true to shop at Anya
+
+ShopIton=true;
+AlwaysMalah=false;
+AlwaysLarzuk=false;
+MalahNotLarzuk=false;	//This is for use with Always Larzuk.  See above
+GoToAnya=false;
+
+
+/* ææææææææææææææææææææææææææææ
+Other configurations
+ææææææææææææææææææææææææææææ */
+// repairpercent=xx		You will visit Larzuk for repair if any of your items fall below this percent of durability
+// taunts=true/false		Set to true to have Pindleskin sling random taunts your direction
+// FreeSpace=x			This is the number of columns you must have at the start of the run before stashing
+// charsnag="which"		Set this to the ini you want used for snagit
+// charbmitems="which"		Set this to the ini you want used for the bmitems file you want to use
+// skipheallife=xx		If you have more than this percent of your life, you won't go to Malah
+// skiphealmana=xx		If you have more than this percent of your mana, you won't go to Malah
+//
+// Note:			These whole integer numbers represent a percent value
+// Example:			"skipheallife=90" means "Skip going to Malah if you have at least %90
+//				of your total maximum life", etc...
+// walkdel=xx			This is the delay between steps.  Change this if you are having problems with black walls
+
+repairpercent=25;
+taunts=true;
+FreeSpace=3;
+charsnag="snagit.ini";
+charbmitems="bmitems.ini";
+skipheallife=80;
+skiphealmana=80;
+walkdel=150;
+
+/*ææææææææææææææææææææææææææææ
+Zombie attack!
+ææææææææææææææææææææææææææææ*/
+// attackzombies=true/false	Set to true if you want to attack the Zombies in the courtyard.  Requires Nova
+// zombieSkill=x			Skill to attack zombies with
+// zombieStand=true/false	If true, stand still to attack (strafe/traps/...)
+
+attackzombies=false;
+zombieSkill="Fury";
+zombieStand=true;
+
+/* ææææææææææææææææææææææææææææææææææææææææ?
+Immunities/Resistances/Enchantments to skip
+ææææææææææææææææææææææææææææææææææææææææ?*/
+
+//Set each to true to chicken out if pindle is immune to that kind of damage
+
+immunities[1]=true;			// Physical
+immunities[2]=false;			// Magic
+immunities[3]=false;			// Fire
+immunities[4]=false;			// Lightning
+immunities[5]=false;			// Cold
+immunities[6]=false;			// Poison
+
+// Immunities Combinations
+// Method:  if set to true, will chicken with that immunities# / immunities# combination
+// immunecombos[next number] = new Array(immunities#,immunities#,true/false);
+
+immunecombos[1]=new Array(1,2,false);	// Immune to Physical and Immune to Magic
+immunecombos[2]=new Array(4,5,false);	// Immune to Lightning and Immune to Cold
+
+//Set each to true to chicken out if pindle has that enchantment
+
+enchantments[1]=false;		//Extra Strong
+enchantments[2]=false;		//Extra Fast
+enchantments[3]=false;		//Cursed
+enchantments[4]=false;		//Magic Resistant
+enchantments[5]=false;		//Fire Enchanted
+enchantments[6]=false;		//Lightning Enchanted
+enchantments[7]=false;		//Cold Enchanted
+enchantments[8]=false;		//Mana Burn
+enchantments[9]=false;		//Teleportation
+enchantments[10]=false;		//Spectral Hit
+enchantments[11]=false;		//Stone Skin
+enchantments[12]=false;		//Multiple Shot
+
+// Enchantment Combinations
+// Method:  if set to true, will chicken with that enchantment# / enchantment# combination
+// enchantcombos[next number] = new Array(enchantment#,enchantment#,true/false);
+
+enchantcombos[1]=new Array(6,12,true);	// Multiple Shot Lightning
+enchantcombos[2]=new Array(2,8,false);	// Extra Fast Mana Burn
+
+// Set each to true to chicken out if pindle has that aura
+
+auras[1]=false;			//Conviction
+auras[2]=false;			//Might
+auras[3]=false;			//Holy Fire
+auras[4]=false;			//Blessed Aim
+auras[5]=false;			//Holy Freeze
+auras[6]=false;			//Holy Shock
+auras[7]=false;			//Fanaticism
+
+// Enchantment / Aura Combinations
+// Method:  if set to true, will chicken with that enchantment# / aura# combination
+// enchantauracombos[next number] = new Array(enchantment#,aura#,true/false);
+
+enchantauracombos[1]=new Array(2,2,false);	// Extra Fast Might
+enchantauracombos[2]=new Array(2,5,true);	// Extra Fast Holy Freeze
+enchantauracombos[3]=new Array(2,7,false);	// Extra Fast Fanaticism
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ææææææææææææææææææææææææææææ
+Necro Variables
+ææææææææææææææææææææææææææææ */
+
+
+
+
+
+
+
+
+
+
+
+function necrovariables() {
+/* ææææææææææææææææææææææææææææ
+Necro Variables
+ææææææææææææææææææææææææææææ */
+
+// Necro Configurations
+//====================================================================
+// CorpsePopping=true/false		Set this to true to kill pindle's minions and pop their corpses
+// BodySkill=xxxx			This to the skill you want to use on the corpses
+// NecroSkill=xxxx			Set this to your attack skill
+// BoneBehind=true/false		Set this to true to cast a bone wall behind you
+// BonePindle=true/false		Set this to true to cast a bone prison around pindle
+// BoneNumber=x				This is the number of bone prisons to cast
+// BoneArmor=true/fasle			Set this to true to cast BoneArmor
+// NecroCurse=xxxx			Set this as the curse you want to use
+// NecroSummon=xxxx			This is the golem you wish to use
+// SummonBefore=true/false		Summon a golem in town
+// CastonPindle=true/false		Summon a golem on top of pindle
+// maxattacks=xx			The number of attack you'll reach before leaving the game
+
+CorpsePopping=false;		//For some reason, it won't switch to corpse explosion...
+BodySkill="Corpse Explosion";
+NecroSkill="Bone Spirit";
+BoneBehind=true;
+BonePindle=true;
+BoneNumber=1;
+BoneArmor=true;
+NecroCurse="Lower Resist";
+NecroSummon="FireGolem";
+SummonBefore=false;
+CastonPindle=true;
+maxattacks=40;
+
+
+// Options for configuring you character to perform ranged attacks
+//====================================================================
+// BowAmount=xx			Set this to the number you want to buy fresh ammo on
+// JavAmount=xx			Set this to the number you want to fix your javs on
+// RangedAtt=true/false		Set this to true to attack from the entrance to pindle's temple
+BowAmount=45;
+JavAmount=31;
+RangedAtt=true;
+
+
+/* ææææææææææææææææææææææææææææ
+Mercenary Variables
+ææææææææææææææææææææææææææææ */
+// usemerc=true/false		Set to true if you use a merc, will revive merc at Qual-Kehk if necessary
+// merccost=xxxxx		Set this to the amount of gold it costs for you to revive your merc at Qual-Kehk
+
+usemerc=true;
+merccost=50000;
+
+
+/* ææææææææææææææææææææææææææææ
+ShopIt!
+ææææææææææææææææææææææææææææ */
+// ShopIton=true/false		Set this to true to shop every npc you talk to, false to skip this
+// AlwaysMalah=true/false	Set this to true to shop Malah every run
+// AlwaysLarzuk=true/false	Set this to true to shop Larzuk every run
+// MalahNotLarzuk=true/false	Set this to true, and you won't visit Larzuk after going to Anya
+// GoToAnya=true/false		Set this to true to shop at Anya
+
+ShopIton=true;
+AlwaysMalah=false;
+AlwaysLarzuk=false;
+MalahNotLarzuk=false;	//This is for use with Always Larzuk.  See above
+GoToAnya=false;
+
+
+/* ææææææææææææææææææææææææææææ
+Other configurations
+ææææææææææææææææææææææææææææ */
+// repairpercent=xx		You will visit Larzuk for repair if any of your items fall below this percent of durability
+// taunts=true/false		Set to true to have Pindleskin sling random taunts your direction
+// FreeSpace=x			This is the number of columns you must have at the start of the run before stashing
+// charsnag="which"		Set this to the ini you want used for snagit
+// charbmitems="which"		Set this to the ini you want used for the bmitems file you want to use
+// skipheallife=xx		If you have more than this percent of your life, you won't go to Malah
+// skiphealmana=xx		If you have more than this percent of your mana, you won't go to Malah
+//
+// Note:			These whole integer numbers represent a percent value
+// Example:			"skipheallife=90" means "Skip going to Malah if you have at least %90
+//				of your total maximum life", etc...
+// walkdel=xx			This is the delay between steps.  Change this if you are having problems with black walls
+
+repairpercent=25;
+taunts=true;
+FreeSpace=3;
+charsnag="snagit.ini";
+charbmitems="bmitems.ini";
+skipheallife=80;
+skiphealmana=80;
+walkdel=150;
+
+/*ææææææææææææææææææææææææææææ
+Zombie attack!
+ææææææææææææææææææææææææææææ*/
+// attackzombies=true/false	Set to true if you want to attack the Zombies in the courtyard.  Requires Nova
+// zombieSkill=x			Skill to attack zombies with
+// zombieStand=true/false	If true, stand still to attack (strafe/traps/...)
+
+attackzombies=false;
+zombieSkill="Bone Spirit";
+zombieStand=true;
+
+/* ææææææææææææææææææææææææææææææææææææææææ?
+Immunities/Resistances/Enchantments to skip
+ææææææææææææææææææææææææææææææææææææææææ?*/
+
+//Set each to true to chicken out if pindle is immune to that kind of damage
+
+immunities[1]=false;			// Physical
+immunities[2]=true;			// Magic
+immunities[3]=false;			// Fire
+immunities[4]=false;			// Lightning
+immunities[5]=false;			// Cold
+immunities[6]=false;			// Poison
+
+// Immunities Combinations
+// Method:  if set to true, will chicken with that immunities# / immunities# combination
+// immunecombos[next number] = new Array(immunities#,immunities#,true/false);
+
+immunecombos[1]=new Array(1,2,false);	// Immune to Physical and Immune to Magic
+immunecombos[2]=new Array(4,5,false);	// Immune to Lightning and Immune to Cold
+
+//Set each to true to chicken out if pindle has that enchantment
+
+enchantments[1]=false;		//Extra Strong
+enchantments[2]=false;		//Extra Fast
+enchantments[3]=false;		//Cursed
+enchantments[4]=false;		//Magic Resistant
+enchantments[5]=false;		//Fire Enchanted
+enchantments[6]=false;		//Lightning Enchanted
+enchantments[7]=false;		//Cold Enchanted
+enchantments[8]=false;		//Mana Burn
+enchantments[9]=false;		//Teleportation
+enchantments[10]=false;		//Spectral Hit
+enchantments[11]=false;		//Stone Skin
+enchantments[12]=false;		//Multiple Shot
+
+// Enchantment Combinations
+// Method:  if set to true, will chicken with that enchantment# / enchantment# combination
+// enchantcombos[next number] = new Array(enchantment#,enchantment#,true/false);
+
+enchantcombos[1]=new Array(6,12,true);	// Multiple Shot Lightning
+enchantcombos[2]=new Array(2,8,false);	// Extra Fast Mana Burn
+
+// Set each to true to chicken out if pindle has that aura
+
+auras[1]=false;			//Conviction
+auras[2]=false;			//Might
+auras[3]=false;			//Holy Fire
+auras[4]=false;			//Blessed Aim
+auras[5]=false;			//Holy Freeze
+auras[6]=false;			//Holy Shock
+auras[7]=false;			//Fanaticism
+
+// Enchantment / Aura Combinations
+// Method:  if set to true, will chicken with that enchantment# / aura# combination
+// enchantauracombos[next number] = new Array(enchantment#,aura#,true/false);
+
+enchantauracombos[1]=new Array(2,2,false);	// Extra Fast Might
+enchantauracombos[2]=new Array(2,5,false);	// Extra Fast Holy Freeze
+enchantauracombos[3]=new Array(2,7,false);	// Extra Fast Fanaticism
+}
+
+
+
+
+
+/* ææææææææææææææææææææææææææææ
+Paladin Variables
+ææææææææææææææææææææææææææææ */
+
+
+
+
+
+
+
+
+
+function paladinvariables() {
+/* ææææææææææææææææææææææææææææ
+Paladin Variables
+ææææææææææææææææææææææææææææ */
+
+// Paladin Skill Configuration
+//====================================================================
+// StartFOH=false/X		Number of times to use FOH.  False to not use it.
+// PallyAttack="skill"		Set this to the skill you want to attack Pindleskin with
+// AuraX="aura"			These are auras used for flashing.  If you don't wish to flash auras, just select aura A
+//				The current setup will use Holy Freeze for 3 seconds then fanat the rest of the time
+// SwitchPhys="skill"		If you want this to switch to a skill when pindle is has high phys resists, assign it here
+// SwitchAura="aura"		This is the aura you want set to aura A, B, or C to if high phys resists on pindle
+// SwitchAmount=xx		Set this to the physical resistance number you want to switch on
+// UseVigor=true/false		Set this to true to use vigor until you get to pindle
+// HolyShield=true/false	Set this to true if you want to cast Holy Shield
+// maxattacks=xx		This is the maximum number of attack sequences used to attack Pindleskin
+//				If he is still alive after this many attacks, the game will abort
+
+StartFOH=false;
+FOHAura="Conviction";
+PallyAttack="Zeal";
+AuraA="Holy Freeze";		//This aura will be used for 3 seconds and changed with aura B
+AuraB="Fanaticism";		//This aura will be used for 3 seconds and changed with aura C
+AuraC=false;			//This aura will be used for 2 seconds and changed with aura A
+SwitchPhys=false;		//change this to what skill you want to switch to.  See above
+SwitchAuraA=false;		//Change this to the aura you want to switch to.  See above
+SwitchAuraB=false;		//Change this to the aura you want to switch to.  See above
+SwitchAuraC=false;		//Change this to the aura you want to switch to.  See above
+SwitchAmount=50;		//set to 99 for only switching when Pindle is immune
+UseVigor=true;
+HolyShield=true;
+maxattacks=80;
+
+
+// Options for configuring you character to perform ranged attacks
+//====================================================================
+// BowAmount=xx			Set this to the number you want to buy fresh ammo on
+// JavAmount=xx			Set this to the number you want to fix your javs on
+// RangedAtt=true/false		Set this to true to attack from the entrance to pindle's temple
+BowAmount=45;
+JavAmount=31;
+RangedAtt=false;
+
+
+/* ææææææææææææææææææææææææææææ
+Mercenary Variables
+ææææææææææææææææææææææææææææ */
+// usemerc=true/false		Set to true if you use a merc, will revive merc at Qual-Kehk if necessary
+// merccost=xxxxx		Set this to the amount of gold it costs for you to revive your merc at Qual-Kehk
+
+usemerc=true;
+merccost=50000;
+
+
+/* ææææææææææææææææææææææææææææ
+ShopIt!
+ææææææææææææææææææææææææææææ */
+// ShopIton=true/false		Set this to true to shop every npc you talk to, false to skip this
+// AlwaysMalah=true/false	Set this to true to shop Malah every run
+// AlwaysLarzuk=true/false	Set this to true to shop Larzuk every run
+// MalahNotLarzuk=true/false	Set this to true, and you won't visit Larzuk after going to Anya
+// GoToAnya=true/false		Set this to true to shop at Anya
+
+ShopIton=true;
+AlwaysMalah=false;
+AlwaysLarzuk=false;
+MalahNotLarzuk=false;	//This is for use with Always Larzuk.  See above
+GoToAnya=false;
+
+
+/* ææææææææææææææææææææææææææææ
+Other configurations
+ææææææææææææææææææææææææææææ */
+// repairpercent=xx		You will visit Larzuk for repair if any of your items fall below this percent of durability
+// taunts=true/false		Set to true to have Pindleskin sling random taunts your direction
+// FreeSpace=x			This is the number of columns you must have at the start of the run before stashing
+// charsnag="which"		Set this to the ini you want used for snagit
+// charbmitems="which"		Set this to the ini you want used for the bmitems file you want to use
+// skipheallife=xx		If you have more than this percent of your life, you won't go to Malah
+// skiphealmana=xx		If you have more than this percent of your mana, you won't go to Malah
+//
+// Note:			These whole integer numbers represent a percent value
+// Example:			"skipheallife=90" means "Skip going to Malah if you have at least %90
+//				of your total maximum life", etc...
+// walkdel=xx			This is the delay between steps.  Change this if you are having problems with black walls
+
+repairpercent=25;
+taunts=true;
+FreeSpace=3;
+charsnag="snagit.ini";
+charbmitems="bmitems.ini";
+skipheallife=80;
+skiphealmana=80;
+walkdel=150;
+
+/*ææææææææææææææææææææææææææææ
+Zombie attack!
+ææææææææææææææææææææææææææææ*/
+// attackzombies=true/false	Set to true if you want to attack the Zombies in the courtyard.  Requires Nova
+// zombieSkill=x		Skill to attack zombies with
+// zombieStand=true/false	If true, stand still to attack (strafe/traps/...)
+// ZAuraX="aura"		Auras to switch with
+
+attackzombies=false;
+zombieSkill="Zeal";
+zombieStand=false;
+ZAuraA="Holy Freeze";		//This aura will be used for 3 seconds and changed with aura B
+ZAuraB="Fanaticism";		//This aura will be used for 3 seconds and changed with aura C
+ZAuraC=false;			//This aura will be used for 2 seconds and changed with aura A
+
+/* ææææææææææææææææææææææææææææææææææææææææ?
+Immunities/Resistances/Enchantments to skip
+ææææææææææææææææææææææææææææææææææææææææ?*/
+
+//Set each to true to chicken out if pindle is immune to that kind of damage
+
+immunities[1]=false;			// Physical
+immunities[2]=false;			// Magic
+immunities[3]=false;			// Fire
+immunities[4]=false;			// Lightning
+immunities[5]=false;			// Cold
+immunities[6]=false;			// Poison
+
+// Immunities Combinations
+// Method:  if set to true, will chicken with that immunities# / immunities# combination
+// immunecombos[next number] = new Array(immunities#,immunities#,true/false);
+
+immunecombos[1]=new Array(1,2,false);	// Immune to Physical and Immune to Magic
+immunecombos[2]=new Array(4,5,false);	// Immune to Lightning and Immune to Cold
+
+//Set each to true to chicken out if pindle has that enchantment
+
+enchantments[1]=false;		//Extra Strong
+enchantments[2]=false;		//Extra Fast
+enchantments[3]=false;		//Cursed
+enchantments[4]=false;		//Magic Resistant
+enchantments[5]=false;		//Fire Enchanted
+enchantments[6]=false;		//Lightning Enchanted
+enchantments[7]=false;		//Cold Enchanted
+enchantments[8]=false;		//Mana Burn
+enchantments[9]=false;		//Teleportation
+enchantments[10]=false;		//Spectral Hit
+enchantments[11]=false;		//Stone Skin
+enchantments[12]=false;		//Multiple Shot
+
+// Enchantment Combinations
+// Method:  if set to true, will chicken with that enchantment# / enchantment# combination
+// enchantcombos[next number] = new Array(enchantment#,enchantment#,true/false);
+
+enchantcombos[1]=new Array(6,12,false);	// Multiple Shot Lightning
+enchantcombos[2]=new Array(2,8,false);	// Extra Fast Mana Burn
+
+// Set each to true to chicken out if pindle has that aura
+
+auras[1]=false;			//Conviction
+auras[2]=false;			//Might
+auras[3]=false;			//Holy Fire
+auras[4]=false;			//Blessed Aim
+auras[5]=false;			//Holy Freeze
+auras[6]=false;			//Holy Shock
+auras[7]=false;			//Fanaticism
+
+// Enchantment / Aura Combinations
+// Method:  if set to true, will chicken with that enchantment# / aura# combination
+// enchantauracombos[next number] = new Array(enchantment#,aura#,true/false);
+
+enchantauracombos[1]=new Array(2,2,false);	// Extra Fast Might
+enchantauracombos[2]=new Array(2,5,false);	// Extra Fast Holy Freeze
+enchantauracombos[3]=new Array(2,7,false);	// Extra Fast Fanaticism
+}
+
+
+
+
+
+
+
+
+
+/* ææææææææææææææææææææææææææææææææææææææææææææææææ
+General configurations -- only needed if you are experiencing problems!
+ææææææææææææææææææææææææææææææææææææææææææææææææ */
+// begingamedelay=xxxx;		Delay before beginning script. 1000 = 1 second.  Set a value here if you are
+//				having trouble with the script not detecting your merc or other problems
+//				at the beginning of the game.
+// snagdelay=xxx		This is the amount of time to wait before snagit picks up items.
+//				Change this if you are not seeing items appear while holding alt
+// SkipCredits=true/false	Set this to true to skip printing the credits
+// SellBackItems=true/false	Turn this off if you don't want to sell items
+
+var begingamedelay=500;
+var snagdelay=150;
+var SkipCredits=true;
+var SellBackItems=false;
+
+/* ææææææææææææææææææææææææææææææææææææææææææææææææ
+randomizations to avoid detection
+ææææææææææææææææææææææææææææææææææææææææææææææææ */
+// RandomDel=true/false		This will randomize all delays to make the script harder to detect by blizz
+// RandomMove=true/false	This will make your movements random
+// RandomMoveDel=true/false	This will make movement delays random
+// RandomNPC=true/false		Visit random npcs during your runs
+
+var RandomDel=true;
+var RandomMove=true;
+var RandomMoveDel=true;
+var RandomNPC=false;
+
+/* ææææææææææææææææææææææææææææææææææææææææææææææææ
+Debugging Information
+ææææææææææææææææææææææææææææææææææææææææææææææææ */
+// debuglevel=0/1		0 = none, 1 = print to screen.
+// dprintdelay=xxxx		How long you want to have the script pause after a debug print
+// nooverheads=true/false	Set to false to show overheads
+// DisplayImmunities=true/false	Set this to true to see what pindle is immune to on screen.
+
+var debuglevel=0;
+var dprintdelay=0;
+var nooverheads=true;
+var DisplayImmunities=true;
+
+/* ææææææææææææææææææææææææææææææææææææææææææææææææ
+Multi-Lingual Support
+ææææææææææææææææææææææææææææææææææææææææææææææææ */
+
+var pindle="Pindleskin";
+var malah="Malah";
+var qual="Qual-Kehk";
+var anya="Anya";
+var larzuk="Larzuk";
+var stash="bank";

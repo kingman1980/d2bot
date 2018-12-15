@@ -1,0 +1,157 @@
+
+var _cube_source = new Array();
+var _cube = false;
+
+function my_try() {
+	return parseInt(me.ping/150) + 3;
+}
+
+function my_delay(intime) {
+	do {
+		delay(intime);
+	} while (me.ping > 1000);
+}
+
+function open_cube() {
+	if (getUIFlag(0x1A)) return true;
+	_cube = getUnit(4, "box", 104);
+	if (!_cube) {
+		_cube = getUnit(4, "box", 100);
+		if (!_cube) return false;
+	}
+	clickItem(1, _cube);
+	while (!getUIFlag(0x1A)) my_delay(750);
+	return true;
+}
+
+function cube_it() {
+	transmute();
+	my_delay(750);
+	var tmpid = getUnit(4, null, 103);
+	if (check_itemuse(tmpid)) return false;
+	return true;
+}
+
+function close_cube() {
+	if (!getUIFlag(0x1A)) return true;
+	_cube.cancel(0);
+	while (getUIFlag(0x1A)) my_delay(750);
+	return true;
+}
+
+function check_itemuse(inid) {
+	for (var i=0; i<_cube_source.length; i++)
+		if ((inid.itemloc == _cube_source[i].itemloc) && (inid.x == _cube_source[i].x) && (inid.y == _cube_source[i].y)) return true;
+	return false;
+}
+function select_onesource0(initem, where) {
+	var tmpid = getUnit(4, initem, where);
+	if (tmpid) do {
+		if (!check_itemuse(tmpid)) {
+			_cube_source.push(tmpid);
+			return true;
+		}
+	} while (tmpid.getNext(initem, where));
+	return false;
+}
+function select_onesource(initem) {
+	if (select_onesource0(initem, 103)) return true;
+	if (select_onesource0(initem, 100)) return true;
+	if (select_onesource0(initem, 104)) return true;
+	return false;
+}
+function select_onetypesource(initem) {
+   while (_cube_source.length > 0) _cube_source.pop();
+	for (var i=0; i<3; i++)
+		if (!select_onesource(initem)) return false;
+	return true;
+}
+function select_alltypesource() {
+   var _gem_code = ["glg", "glr", "gly", "gzv", "glw", "glb", "skl"];
+	for (var i=0; i<_gem_code.length; i++) {
+		if (select_onetypesource(_gem_code[i])) return true;
+	}
+	return false;
+}
+
+function test_can(inid, inx, iny, inspace) {
+	for (var i=inx; i<inx+inid.xsize; i++)
+		for (var j=iny; j<iny+inid.ysize; j++)
+			if ((i >= inspace.length) || (j >= inspace[i].length) || (inspace[i].charAt(j) == "1")) return false;
+	return true;
+}
+function move_oneitem(inid, where) {
+	if (inid.itemloc == where-100) return true;
+	switch (where) {
+		case 100 : wherex = 10; wherey = 4; break;
+		case 103 : wherex = 3; wherey = 4; break;
+		case 104 : wherex = 6; wherey = 8; break;
+		default : return false;
+	}
+	var tmpspace = new Array();
+	for (var i=0; i<wherex; i++)
+		tmpspace.push("00000000".substr(0, wherey));
+	var tmpid = getUnit(4, null, where);
+	if (tmpid) do {
+		for (var i=tmpid.x; i<tmpid.x+tmpid.xsize; i++)
+			tmpspace[i] = tmpspace[i].substr(0, tmpid.y) + "11111111".substr(0, tmpid.ysize) + tmpspace[i].substr(tmpid.y+tmpid.ysize);
+	} while (tmpid.getNext(null, where));
+	for (var i=0; i<wherex; i++)
+		for (var j=0; j<wherey; j++)
+			if (test_can(inid, i, j, tmpspace)) {
+				clickItem(0, inid);
+				while (inid.mode != 4) my_delay(750);
+				clickItem(0, i, j, where-100);
+				while (inid.mode == 4) my_delay(750);
+				return true;
+			}
+	return false;
+}
+
+function outmove_allother() {
+	var tmpid = getUnit(4, null, 103);
+	if (tmpid) {
+		if (!open_cube()) return false;
+		do {
+			if (check_itemuse(tmpid)) continue;
+			if (!move_oneitem(tmpid, 100)) return false;
+		} while (tmpid.getNext(null, 103));
+	}
+	return true;
+}
+
+function inmove_allsource() {
+	if (!close_cube()) return false;
+	for (var i=0; i<_cube_source.length; i++) {
+		if (_cube_source[i].itemloc != 4) continue;
+		if (!move_oneitem(_cube_source[i], 100)) return false;
+	}
+	if (!open_cube()) return false;
+	for (var i=0; i<_cube_source.length; i++)
+		if (!move_oneitem(_cube_source[i], 103)) return false;
+	return true;
+}
+
+function cubepg_main() {
+	while (1) {
+		if (!select_alltypesource()) {
+			print("ÿc2No more recipe, cube complete!");
+			break;
+		}
+		if (!outmove_allother()) {
+			print("ÿc1Failed to move item from cube, cube cancel!");
+			break;
+		}
+		if (!inmove_allsource()) {
+			print("ÿc1Failed to move item into cube, cube cancel");
+			break;
+		}
+		for(var i=0; i<my_try(); i++) {
+			var tmptmp = cube_it();
+			if (tmptmp) break;
+			print("ÿc1Failed to cube, retry " + (i+1));
+		}
+		if (!tmptmp) break;
+	}
+	close_cube();
+}

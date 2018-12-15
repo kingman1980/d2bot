@@ -1,0 +1,1507 @@
+// There is no need to edit anything in this script.  Please edit your pwnchars.d2l
+
+/* ææææææææææææææææææææææææææææ
+System Variables
+ææææææææææææææææææææææææææææ */
+
+var AmmoArray=new Array();
+var needstash=true;
+var FullINV=false;
+var needrepair=false;
+var needammo=false;
+var needmerc=false;
+var Idied=false;
+var mercname="Mercenary";
+var DropEM=0;
+
+var target=false;
+var attackscompleted=0;
+
+var itemx=1000;
+var itemy=1000;
+var itemc="temp";
+var gidarray=new Array();
+var Uniditem=false;
+var itemID=false;
+var Niceitem=false;
+
+var l_total = 0;
+var l_kills = 0;
+var l_abort = 0;
+var l_badres = 0;
+var l_crash = 0;
+var l_death = 0;
+var l_time = 1000000;
+var StartTimer=new Date().getTime();
+var RunTimer = 0;
+var TotalRunTime = 0;
+var AddRunTime = 0;
+var SavedAverage = 0;
+
+/* ææææææææææææææææææææææææææææ
+Event triggers
+ææææææææææææææææææææææææææææ */
+
+// checks to see if the stash is full of gold
+
+function PrintQuitFile(string) {
+	timer=new Date();
+	newtime=timer.toString();
+	GMT = newtime.indexOf("GMT");
+	ptimer=newtime.substring(4, GMT-1);
+	ptimer=ptimer.substr(7,4)+"/"+(timer.getMonth()<9?"0":"")+(timer.getMonth()+1)+"/"+ptimer.substr(4,3)+ptimer.substr(12);
+	
+	quitLog="output/"+me.name+"_QuitLog.txt";
+	FileWriteLog=fileOpen(quitLog, 2);
+	if (FileWriteLog) {
+		FileWriteLog.writeLine(ptimer  +" | " + me.x +"/" + me.y +" | " + string);
+		FileWriteLog.close();
+	}
+}
+
+
+function StashGoldFull()
+{
+	var maxGold;
+	var level = me.getStat(12);
+
+	if (level < 30)
+		maxGold = Math.floor((level + 10) / 10) * 50000;
+	else
+		maxGold = 800000 + Math.floor((level - 30) / 2) * 50000;
+
+	return (maxGold == me.getStat(15));
+}
+
+function MyGold()
+{
+	return me.getStat(14)+me.getStat(15);
+}
+
+function pickiton()
+{
+	DoDel(snagdelay);
+	SnagIt("settings/"+charsnag);
+}
+
+function CheckDrop()
+{
+	var snagitem = getUnit(4);
+	if (snagitem) itemloop : do
+	{
+		if((snagitem.mode==3 || snagitem.mode==5) && snagitem.code!="gld" && snagitem.itemtype!=78)
+		{
+			if (CheckItem(snagitem, "settings/"+charsnag) && !idValid)
+			{
+				if(!PickUpItem(snagitem)) continue itemloop;
+			}
+		}
+	} while(snagitem && snagitem.getNext());
+}
+
+function corpsecollect()
+{
+	wearingitems=false;
+	equip=getUnit(4,null,1);
+	if(equip) wearingitems=true;
+
+	mycorpse = getUnit(0,me.name,17);
+	if (!mycorpse && wearingitems)
+		return false;
+	else if(!mycorpse)
+	{
+		ctry=0;
+		while(!mycorpse)
+		{
+			DoDel(100);
+			ctry++
+			if(ctry >= 50)
+				quitmessage("Whoops!  We can't find your body, and you have no items!");
+			mycorpse = getUnit(0,me.name,17);
+		}
+	}
+	if (mycorpse)
+	{
+		if(!nooverheads) me.overhead("Shit, I died again!");
+		DoDel(250);
+		for (c = 1; c <= 10; c++)
+		{
+			mycorpse = getUnit(0,me.name,17);
+			if (mycorpse)
+			{
+				if(c>=3) doWeaponSwitch();
+				walkto(mycorpse.x, mycorpse.y);
+				DoDel(1000);
+				mycorpse.interact();
+				DoDel(1000);
+			}
+			else
+			{
+				print("Body recovered");
+				DoDel(500);
+				Idied=true;
+				return true;
+			}
+		}
+		mycorpse = getUnit(0,me.name,17);
+		if (mycorpse) quitmessage("Cannot retrieve body!");
+	}
+}
+
+function checkheal()
+{
+	//PrintQuitFile("test");
+	mymaxlife = parseInt((me.hpmax) + (me.hpmax * (me.getStat(76) / 100)));
+	mymaxmana = parseInt((me.mpmax) + (me.mpmax * (me.getStat(77) / 100)));
+	lifethreshold = parseInt((mymaxlife * skipheallife) / 100);
+	manathreshold = parseInt((mymaxmana * skiphealmana) / 100);
+	dprint("Max mana=(" +mymaxmana +") Max life=(" +mymaxlife +") Malah mana=(" +manathreshold +") Malah life=(" +lifethreshold +")");
+
+	if (me.hp < lifethreshold || me.mp < manathreshold)
+	{
+		managepotions();
+		if (me.hp < lifethreshold || me.mp < manathreshold)
+		{
+			print("Need to heal");
+			return true;
+		}
+	}
+	dprint("You don't need to heal!");
+}
+
+function checkrepair()
+{
+	lowestitem = 100;
+	check = getUnit(4,null,1);
+	if (check) do
+	{
+		if (check.getParent() && check.getParent().name == me.name)
+		{
+			if(check.getStat(73) > 0)
+			{
+				if (check.getStat(75) > 0)
+					currentitem = parseInt(((check.getStat(72) * check.getStat(75)) / check.getStat(73)) * 100);
+				else
+					currentitem = parseInt((check.getStat(72) / check.getStat(73)) * 100);
+				if (currentitem < lowestitem) 
+					lowestitem = currentitem;
+				if (currentitem <= repairpercent && !check.getFlag(0x400000))
+				{
+					needrepair=true;
+					return true;
+				}
+			}
+		}
+	} while (check.getNext(null,1));
+
+	print("Lowest item is at " + lowestitem + "% durability");
+	return false;
+}
+
+//Code by Venom
+function checkammo()
+{
+	AmmoArray=new Array();
+	needammo=false;
+	needrepair=false;
+	var check = getUnit(4,null,1);
+	if(check) do
+	{
+		if(iloc(check))
+		{
+			if(bowcheck(check))
+				AmmoArray.push(new AmmoObject(check));
+			else if(javcheck(check)=="Jav" && check.getStat(70)<JavAmount && !check.getFlag(0x400000))
+				needrepair=true;
+		}
+	} while(check.getNext(null,1));
+
+	ammo=getUnit(4,null,1);
+	if(ammo) do
+	{
+		if(iloc(ammo)) for(var zx=0; zx<AmmoArray.length; zx++)
+		{
+			if(ammo.code==AmmoArray[zx].CheckCode && iloc(ammo)==AmmoArray[zx].Location)
+			{
+				AmmoArray[zx].FoundAmmo=true;
+				if(ammo.getStat(70)<BowAmount)
+					AmmoArray[zx].FillAmmo=true;
+			}
+		}
+	} while (ammo.getNext(null,1));
+
+	for(var zx=0; zx<AmmoArray.length; zx++)
+	{
+		if(!AmmoArray[zx].FoundAmmo || AmmoArray[zx].FillAmmo)
+			needammo=true;
+	}
+
+	if(needammo)
+		print("Replenish ammunition!");
+	if(needrepair)
+		print("Repair throwing weapon!");
+	return (needrepair || needammo);
+}
+
+function AmmoObject(check)
+{
+	this.WeaponType=bowcheck(check)?"bow":javcheck(check);
+	this.CheckCode=bowcheck(check)?bowcheck(check):check.code;
+	this.Location=iloc(check);
+}
+
+function bowcheck(check)
+{
+	if(check.itemtype==85 || check.itemtype==27)
+		return "aqv";
+	if(check.itemtype == 35)
+		return "cqv";
+	return false;
+}
+
+function javcheck(check)
+{
+	if(check.itemtype==86 || check.itemtype==33)
+		return "Spear";
+	if(check.itemtype==87 || check.itemtype==44)
+		return "Jav";
+	return false;
+}
+
+function iloc(check)
+{
+	if(check.mode!=1 || !CheckOwner(check,me.name))
+		return 0;
+	if(check.itemloc==4 || check.itemloc==5)
+		return 1;
+	if(check.itemloc==11 || check.itemloc==12)
+		return 2;
+	return 0;
+}
+
+function CheckOwner(item,who) { return (item && item.getParent() && item.getParent().name==who) }
+
+//Code by venom
+function buyammo(npc)
+{
+	for(var zx=0; zx<AmmoArray.length; zx++)
+	{
+		var SwitchedWeapons=false;
+		if(!AmmoArray[zx].FoundAmmo || AmmoArray[zx].FillAmmo)
+		{
+			if(AmmoArray[zx].Location-1!=weaponSwitch(1))
+			{
+				SwitchedWeapons=true;
+				doWeaponSwitch();
+			}
+			ammo = getUnit(4,AmmoArray[zx].CheckCode,1);
+			if (ammo)
+			{
+				do
+				{
+					owner = ammo.getParent();
+					if(ammo.itemloc!=11 && ammo.itemloc!=12 && owner && owner.name == me.name)
+					{
+						print("Selling ammo!");
+						BuyItem(ammo,npc,1);
+						break;
+					}
+				} while(ammo && ammo.getNext(AmmoArray[zx].CheckCode,1))
+			}
+
+			ammo = getUnit(4,AmmoArray[zx].CheckCode,0);
+			if (ammo)
+			{
+				do
+				{
+					owner = ammo.getParent();
+					if(owner && owner.name != me.name)
+					{
+						print("Buying ammo!");
+						BuyItem(ammo,npc,2);
+						break;
+					}
+				} while(ammo && ammo.getNext(AmmoArray[zx].CheckCode,0))
+			}
+			if(SwitchedWeapons)
+				doWeaponSwitch();
+		}
+	}
+}
+
+function BuyItem(item,npc,which)
+{
+	numtries = 0;
+	mygold=MyGold();
+	item.shop(npc,which);
+	print("Buy or sell an item");
+	while(mygold == MyGold())
+	{
+		DoDel(100);
+		numtries++;
+		if (numtries > 10) break;
+	}
+	DoDel(500);
+}
+
+function checkmerc()
+{
+	if (usemerc)
+	{
+		needmerc = true;
+		merc = getUnit(1);
+		if (merc) do
+		{
+			if(merc.classid!=271 && merc.classid!=338 && merc.classid!=359 && merc.classid!=561)
+				continue;
+			if (merc.getParent() && merc.getParent().name == me.name)
+			{
+				if (merc.hp > 0)
+				{
+					mercname = merc.name;
+					print(mercname+" is alive!");
+					needmerc = false;
+					return false;
+				}
+			}
+		} while(merc && merc.getNext());
+		if (needmerc)
+		{
+			goldamount = MyGold();
+			if (goldamount < merccost)
+			{
+				print("Not enough gold to revive Mercenary!!!");
+				usemerc = false;
+				needmerc = false;
+				return false;
+			}
+		}
+		return true;
+	}
+}
+
+function SellItems(where,itemcode,npc)
+{
+	locitem=FindNext(itemcode,where);
+	if (locitem)
+	{
+		printdrop=locitem.name;
+		for (t = 1; t < 41; t++)
+		{
+			BuyItem(locitem,npc,1);
+			locitem=FindNext(itemcode,where);
+			if (!locitem)
+			{
+				print(t +" " +printdrop +" cleared!");
+				return true;
+			}
+		}
+	}
+}
+
+function FindNext(itemcode,where)
+{
+	NextItem=getUnit(4,itemcode,where);
+	if(NextItem) do
+	{
+		if(NextItem.getParent() && NextItem.getParent().name == me.name && (NextItem.code==itemcode || !itemcode))
+			return NextItem;
+	} while(NextItem && NextItem.getNext(itemcode,where))
+}
+
+function TossItem(where, itemcode)
+{
+	locitem = getUnit(4,itemcode,where);
+	if (locitem) if (locitem.itemloc==0)
+	{
+		printdrop=locitem.name;
+		for (t = 1; t < 21; t++)
+		{
+			clickItem(0,locitem);
+			for (up = 0; up < 30; up++)
+			{
+				if(me.itemoncursor) break;
+				DoDel(20);
+			}
+			clearcursor();
+			locitem = getUnit(4,itemcode,where);
+			if (!locitem)
+			{
+				print(t +" " +printdrop +" cleared!");
+				return true;
+			}
+		}
+	}
+}
+
+function DisplayEnemyLife(enemy)
+{
+	if (enemy && enemy.name!=mercname && enemy.name!="Gold")
+	{
+		if (enemy.hp > 0) me.overhead(enemy.name + " Life: " + Math.round(enemy.hp / 1.28) + " %");
+		if (enemy.hp <= 0) me.overhead(enemy.name + " Life:  0%");
+	}
+}
+
+function checkfortarget(name)
+{
+	target = getUnit(1,name);
+
+	// Code by HPB_Forever
+	i = 0;
+	while (!target && (i++ < 3))
+	{
+		print("Waiting to detect " + name + "... (" + i + "/" + 3 + ")");
+		DoDel(100);
+		target = getUnit(1,name);
+	}
+
+	if(target) print(name + " detected!");
+	if(!target) quitmessage(name + " not detected!");
+}
+
+function DoCast(which,usehand,x,y)
+{
+	for(var j=0; j<5; j++)
+	{
+		for (qw = 0; qw < 100; qw++)
+		{
+			if(!me.itemoncursor) break;
+			DoDel(20);
+		}
+		if(me.itemoncursor)
+			return false;
+		if(arguments.length>1)
+			dprint("Casting "+which+" on hand number "+usehand);
+		for(var sw=0; sw<3; sw++)
+		{
+			if(me.getSkill(usehand)!=which)
+			{
+				if(!me.getSkill(which))
+					return false;
+				dprint("Switching to "+which+" on hand number "+usehand);
+				me.setSkill(which,usehand)
+				for (var qw = 0; qw < 25; qw++)
+				{
+					if(me.getSkill(usehand)==which)
+						break;
+					DoDel(10);
+				}
+				if(me.getSkill(usehand)!=which)
+					return false;
+			}
+		}
+
+		switch(arguments.length)
+		{
+			case 0: break;
+			case 2: me.useSkillAt(me.x+rnd(-2,2),me.y+rnd(-2,2),usehand); break;
+			case 3:	x.useSkill(usehand);
+				DisplayEnemyLife(x);
+				break;
+			case 4: me.useSkillAt(x,y,usehand); break;
+		}
+		mcheck=PreModeWait();
+		if(!mcheck)
+			dprint("Cast has failed of "+which+" on hand number "+usehand);
+		else
+		{
+			dprint("Cast reported succesful of "+which+" on hand number "+usehand);
+			while (me.mode==mcheck)
+			{
+				if(target)
+				{
+					DisplayEnemyLife(target);
+					if (target.hp <= 0) return true;
+				}
+				DoDel(10);
+			}
+			return true;
+		}
+	}
+	return false;
+}
+
+function PreModeWait()
+{
+	for (qw = 1; qw <= 20; qw++)
+	{
+		if (me.mode==7 || me.mode==8 || (me.mode>9 && me.mode<19)) return me.mode;
+		DoDel(20);
+	}
+	return false;
+}
+
+function doWeaponSwitch(switchTo)
+{
+	myweapontype = ["Attack","MF"];
+	
+	if (arguments.length < 1)
+		switchTo = (weaponSwitch(1)==0)?1:0;
+
+	i = 0;
+	if (weaponSwitch(1) != switchTo)
+	{
+		weaponSwitch();
+		while (weaponSwitch(1) != switchTo && i++ < 50)
+			DoDel(10);
+	}
+
+	if (weaponSwitch(1) != switchTo)
+		print("Weapon switch failed!");
+	else
+	{
+		DoDel(100);
+		print ("Weapon switch to " + myweapontype [weaponSwitch(1)]);
+	}
+}
+
+function DoDel(amount)
+{
+	if(RandomDel) delay(amount+rnd(0,amount));
+	else delay(amount+rnd(0,10));
+}
+
+function checkimmunities(name)
+{
+	creature = getUnit(1,name);
+	if (creature)
+	{
+		var immunecheck = new Array(7);
+		immunecheck[1]=new Array(36,"Immune to Physical");
+		immunecheck[2]=new Array(37,"Immune to Magic");
+		immunecheck[3]=new Array(39,"Immune to Fire");
+		immunecheck[4]=new Array(41,"Immune to Lightning");
+		immunecheck[5]=new Array(43,"Immune to Cold");
+		immunecheck[6]=new Array(45,"Immune to Poison");
+
+		var enchantmentcheck = new Array(13);
+		enchantmentcheck[1]=new Array(5,"Extra Strong");
+		enchantmentcheck[2]=new Array(6,"Extra Fast");
+		enchantmentcheck[3]=new Array(7,"Cursed");
+		enchantmentcheck[4]=new Array(8,"Magic Resistant");
+		enchantmentcheck[5]=new Array(9,"Fire Enchanted");
+		enchantmentcheck[6]=new Array(17,"Lightning Enchanted");
+		enchantmentcheck[7]=new Array(18,"Cold Enchanted");
+		enchantmentcheck[8]=new Array(25,"Mana Burn");
+		enchantmentcheck[9]=new Array(26,"Teleportation");
+		enchantmentcheck[10]=new Array(27,"Spectral Hit");
+		enchantmentcheck[11]=new Array(28,"Stone Skin");
+		enchantmentcheck[12]=new Array(29,"Multi-Shot");
+
+		var auracheck = new Array(8);
+		auracheck[1]=new Array(28,"Conviction Aura Enchanted");
+		auracheck[2]=new Array(33,"Might Aura Enchanted");
+		auracheck[3]=new Array(35,"Holy Fire Aura Enchanted");
+		auracheck[4]=new Array(40,"Blessed Aim Aura Enchanted");
+		auracheck[5]=new Array(43,"Holy Freeze Aura Enchanted");
+		auracheck[6]=new Array(46,"Holy Shock Aura Enchanted");
+		auracheck[7]=new Array(49,"Fanaticism Aura Enchanted");
+
+		for (i = 1; i <= 6; i++)
+		{
+			if ((creature.getStat(immunecheck[i][0]) > 99)
+				&& (immunities[i] == true))
+			{
+				print(immunecheck[i][1] + "!!!");
+				PrintQuitFile(immunecheck[i][1] + "!!!");
+				plus_badres();
+			}
+		}
+
+		for (i = 1; i < immunecombos.length; i++)
+		{
+			if ((creature.getStat(immunecheck[immunecombos[i][0]][0]) > 99)
+				&& (creature.getStat(immunecheck[immunecombos[i][1]][0]) > 99)
+				&& (immunecombos[i][2] == true))
+			{
+				print(immunecheck[immunecombos[i][0]][1] + " & " + immunecheck[immunecombos[i][1]][1] + "!!!");
+				PrintQuitFile(immunecheck[immunecombos[i][0]][1] + " & " + immunecheck[immunecombos[i][1]][1] + "!!!");
+				plus_badres();
+			}
+		}
+
+		for (i = 1; i <= 12; i++)
+		{
+			if ((creature.getEnchant(enchantmentcheck[i][0]))
+				&& (enchantments[i] == true))
+			{
+				print(enchantmentcheck[i][1] + "!!!");
+				PrintQuitFile(enchantmentcheck[i][1] + "!!!");
+				plus_badres();
+			}
+		}
+
+		for (i = 1; i < enchantcombos.length; i++)
+		{
+			if ((creature.getEnchant(enchantmentcheck[enchantcombos[i][0]][0]))
+				&& (creature.getEnchant(enchantmentcheck[enchantcombos[i][1]][0]))
+				&& (enchantcombos[i][2] == true))
+			{
+				print(enchantmentcheck[enchantcombos[i][0]][1] + " & " + enchantmentcheck[enchantcombos[i][1]][1] + "!!!");
+				PrintQuitFile(enchantmentcheck[enchantcombos[i][0]][1] + " & " + enchantmentcheck[enchantcombos[i][1]][1] + "!!!");
+				plus_badres();
+			}
+		}
+
+		for (i = 1; i <= 7; i++)
+		{
+			if ((creature.getState(auracheck[i][0]))
+				&& (auras[i] == true))
+			{
+				print(auracheck[i][1] + "!!!");
+				PrintQuitFile(auracheck[i][1] + "!!!");
+				plus_badres();
+			}
+		}
+
+		for (i = 1; i < enchantauracombos.length; i++)
+		{
+			if ((creature.getEnchant(enchantmentcheck[enchantauracombos[i][0]][0]))
+				&& (creature.getState(auracheck[enchantauracombos[i][1]][0]))
+				&& (enchantauracombos[i][2] == true))
+			{
+				print(enchantmentcheck[enchantauracombos[i][0]][1] + " & " + auracheck[enchantauracombos[i][1]][1] + "!!!");
+				PrintQuitFile(enchantmentcheck[enchantauracombos[i][0]][1] + " & " + auracheck[enchantauracombos[i][1]][1] + "!!!");
+				plus_badres();
+			}
+		}
+		if (DisplayImmunities)
+		{
+			ioutput="";
+			eoutput="";
+			aoutput="";
+			for (i = 1; i <= 6; i++)
+			{
+				if (creature.getStat(immunecheck[i][0]) > 99)
+					ioutput+="ÿc@/ÿc1"+immunecheck[i][1];
+			}
+
+			for (i = 1; i <= 12; i++)
+			{
+				if (creature.getEnchant(enchantmentcheck[i][0]))
+					eoutput+="ÿc@/ ÿc7"+enchantmentcheck[i][1];
+			}
+
+			for (i = 1; i <= 7; i++)
+			{
+				if (creature.getState(auracheck[i][0]))
+					aoutput+="ÿc@/ ÿc8"+auracheck[i][1];
+			}
+			if(ioutput!=name + " is") print(ioutput);
+			if(eoutput!=name + " is enchanted with") print(eoutput);
+			if(aoutput!=name + " has the auras") print(aoutput);
+		}
+	} else 
+	{
+		print(name + " not detected!");
+		PrintQuitFile(name + " not detected!");
+		delay(5000);
+		plus_badres();
+	}
+}
+
+function plus_badres()
+{
+	l_badres++;
+	SaveRun(1);
+	quit();
+}
+
+function checkattacks()
+{
+	attackscompleted++;
+	if (attackscompleted >= maxattacks)
+	{
+		pickiton();
+		quitmessage("Maximum number of attacks reached!");
+	}
+}
+
+
+/* ææææææææææææææææææææææææææææ
+Stashing
+ææææææææææææææææææææææææææææ */
+
+function Checkitems()
+{
+	Uniditem=false;
+	if(MyGold()<80) return false;
+	item = getUnit(4,null,100);
+	if(item) do
+	{
+		if((item.getFlag(0x10) == 0) && (item.itemloc == 0))
+		{
+			if(CheckItem(item, "settings/"+charsnag) && idValid)
+			{
+				print("There is an unid item in your inventory on your id list!");
+				Uniditem=true;
+				gidarray.push(item.gid);
+				itemx = item.x;
+				itemy = item.y;
+				itemc = item.code;
+				return true;
+			}
+		}
+	} while (item.getNext(null,100));
+	return false;
+}
+
+function IDitem(npc)
+{
+	Scroll = getUnit(4,"isc");
+	if(!Scroll)
+		return false;
+	else do
+	{
+		var owner = Scroll.getParent();
+		if(owner && owner.name==npc.name)
+		{
+			BuyItem(Scroll,npc,2);
+			break;
+		}
+	} while (Scroll && Scroll.getNext("isc"));
+
+	item = getUnit(4,null,100);
+	if(item) do
+	{
+		if((item.getFlag(0x10) == 0) && (item.x == itemx) && (item.y == itemy) && (itemc = item.code))
+			break;
+	} while (item && item.getNext(null,100));
+	if((item.getFlag(0x10)!=0) || (item.itemloc!=0) || (item.x!=itemx) || (item.y!=itemy) || (itemc!=item.code)) return false;
+
+	Scroll = getUnit(4,null,100);
+	if(Scroll) do
+	{
+		var owner = Scroll.getParent();
+		if(owner && (Scroll.code == "isc" || Scroll.code == "ibk") && owner.name == me.name)
+		{
+			clickItem(1,Scroll);
+			for(var can=0; can<50; can++)
+			{
+				if(getUIFlag(0x25))
+					break;
+				DoDel(10);
+			}
+			clickItem(0,item);
+			for (y = 0; y < 10; y++)
+			{
+				if(item.getFlag(0x10) != 0) break;
+				DoDel(200);
+			}
+			itemID=(item.getFlag(0x10) != 0);
+
+			return itemID;
+		}
+	} while (Scroll.getNext(null,100));
+}
+
+function SellIdeditem(npc)
+{
+	if(Niceitem || !itemID)
+	{
+		print("Returning");
+		return false;
+	}
+
+	item = getUnit(4,null,100);
+	if(item) do
+	{
+		if(item.x==itemx && item.y==itemy && itemc == item.code)
+			break;
+	} while (item.getNext(null,100));
+	if(item.getFlag(0x10)==0 || item.x!=itemx || item.y!=itemy || itemc!=item.code)
+		return false;
+
+	if(ParseIt("settings/"+charbmitems, itemx, itemy, 0))
+		print("Oops, something is wrong here...  We won't be selling the item!");
+	else
+	{
+		BuyItem(item,npc,1);
+		if(needstash)
+		{
+			print("Rechecking inventory!");
+			checkinventory();
+		}
+	}
+
+	SellItems(100,"aqv",npc);
+	SellItems(100,"cqv",npc);
+	SellItems(100,"isc",npc);
+}
+
+function checkinventory()
+{
+	var invspace=new Array(4);
+	invspace[0]=new Array(10);
+	invspace[1]=new Array(10);
+	invspace[2]=new Array(10);
+	invspace[3]=new Array(10);
+	for (y = 0; y < 4; y++)
+	{
+		for (x = 0; x < 10; x++)
+		{
+			invspace[y][x] = "empty";
+		}
+	}
+
+	dprint("Beginning inventory scan");
+	invitem = getUnit(4,null,100);
+	freespaces = 40;
+	iis = 0;
+	if (invitem) do
+	{
+		owner = invitem.getParent();
+		if (owner)
+		{
+			if (owner.name == me.name)
+			{
+				invitemy = invitem.y;
+				invitemx = invitem.x;
+				iis++;
+				for (y = 0; y < invitem.ysize; y++)
+				{
+					for (x = 0; x < invitem.xsize; x++)
+					{
+						invspace[y + invitemy][x + invitemx] = "full";
+						freespaces -= 1;
+					}
+				}
+			}
+		}
+	} while (invitem.getNext(null,100));
+	dprint("Found " + iis + " items");
+
+	needstash = true;
+	donescanning:
+	for (x = 0; x < 10; x++)
+	{
+		if (invspace[0][x] == "empty")
+		{
+			invspacecheck = true;
+			for (m = 0; m < 4; m++)
+			{
+				for (n = 0; n < FreeSpace; n++)
+				{
+					if(invspace[0 + m][x + n] == "full" || x + n > 10)
+						invspacecheck = false;
+				}
+			}
+			if (invspacecheck)
+			{
+				needstash = false;
+				break donescanning;
+			}
+		}
+	}
+	if (FreeSpace * 4 > freespaces) needstash=true;
+	if (needstash && !Niceitem) print("You only have "+freespaces +" spaces left!");
+	if (Niceitem) needstash=true;
+	if (needstash && Niceitem) print("Something good found.  Moving to stash.");
+	if (!needstash) print("There are " +freespaces +" free spaces in your inventory!");
+	if (needstash)
+	{
+		if(!managestash(2)) needstash=false;
+		if (freespaces<1) FullINV=true;
+	}
+	return needstash;
+}
+
+function managestash(checkspace)
+{
+	var nostashlist = [5,6,18,22,41,76,77,78,79,80,81,82,83,84];
+
+	if(checkspace==1 && me.getStat(14)!=0)
+	{
+		var CurGold=MyGold();
+		gold(me.getStat(14), 3);
+		for(var i=0; i<20; i++)
+		{
+			if(me.getStat(14)!=CurGold)
+				break;
+			DoDel(20);
+		}
+	}
+	stashXsize = 10;
+	stashYsize = 10;
+	var stashspace = new Array(stashYsize );
+	for (y = 0; y < stashYsize ; y++) stashspace[y] = new Array(stashXsize );
+
+	for (y = 0; y < stashYsize; y++)
+	{
+		for (x = 0; x < stashXsize; x++)
+		{
+			stashspace[y][x] = "empty";
+		}
+	}
+
+	sitem = getUnit(4,null,104);
+	if (sitem) do
+	{
+		for (y = 0; y < sitem.ysize; y++)
+		{
+			for (x = 0; x < sitem.xsize; x++)
+			{
+				stashspace[y + sitem.y][x + sitem.x] = "full";
+			}
+		}
+	} while (sitem.getNext(null,104));
+
+	item = getUnit(4,null,100);
+	if (item) do
+	{
+		dontstashthis = false;
+		if((item.getFlag(0x10) == 0) && CheckItem(item, "settings/"+charsnag) && idValid) dontstashthis=true;
+		noloop : for (x = 0; x < nostashlist.length; x++)
+		{
+			if (item.itemtype == nostashlist[x])
+			{
+				for (yt = 0; yt < gidarray.length; yt++)
+				{
+					if (gidarray[yt] == item.gid && item.getFlag(0x10)) break noloop;
+				}
+				dontstashthis = true;
+				break;
+			}
+		}
+		if (!dontstashthis)
+		{
+			donewiththisitem:
+			for (y = 0; y < stashYsize; y++)
+			{
+				for (x = 0; x < stashXsize; x++)
+				{
+					if (stashspace[y][x] == "empty")
+					{
+						itemfitx = (item.xsize-1) + x;
+						itemfity = (item.ysize-1) + y;
+						if (itemfitx <  stashYsize&& itemfity < stashXsize)
+						{
+							var itemspacecheck = true;
+							for (m = 0; m < item.ysize; m++)
+							{
+								for (n = 0; n < item.xsize; n++)
+								{
+									if (stashspace[y + m][x + n] == "full")
+									{
+										itemspacecheck = false;
+									}
+								}
+							}
+							if (itemspacecheck && checkspace==1)
+							{
+								for (m = 0; m < item.ysize; m++)
+								{
+									for (n=0;n<item.xsize;n++)
+									{
+										stashspace[y + m][x + n] = "full";
+									}
+								}
+								clickItem(0,item);
+								numtries = 0;
+								while(item.mode != 4)
+								{
+									DoDel(750);
+									if (numtries > 10) break;
+									numtries++;
+								}
+								clickItem(0,x,y,4);
+								numtries = 0;
+								while(item.mode == 4)
+								{
+									DoDel(750);
+									if (numtries > 10) break;
+									numtries++;
+								}
+								break donewiththisitem;
+							}
+							if (itemspacecheck && checkspace==2)
+							{
+								return true;
+							}
+						}
+					}
+				}
+			}
+			if(!itemspacecheck) print("ÿc1Not enough room to stash your " +itemQual[item.quality] +" " +item.name +"!");
+		}
+	} while (item.getNext(null,100));
+}
+
+function checkposition(x, y)
+{
+	if ((Math.abs(me.x - x) > 7) || (Math.abs(me.y - y) > 7))
+	{
+		print("Correcting position");
+		MoveTo(x, y);
+	}
+}
+
+function quitmessage(message)
+{
+	l_abort++;
+	SaveRun(1);
+	PrintQuitFile(message);
+	print("Aborting game...");
+	DoDel(2000);
+	quit();
+}
+
+function stopmessage(message)
+{
+	PrintQuitFile(message);
+	print("Halting script...");
+	delay(1000);
+	stop();
+}
+
+function dprint(string)
+{
+	if (debuglevel >= 1)
+	{
+		print("ÿc2"+string);
+		delay(dprintdelay);
+	}
+}
+
+function MoveTo(x,y)
+{
+	while (me.mode==7 || me.mode==8 || (me.mode>9 && me.mode<19)) DoDel(10);
+	if (Math.abs(me.x - x) < 4 && Math.abs(me.y - y) < 4) return walkto(x, y);
+
+	if(me.classid!=1 || me.area == 1 || me.area == 40 || me.area == 75 || me.area == 103 || me.area == 109)
+		return walkto(x, y);
+	return teleportto(x, y);
+}
+
+function walkto(x, y)
+{
+	startX = me.x;
+	startY = me.y;
+	currDestX = x;
+	currDestY = y;
+	trys = 0;
+	ntrys=parseInt(10000/walkdel);
+	thrash = 0;
+	nthrash=parseInt(3000/walkdel);
+
+	if(me.runwalk==0)
+		me.runwalk=1;
+	if (Math.abs(me.x - x) <= 1 && Math.abs(me.y - y) <= 1) return true;
+
+	dprint("Walking to [" + x + ", " + y + "]");
+
+	while ((Math.abs(me.x - x) > 4 || Math.abs(me.y - y) > 4) && trys <= ntrys)
+	{
+		if(RandomMove)
+		{
+			currDestX+=rnd(-1,1);
+			currDestY+=rnd(-4,4);
+		}
+		me.move(currDestX, currDestY);
+		if(DropEM == 0) managepotions();
+		if(RandomMoveDel) DoDel(walkdel);
+		else delay(walkdel);
+		trys++;
+		if ((Math.abs(me.x - startX) < 4 && Math.abs(me.y - startY) < 4))
+		{
+			if (thrash >= nthrash)
+			{
+				//updated by Pachelbel
+				var dx = currDestX - startX;
+				var dy = currDestY - startY;
+				var a = Math.atan2(dx, dy);
+				a = Math.floor(a * 100) + 157;  // + pi/2;
+				var direction = rnd(a, a+314)/100;  // + pi
+				currDestX = Math.floor(Math.sin(direction)*20) + me.x;
+				currDestY = Math.floor(Math.cos(direction)*20) + me.y;
+				thrash=0;
+			} else thrash++;
+		}
+		else
+		{
+			startX = me.x;
+			startY = me.y;
+			currDestX = x;
+			currDestY = y;
+		}
+	}
+	if (Math.abs(me.x - x) > 4 || Math.abs(me.y - y) > 4) quitmessage("We got stuck someplace...  Argg!");
+	return true;
+}
+
+function teleportto(x, y)
+{
+	if(RandomMove)
+	{
+		x+=rnd(-1,1);
+		y+=rnd(-4,4);
+	}
+	for (rv = 0; rv < 5; rv++)
+	{
+		DoCast("Teleport",0,x,y);
+
+		// Check to see see if we have arrived at our destination
+		if ((Math.abs(me.x - x) < 6) && (Math.abs(me.y - y) < 6))
+		{
+			dprint("Teleported to [" + me.x + ", " + me.y + "]");
+			return true;
+		}
+	}
+	return walkto(x, y);
+}
+
+/* ææææææææææææææææææææææææææææ
+Run Logging by Rayzer and Scavenger
+ææææææææææææææææææææææææææææ */
+
+function LoadRun()
+{
+	GetRunInfo(RunLog);
+	if(l_total==0) GetRunInfo("output/"+me.name+"_calcs.log");
+	CalcAverageRun();
+	SavedAverage = parseInt((TotalRunTime + AddRunTime)/l_kills);
+	if(Idied) l_death++;
+	crash = l_total - l_kills - l_abort - l_crash - l_badres - l_death;
+	if (crash > 0) l_crash+=crash;
+	l_total++;
+	SaveRun(0);
+	MainLoad=l_kills;
+}
+
+function CalcAverageRun()
+{
+	file = fileOpen("output/"+me.name+"_calcs.log", 0);
+
+	if (file)
+	{
+		while(!file.eof)
+		{
+			line = file.readLine();
+			a = line.split("=");
+			if (a.length == 2)
+			{
+				switch (a[0])
+				{
+					case "total_time":
+						TotalRunTime = parseInt(a[1]);
+						break;
+				}
+			}
+		}
+		file.close();
+	}
+}
+
+function GetRunInfo(which)
+{
+	file = fileOpen(which, 0);
+
+	if (file)
+	{
+		while(!file.eof)
+		{
+			line = file.readLine();
+			a = line.split("=");
+			if (a.length == 2)
+			{
+				switch (a[0])
+				{
+					case "total_runs":
+						l_total = parseInt(a[1]);
+						break;
+					case "total_kills":
+						l_kills = parseInt(a[1]);
+						break;
+					case "total_aborts":
+						l_abort = parseInt(a[1]);
+						break;
+					case "total_badres":
+						l_badres = parseInt(a[1]);
+						break;
+					case "total_crashes_chickens":
+						l_crash = parseInt(a[1]);
+						break;
+					case "total_deaths":
+						l_death = parseInt(a[1]);
+						break;
+					case "last_run":
+						AddRunTime = parseInt(a[1]);
+						break;
+					case "total_time":
+						TotalRunTime = parseInt(a[1]);
+						break;
+					case "best_time":
+						l_time = parseInt(a[1]);
+						break;
+				}
+			}
+		}
+		file.close();
+	}
+}
+
+function SaveRun(how)
+{
+	file = fileOpen(RunLog, 1);
+	if (!file) {
+		print("Failed to open logfile");
+		return;
+	}
+
+	var br = "<br>";
+
+	if(how==0) file.writeLine("Success_Rate=" + String((l_kills / (l_total-1)) * 100).substring(0,5) + "%" + br);
+	else if(how>0) file.writeLine("Success_Rate=" + String((l_kills / l_total) * 100).substring(0,5) + "%" + br);
+	file.writeLine("Average_Time=" + SavedAverage + br);
+	file.writeLine("total_runs=" + l_total + br);
+	file.writeLine("total_kills=" + l_kills + br);
+	file.writeLine("total_aborts=" + l_abort + br);
+	file.writeLine("total_badres="+ l_badres + br);
+	file.writeLine("total_deaths="+ l_death + br);
+	file.writeLine("total_crashes_chickens=" + l_crash + br);
+	file.writeLine("best_time=" + l_time + br);
+	if(how==2) file.writeLine("last_run=" + RunTimer + br);
+	file.close();
+
+	if(how==0)
+	{
+		tfile = fileOpen("output/"+me.name+"_calcs.log", 1);
+		if (!tfile)
+		{
+			print("Failed to open temp logfile");
+			return;
+		}
+		tfile.writeLine("This file is only for calculation purposes, and for backups in case of error with writing to a file, please ignore it");
+		tfile.writeLine("total_runs=" + l_total);
+		tfile.writeLine("total_kills=" + l_kills);
+		tfile.writeLine("total_aborts=" + l_abort);
+		tfile.writeLine("total_badres="+ l_badres);
+		tfile.writeLine("total_crashes_chickens=" + l_crash);
+		tfile.writeLine("total_deaths=" + l_death);
+		tfile.writeLine("total_time=" + (TotalRunTime + AddRunTime));
+		tfile.writeLine("best_time=" + l_time);
+		tfile.close();
+	}
+}
+
+function plus_kills()
+{
+	EndTimer=new Date().getTime();
+	RunTimer=EndTimer-StartTimer;
+	if(RunTimer-l_time <= 0) l_time=RunTimer;
+	l_kills++;
+	SaveRun(2);
+
+	//header();
+	quit();
+}
+
+////////////////////////////////////////
+//
+// Functions by FuQ_Serotonin, to get some html logging goin.
+// Serotonin@clanfuq.com  #d2jsp-dev irc.openprojects.net
+// http://www.clanfuq.com
+////////////////////////////////////////
+
+////////////////////
+//Global Data Members
+////////////////////
+
+function header(){
+	file = fileOpen("output/"+me.name+"_log.html", 1);
+	if(file){
+		file.writeLine("<html>");
+		file.writeLine("<head>");
+		file.writeLine("<title>d2jsp log for " +me.name +"- By Serotonin (html template by njaguar, Scavenger, and Vapid)</title>");
+		file.writeLine("<meta HTTP-EQUIV=\"Pragma\" CONTENT=\"no-cache\">");
+		file.writeLine("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">");
+		file.writeLine("<link rel=\"stylesheet\" type=\"text/css\" href=\"frame.css\">");
+		file.writeLine("<style type='text/css'>");
+		file.writeLine("form { display: inline }");
+		file.writeLine("TABLE, TR, TD { font-family: Tahoma; font-size: 8pt; color: #000000; word-wrap: break-word }");
+		file.writeLine(".row1 { background-color: #EEF2F7 }");
+		file.writeLine("a:link, a:visited, a:active { text-decoration: underline; color: #000000 }");
+		file.writeLine("a:hover { color: #465584 }");
+		file.writeLine(".header { font-size:10pt; color: #FFFFFF }");
+		file.writeLine(".headerinfo { font-size:8pt; color: #000000; }");
+		file.writeLine("</style>");
+		file.writeLine("<noscript>");
+		file.writeLine("<meta http-equiv='refresh' content='2'>");
+		file.writeLine("</noscript>");
+		file.writeLine("<script language='JavaScript'>");
+		file.writeLine("function doLoad() { setTimeout( 'refresh()', 60000 ); }");
+		file.writeLine("</script>");
+		file.writeLine("<script language='JavaScript'>");
+		file.writeLine("var sURL = unescape(window.location.pathname);");
+		file.writeLine("function refresh() { window.location.href = sURL; }");
+		file.writeLine("</script>");
+		file.writeLine("</head>");
+		file.writeLine("<body onload='doLoad()' bgcolor=\"#FFFFFF\" text=\"#000000\" link=\"#000000\" vlink=\"#000000\" alink=\"#000000\" leftmargin='0' topmargin='0' marginwidth='0' marginheight='0'>");
+		file.writeLine("<table class=\"frame\" width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">");
+		file.writeLine("  <tr>");
+		file.writeLine("    <td> ");
+		file.writeLine("      <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">");
+		file.writeLine("        <tr> ");
+		file.writeLine("          <td height=\"59\" background=\"images/TOP_BACK.jpg\" width=\"249\"><img src=\"images/logo.jpg\" width=\"249\" height=\"59\"></td>");
+		file.writeLine("          <td height=\"59\" background=\"images/TOP_BACK.jpg\" align=\"left\" valign=\"middle\" width=\"20\">&nbsp;</td>");
+		file.writeLine("          <td height=\"59\" background=\"images/TOP_BACK.jpg\" align=\"left\" valign=\"middle\"><font style=\"font-size:12pt\" color=\"#FFFFFF\">");
+		file.writeLine("			d2jsp was written and programmed by Paul Taulborg (njaguar) <a href=\"mailto:njaguar@d2jsp.org\">njaguar@d2jsp.org</a>");
+		file.writeLine("          </font> ");
+		file.writeLine("          <p><font size=\"3\" color=\"#FFFFFF\">d2jsp character log file by Serotonin</font></td>");
+		file.writeLine("        </tr>");
+		file.writeLine("      </table>");
+		file.writeLine("      <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">");
+		file.writeLine("        <tr> ");
+		file.writeLine("          <td width=\"10\"><img src=\"images/spacer.gif\" width=\"10\" height=\"10\"></td>");
+		file.writeLine("          <td width=\"150\"><img src=\"images/spacer.gif\" width=\"150\" height=\"10\"></td>");
+		file.writeLine("          <td width=\"10\"><img src=\"images/spacer.gif\" width=\"10\" height=\"10\"></td>");
+		file.writeLine("          <td width=\"100%\">&nbsp;</td>");
+		file.writeLine("          <td width=\"10\"><img src=\"images/spacer.gif\" width=\"10\" height=\"10\"></td>");
+		file.writeLine("          <td width=\"150\"><img src=\"images/spacer.gif\" width=\"150\" height=\"10\"></td>");
+		file.writeLine("         <td width=\"10\"><img src=\"images/spacer.gif\" width=\"10\" height=\"10\"></td>");
+		file.writeLine("        </tr>");
+		file.writeLine("        <tr> ");
+		file.writeLine("          <td>&nbsp;</td>");
+		file.writeLine("          <td class=\"menu\" align=\"left\" valign=\"top\"> ");
+		file.writeLine("            <table width=\"148\" border=\"0\" cellspacing=\"0\" cellpadding=\"10\">");
+		file.writeLine("              <tr> ");
+		file.writeLine("                <td> ");
+		file.writeLine("                 <table border='0' width='128' cellspacing='0' cellpadding='1'>");
+		file.writeLine("<tr><td class='menu_title'>Main</td></tr>");
+		file.writeLine("<tr><td><a href='http://www.d2jsp.org' class='menu_normal' target='_blank'>Home</a></td></tr>");
+		file.writeLine("<tr><td><a href='http://forums.d2jsp.org/index.php?act=Reg&CODE=00' class='menu_normal' target='_blank'>Register</td></tr>");
+		file.writeLine("<tr><td><a href='http://forums.d2jsp.org/index.php?act=Login&CODE=00' class='menu_normal' target='_blank'>Login</td></tr>");
+		file.writeLine("<tr><td class='menu_normal'>&nbsp;</td></tr>");
+		file.writeLine("<tr><td class='menu_title'>Quick Links</td></tr>");
+		file.writeLine("<tr><td><a href='http://forums.d2jsp.org' class='menu_normal' target='_blank'>Forums</a></td></tr>");
+		file.writeLine("<tr><td><a href='http://scripts.d2jsp.org' class='menu_normal' target='_blank'>Scripts</a></td></tr>");
+		file.writeLine("<tr><td class='menu_normal'>&nbsp;</td></tr>");
+		file.writeLine("<tr><td><a href='http://www.d2jsp.org/docs/' class='menu_normal' target='_blank'>Scripting Docs</a></td></tr>");
+		file.writeLine("<tr><td><a href='http://www.d2jsp.org/docs/itemcodes.html' class='menu_normal' target='_blank'>Item Codes</a></td></tr>");
+		file.writeLine("<tr><td class='menu_normal'>&nbsp;</td></tr>");
+		file.writeLine("<tr><td class='menu_title'>Donate</td></tr>");
+		file.writeLine("<tr><td>If you would like to donate to njaguar's great efforts and work, please click the link below.<br></td></tr>");
+		file.writeLine("<tr><td>");
+		file.writeLine("<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\">");
+		file.writeLine("<input type=\"hidden\" name=\"cmd\" value=\"_xclick\">");
+		file.writeLine("<input type=\"hidden\" name=\"business\" value=\"paul@taulb.org\">");
+		file.writeLine("<input type=\"hidden\" name=\"item_name\" value=\"d2jsp\">");
+		file.writeLine("<input type=\"hidden\" name=\"no_shipping\" value=\"1\">");
+		file.writeLine("<input type=\"hidden\" name=\"no_note\" value=\"1\">");
+		file.writeLine("<input type=\"image\" src=\"https://www.paypal.com/images/x-click-butcc-donate.gif\" border=\"0\" name=\"submit\" alt=\"Make payments with PayPal - it's fast, free and secure!\" width=\"73\" height=\"44\">");
+		file.writeLine("</form>");
+		file.writeLine("</td></tr>");
+		file.writeLine("<tr><td style=\"font-size:10px\"><BR><BR>Big props go out to metia.nl for hosting d2jsp! Visit them here: <a href='http://www.metia.com' target='_blank'>Metia</a></td></tr>");
+		file.writeLine("</table>");
+		file.writeLine("                </td>");
+		file.writeLine("              </tr>");
+		file.writeLine("            </table>");
+		file.writeLine("          </td>");
+		file.writeLine("          <td>&nbsp;</td>");
+		file.writeLine("          <td class=\"frame_body\" align=\"left\" valign=\"top\"> ");
+		file.writeLine("           <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"10\">");
+		file.writeLine("              <tr> ");
+		file.writeLine("                <td> ");
+		file.writeLine("<table width='100%' border='0' align='center' cellpadding='0' cellspacing='1' bgcolor='#345487'><tr><td align='left'>");
+		file.writeLine("	<table width='100%' border='0' cellspacing='0' cellpadding='0' background='http://forums.d2jsp.org/style_images/1/header_tile.gif' height=\"23\"><tr><td align='left' valign='middle' class=\"header\">&nbsp; ");
+		file.writeLine("	Run Logs for "+me.name+"</td><td align='right' valign='middle' background='http://forums.d2jsp.org/style_images/1/header_tile.gif'>");
+		file.writeLine("	<td align='right' class=\"headerinfo\">");
+		file.writeLine("	</td></td></tr></table></td></tr><tr><td class='row1'><p>");
+		add_charlog(file);
+	}
+}
+
+function add_charlog(file){
+	if(file){
+		var char_array = new Array();
+		char_array=loadLogs(RunLog);
+		for(i=0;i<char_array.length;++i){
+			file.writeLine(char_array[i]);
+		}
+		post_header(file,"Found Item Logs for");
+		var char_array = new Array();
+		char_array=loadLogs(fLog)
+		for(i=char_array.length-1;i>=0;i--){
+			if(char_array[i].substr(0,1) == '!'){
+				rExp = /000080/g;
+				file.writeLine("<font color=\"#FF0000\">"+char_array[i].substr(2).replace(rExp,"#FF0000")+"</font>");
+			}
+		}
+		post_header(file,"Ignored Item Logs for");
+		for(i=char_array.length-1;i>=0;i--){
+			if(char_array[i].substr(0,1) != '!'){
+				file.writeLine("<font color=\"#000080\">"+char_array[i]+"</font>");
+			}
+		}
+		footer(file);
+	}
+}
+
+function loadLogs(which){	//going to have to figure a way to get ppls file names, and sigh, dual bot users :)
+	var char_array = new Array();
+	lfile = fileOpen(which, 0);
+	if (lfile){
+		for(i=0;!lfile.eof;++i){
+			char_array[i]=lfile.readLine();
+		}
+		lfile.close();
+	}
+	return char_array;
+}
+
+function post_header(file,string){
+	if(file){
+		file.writeLine("  </p>  <table width='100%' border='0' cellspacing='0' cellpadding='8'><tr></tr></table></td></tr></td>");
+		file.writeLine("</table><br>");
+		file.writeLine("<table width='100%' border='0' align='center' cellpadding='0' cellspacing='1' bgcolor='#345487'><tr><td align='left'>");
+		file.writeLine("	<table width='100%' border='0' cellspacing='0' cellpadding='0' background='http://forums.d2jsp.org/style_images/1/header_tile.gif' height=\"23\"><tr><td align='left' valign='middle' class=\"header\">");
+		file.writeLine("	"+string +" " + me.name + "</td><td align='right' valign='middle' background='http://forums.d2jsp.org/style_images/1/header_tile.gif'>");
+		file.writeLine("	<td align='right' class=\"headerinfo\">");
+		file.writeLine("	</td></td></tr></table></td></tr><tr><td class='row1'><p>");
+	}
+}
+
+function footer(file){
+	if(file){
+		file.writeLine("  </p>  <table width='100%' border='0' cellspacing='0' cellpadding='8'><tr></tr></table></td></tr></td>");
+		file.writeLine("</table><br>");
+		file.writeLine("                </td>");
+		file.writeLine("              </tr>");
+		file.writeLine("            </table>");
+		file.writeLine("          </td>");
+		file.writeLine("          <td>&nbsp;</td>");
+		file.writeLine("          <td class=\"menu\" align=\"left\" valign=\"top\">");
+		file.writeLine("            <table width=\"148\" border=\"0\" cellspacing=\"0\" cellpadding=\"10\">");
+		file.writeLine("              <tr> ");
+		file.writeLine("                <td> ");
+		file.writeLine("                  <table border='0' width='128' cellspacing='0' cellpadding='1'>");
+		file.writeLine("<tr><td><a href='javascript:refresh()'>Refresh!</a></td></tr>");
+		file.writeLine("<tr><td class='menu_title'>Need to clear your item log??</td></tr>");
+		file.writeLine("<tr><td>Delete the file "+me.name+"itemlog.html</td></tr>");
+		file.writeLine("</table><table border='0' width='128' cellspacing='0' cellpadding='1'>");
+		file.writeLine("<tr><td>&nbsp;</td></tr>");
+		file.writeLine("</table><table border='0' width='128' cellspacing='0' cellpadding='1'>");
+		file.writeLine("<tr><td class='menu_title'>Links</td></tr>");
+		file.writeLine("<tr><td><a href='http://www.gamersresource.net' class='menu_normal' target='_blank'><img src='images/grnet.gif' alt='Gamers Resource'</a></td></tr>");
+		file.writeLine("<tr><td><a href='http://www.clanfuq.com' class='menu_normal' target='_blank'>Serotonin's Site</a></td></tr>");
+		file.writeLine("</table>");
+		file.writeLine("                </td>");
+		file.writeLine("              </tr>");
+		file.writeLine("            </table>");
+		file.writeLine("          </td>");
+		file.writeLine("          <td>&nbsp;</td>");
+		file.writeLine("        </tr>");
+		file.writeLine("        <tr> ");
+		file.writeLine("          <td colspan=\"6\" align='right' valign='middle' class='frame_bottom_line'>&nbsp</td>");
+		file.writeLine("          <td><img src=\"images/spacer.gif\" width=\"10\" height=\"10\"></td>");
+		file.writeLine("        </tr>");
+		file.writeLine("      </table>");
+		file.writeLine("    </td>");
+		file.writeLine("  </tr>");
+		file.writeLine("</table>");
+		file.writeLine("<body>");
+		file.writeLine("</html>");
+		file.close();
+	}
+}

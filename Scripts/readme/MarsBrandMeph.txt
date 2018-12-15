@@ -1,0 +1,184 @@
+================================================================
+This is the new and improved Mars Mephisto Script. 
+Killing Mephisto has never before been so profitable. 
+It includes updated d2jsp 0.31 compatibility and a host of 
+new features and rewritten code.
+================================================================
+
+Version 0.99d (29.03.2003)
+
+* Fixed weapon switch
+* Hacked a fix for set rings problem
+
+Let me know if there are crashing problems when buying or selling.
+
+The script is now finished. I do not plan to do any further work on it.
+
+For those curious about the new settings, I will answer questions in
+the forum. The average character should not have to modify the dodge
+options, unles they wish to disable dodging. About speed: the new
+attacking should not be much slower than the old routies, if at all,
+but if you wish to use the old bot it can be found at 
+http://www.angelfire.lycos.com/in4/eimaj/MBM_D.1.zip.
+
+Todo:
+
+* Adaptive lag calculations based on me.ping or other measurements
+* Avoidance when pathing/portaling/fighting
+* Track down cast failures, other problems
+* See if I can improve pathing some more, make it configurable
+* Dodging
+* Dodging
+* Dodging
+* Dodging
+* Pathing
+* Pathing
+* Run timer
+* Log wiping on a new version
+* NPC delays
+* dodge/hit counter -- requires a core bug to be fixed, need try 0.31
+* gem cubing/crafting (maybe)
+* night lord killing option
+
+Things I plan to improve in the future:
+
+Multi-language support
+Fix remaining bugs
+Add user requests, or changes anyone makes for me
+
+Welcome to the next release of Mephisto Slaughter Script 2000.
+
+*** PLEASE SEND ANY BUGS YOU FIND TO THE FORUM THREAD OR A PRIVATE MESSAGE ***
+
+Brand.X - USEast (Brand\X @ EFNet)
+
+// History Log /////////////////////////////////////////////////////////////////////////
+
+Version 0.99c (29.03.2003)
+
+* Added some timeouts in several event loop places
+* Repeatedly attempts to detect Mephisto after TP
+* Fixed possible problem with 2+ TP tomes
+* Changed buying and selling items
+* Redid pathing again, let me know if it works
+* TP to stash if inventory is full (requested)
+* German and French translations added
+* Minor things, like a reduced attack range
+
+Version 0.99b (23.03.2003)
+
+* Fixed skill switch bug which may have been causing RD
+* Hopefully fixed Mephisto not detected after TP
+
+Version 0.99a (21.03.2003)
+
+* Fixed crash if no space in inventory when moneymaking
+* Fixed not stashing unid charms
+* Fixed bug where repair check included inventory items
+* Changed core delay to 20 ms
+* Minor changes
+* Modified town pathing again
+
+Version 0.99 (19.03.2003)
+
+* Changing in town pathing a bit, should fix Hratli
+* Added uber chest opening for classic (requested)
+* Converted constants to the Sy_Constants library
+* Added ShopIt, NPCs are configurable (requested)
+* Changed how the script teleports through Durance 2 (again)
+* Fixed problem with full rejuv potions
+* Removed run to Durance Entrace option, it was crappy
+* Added support for untimed spells other than nova
+* Adding calculations for casting delays
+* Made some tweaks to the pathing speed. Need feedback!!!
+  Paths will be a little rougher now. Not always optimal.
+  Also restored the option to use simple pathing
+* Fixed lockup when meph was outside nova range
+* Fail cast spams should be stopped, only printing once
+* Dodging now accounts cast rate and lag. More to do here.
+* Fixed some things with run to town chickening
+* Added a configurable money maker mode
+
+Version D.4 (17.03.2003)
+
+* Fixed the inventory free space detection for left-aligned charms
+* Fixed a serious bug if no attack point was found
+* Fixed the gold pickup
+* Fixed teleporting to stairs for high-ping users, thanks snoop_tal
+* Fixed bug where static was being cast even if out of range
+* Improvements to attacking position calculations
+* Added a new "Safety" feature for weak sorcs
+* Other minor changes
+
+Version D.3 (16.03.2003)
+
+* Added a chicken to town and heal option
+* Added chickens for when superunique monsters like Bremm 
+  Sparkfist get too close. Useful for hardcore characters.
+* Autodetects difficulty and selects a best potion type
+* Added a few options and hidden things
+* Added sweet progress bars from snoop_tal. Modified them some.
+* PATHING IS PERFECT! (or close) I used a modified A* algorithm
+  written into mattlant's lib. Instead of searching the grid,
+  it checks for various places it can teleport to, and tries to
+  minimize the number of teleport jumps. After all, a short 
+  teleport takes just as much time as a long one.
+  I haven't personally got Mattlant's permission to do this, 
+  I hope he doesn't mind!
+* Fixed a debugging print bug in mbm_Include, thanks syadasti
+
+Version D.2 (14.03.2003)
+
+* Completely rewrote attacking routines. Thanks Mattlant for the 
+  useful mlHeap library; everything is completely delay() free now. 
+  The dodging should be near-perfect once the delay variables are
+  tuned properly.
+* Added a wait for conviction aura that was requested
+* Added a new way to handle low mana: by dodging meph's spells
+* Added a method of dodging that uses trigonometry
+* Changed dodging configuration to use two variables, read settings.d2l
+* Weapon switch should work now
+* No more dependancy on TownMove.d2l
+* Added Static Field autorange calculation
+* Fixed bugs in the life watch routine
+* Added many delays and timeouts. Hopefully the ID scroll problem will
+  disappear, let me know asap if it comes back.
+* Added a variety of expert settings which you are free to mangle to
+  kill your characters and crash your diablo. IE dont touch them.
+* Made everything use constant strings in preparation for translation.
+* Many other changes
+
+Version D.1 (06.03.2003)
+
+* Improved attack routines now have a much better chance of
+  catching Meph in a static field or a nova. Don't forget to
+  set your static field range in MBM_Settings.d2l, higher
+  skill levels have broader ranges.
+* Implemented stubs for mlMap pathing, which is much more
+  accurate. Warning: may cause lag on slow computers, and
+  potentially may even crash diablo.
+* Fixed the enchant merc bug
+* Fixed the HUD
+* Fixed the logging not working bug
+* No more dependency on BMPwnIt! The only one left now is TownMove.
+* Other minor changes.
+
+Version D (05.03.2003)
+
+Things I improved in this release:
+
+* Totally rewritten attack routines: now uses a modular pseudo-event based scheme 
+  influenced by Mattlant's priority queue bot
+* All the same options as the previous script, such as merc kill, weapon switch, dodging
+* New 0.30 features such as item selling
+* A totally rewritten potion library based on the pwnpots library
+* New options for stash size and mana recovery for classic players and weak characters
+* Removed dependency on PwnageXtreme
+* Faster and deadlier than ever
+
+Changes in C.2:
+* Fixed spelling of Fire Wall in config
+* Added option to unload pickit
+* Added a way to try and let the merc kill mephisto
+* Setting to chicken when out of full healing pots
+* Added option to disable dodging

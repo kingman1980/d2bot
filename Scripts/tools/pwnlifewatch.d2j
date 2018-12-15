@@ -1,0 +1,410 @@
+var PwnPots=new Object();	//Ignore this line
+// Chicken and Potion settings
+//====================================================================
+// If you use a number over 99 for the chicken totals, it will use a static number instead of a percent!
+// chickenlife=x		This is your chicken life percentage.  If you go below this life total, the game will exit.
+// chickenmana=x		This is your chicken mana percentage.  If you go below this mana total, the game will exit.
+// LifeThresh=x			Drink a normal potion if under this % life
+// ManaThresh=x			Drink a normal potion if under this % mana
+// LifeRejuvThresh=x		Drink a potion if under this % life or % mana combined with LifeThresh
+// ManaRejuvThresh=x		Drink a potion if under this % life or % mana combined with ManaThresh
+// MercFavorsJuves=true/false	Set this to true to use rejuvs on your merc before other potions
+// mercpotionlife=x		This is the threshold to use a potion on your merc
+// DrinkTimer=x			But dont drink more than one potion for this number of seconds
+// noPotsChicken=true/false	If true, chicken if you need a pot and none are left
+// mercChickenLife=x		this is your mercs chicken life percentage.  If he goes below this life total, the game will exit.
+// deadMercChicken=true/false	if true, chicken if your merc dies
+// LoopDelay=x			This is the time your script will pause in between each life check
+// IgnorePosition=true/false	Set this to true, and you will drink any potion in your belt, not just those readily clickable
+// QuitOnHostile=true/false	If this is true, you will quit when hostiled.
+
+PwnPots["chickenlife"] = 25;
+PwnPots["chickenmana"] = 10;
+PwnPots["LifeThresh"] = 30;
+PwnPots["ManaThresh"] = 15;
+PwnPots["LifeRejuvThresh"] = 60;
+PwnPots["ManaRejuvThresh"] = 30;
+PwnPots["MercFavorsJuves"] = true;
+PwnPots["mercpotionlife"] = 40;
+PwnPots["DrinkTimer"] = 1;
+PwnPots["noPotsChicken"] = false;
+PwnPots["mercChickenLife"] = 15;
+PwnPots["deadMercChicken"] = false;
+PwnPots["LoopDelay"] = 50;
+PwnPots["IgnorePosition"] = false;
+PwnPots["QuitOnHostile"] = true;
+
+//If you have a character and need different settings for them, you can change them here.
+switch(me.name)
+{
+	case "YourCharacter":
+		PwnPots["chickenlife"] = 60;
+		PwnPots["chickenmana"] = 20;
+		break;
+	case "YourOtherCharacter":
+		PwnPots["LifeRejuvThresh"] = 60;
+		PwnPots["ManaRejuvThresh"] = 30;
+		break;
+}
+
+
+
+
+
+
+
+function PrintLWFile(string) {
+	timer=new Date();
+	newtime=timer.toString();
+	GMT = newtime.indexOf("GMT");
+	ptimer=newtime.substring(4, GMT-1);
+	ptimer=ptimer.substr(7,4)+"/"+(timer.getMonth()<9?"0":"")+(timer.getMonth()+1)+"/"+ptimer.substr(4,3)+ptimer.substr(12);
+	lwLog="output/"+me.name+"_LWLog.txt";
+	FileWriteLog=fileOpen(lwLog, 2);
+	if (FileWriteLog) {
+		FileWriteLog.writeLine(ptimer + " | " + me.x +"/"  + me.y+" | " + string);
+		FileWriteLog.close();
+	}
+}
+
+
+
+
+// There is no need to edit this, unless you know what you are doing
+function main() {
+	print("Potion script loaded!");
+	// Autodrinking standalone process by Syadasti (v0.1) & Swedish Power (v0.2 and on)
+	// v0.2 severe bugfixes
+	// v0.3 added Mana drinking
+	// v0.4 added Rejuvenation logic
+	// v0.5 improved the logic
+	// v0.6 bugfix
+	// v1.5 maintained by HPB_forever for pwnage pindle
+
+	PwnPots["myarea"] = me.area;
+	PwnPots["_tMyLastDrink"] = 0;
+	PwnPots["_tMercLastDrink"] = 0;
+	PwnPots["FailedDrinks"] = 0;
+	PwnPots["outOfPots"] = false;
+	PwnPots["havemerc"] = false;
+	PwnPots["mercAlive"] = false;
+	PwnPots["startpotions"] = false;
+	PwnPots["mercname"] = "";
+	PwnPots["mymaxlife"] = parseInt((me.hpmax) + (me.hpmax * (me.getStat(76) / 100)));
+	PwnPots["mymaxmana"] = parseInt((me.mpmax) + (me.mpmax * (me.getStat(77) / 100)));
+	PwnPots["basemaxlife"] = PwnPots["mymaxlife"];
+	PwnPots["basemaxmana"] = PwnPots["mymaxmana"];
+	PwnPots["currentmaxlife"] = PwnPots["mymaxlife"];
+	PwnPots["currentmaxmana"] = PwnPots["mymaxmana"];
+	PwnPots["workingmaxlife"] = PwnPots["mymaxlife"];
+	PwnPots["workingmaxmana"] = PwnPots["mymaxmana"];
+	PwnPots["mymercpotionlife"] = parseInt((128 * PwnPots["mercpotionlife"]) / 100);
+	PwnPots["myMercChickenLife"] = parseInt((128 * PwnPots["mercChickenLife"]) / 100);
+	while (1)
+	{
+		if(!InTown(me) && !PwnPots["startpotions"]) GetReady();
+		if (!InTown(me) && PwnPots["startpotions"])
+		{
+			PwnPots["currentmaxlife"] = parseInt((me.hpmax) + (me.hpmax * (me.getStat(76) / 100)));
+			PwnPots["currentmaxmana"] = parseInt((me.mpmax) + (me.mpmax * (me.getStat(77) / 100)));
+			PwnPots["currenthppct"] = Math.floor(me.hp * 100 / PwnPots["currentmaxlife"]);
+			PwnPots["currentmppct"] = Math.floor(me.mp * 100 / PwnPots["currentmaxmana"]);
+
+			if (PwnPots["currentmaxlife"] > PwnPots["workingmaxlife"] &&
+				PwnPots["currenthppct"] < (PwnPots["LifeThresh"] > PwnPots["LifeRejuvThresh"] ? PwnPots["LifeThresh"] : PwnPots["LifeRejuvThresh"]))
+					PwnPots["workingmaxlife"] = PwnPots["basemaxlife"];
+			else
+					PwnPots["workingmaxlife"] = PwnPots["currentmaxlife"];
+
+			if (PwnPots["currentmaxmana"] > PwnPots["workingmaxmana"] &&
+				PwnPots["currentmppct"] <  (PwnPots["ManaThresh"] > PwnPots["ManaRejuvThresh"] ? PwnPots["ManaThresh"] : PwnPots["ManaRejuvThresh"]))
+					PwnPots["workingmaxmana"] = PwnPots["basemaxmana"];
+			else
+					PwnPots["workingmaxmana"] = PwnPots["currentmaxmana"];
+			CheckThresh();
+			if (PwnPots["outOfPots"] && PwnPots["noPotsChicken"])
+			{   // out of pots, so force a chicken
+				print("Oops, no more pots!  I'm outta here...");
+				quit ();
+			}
+
+			if(PwnPots["havemerc"])
+			{
+				if (PwnPots["mercAlive"]) CheckMerc();
+				if (PwnPots["deadMercChicken"] && PwnPots["havemerc"] && !PwnPots["mercAlive"])
+				{   // merc's dead, so force a chicken
+					print("Oops, my merc died!  I'm outta here...");
+					quit ();
+				}
+			}
+		}
+		delay(PwnPots["LoopDelay"]);
+	}
+}
+
+function hostilemsgHandler()
+{
+	if(PwnPots["QuitOnHostile"])
+		quit();
+}
+
+// - ripped from scavenges bloodybarb script
+function InTown(e)
+{
+	if(e.area == 1 || e.area == 40 || e.area == 75 || e.area == 103 || e.area == 109)
+		return true;
+
+	return false;
+}
+
+function drinkpot(type,target)
+{
+	if (me.classid == 4 && me.mode == 18)
+		return -1;
+
+	var pot = null;
+
+	switch (type.charAt(0).toLowerCase())
+	{
+		case "r":
+			if(target.name==me.name)
+				pot = getPotion("rvl");
+			if(!pot)
+				pot = getPotion("rvs");
+			if(!pot && target.name!=me.name)
+				pot = getPotion("rvl");
+			break;
+		case "h": case "m":
+			for (i = 5; i > 0; i--)
+			{
+				pot = getPotion(type.charAt(0).toLowerCase()+"p" + i.toString());
+				if(pot)
+					break;
+			}
+			break;
+	}
+
+	if (pot && pot.getParent() && pot.getParent().name == me.name)
+	{
+		if(target.name==me.name)
+			clickItem(1,pot);
+		else
+			clickItem(3,pot);
+		return 1;
+	}
+
+	return 0;
+}
+
+function getPotion(type)
+{
+	if(type)
+		Pot=getUnit(4,null,2);
+
+	if(Pot) do
+	{
+		if(Pot && ((type && type==Pot.code) || !type) && (PwnPots["IgnorePosition"] || Pot.x<4) && Pot.getParent() && Pot.getParent().name == me.name)
+			return Pot;
+	} while(Pot && Pot.getNext(null,2))
+	return null;
+}
+
+function CheckThresh()
+{
+	// and don't drink when dead
+	//PrintLWFile("test");
+	if (me.hp < 1) 
+	{
+		PrintLWFile("I'm dead!");
+		delay(200);
+		quit(); // Run away!
+	}
+	if(me.hp < me.chickenhp || me.mp < me.chickenmp) 
+	{
+		PrintLWFile("Life or Mana Chicken!");
+		delay(200);
+		quit(); // Run away!
+	}
+	// don't drink more than you can handle
+	var tNow = new Date();
+
+	if (PwnPots["_tMyLastDrink"] && ((tNow - PwnPots["_tMyLastDrink"]) < (PwnPots["DrinkTimer"] * 1000)))
+		return false;
+
+	var hppct = Math.floor(me.hp * 100 / PwnPots["workingmaxlife"]);
+	var mppct = Math.floor(me.mp * 100 / PwnPots["workingmaxmana"]);
+
+	if (hppct <= PwnPots["LifeThresh"] || mppct <= PwnPots["ManaThresh"] ||
+	    hppct <= PwnPots["LifeRejuvThresh"] || mppct <= PwnPots["ManaRejuvThresh"])
+	{ // Check hp level
+		if (hppct <= PwnPots["LifeRejuvThresh"] || mppct <= PwnPots["ManaRejuvThresh"] ||
+		    (hppct <= PwnPots["LifeThresh"] && mppct <= PwnPots["ManaThresh"]))
+		{
+			potion = "rejuvenation";
+		}
+		else if (hppct <= PwnPots["LifeThresh"])
+			potion = "healing";
+		else if (mppct <= PwnPots["ManaThresh"])
+			potion = "mana";
+
+		if (me.mode == 0 || me.mode == 17 || (me.classid == 4 && me.mode == 18))
+			return;
+
+		if(PwnPots["FailedDrinks"]<3)
+			print("Attemting to drink a " + potion + " potion...");
+		var result = drinkpot(potion,me);
+		if (result == 1)
+		{
+			print("Drinking a "+potion+" potion was a Success!");
+			PwnPots["FailedDrinks"] = 0;
+		}
+		else
+		{
+			if (result == -1)
+				Eprint("Drink attempt FAILED!");
+			else
+				Eprint("Out of " + potion + " potions!");
+
+			if (potion == "rejuvenation")
+			{
+				if(hppct <= PwnPots["LifeThresh"])
+					potion = "healing";
+				if(mppct <= PwnPots["ManaThresh"])
+					potion = "mana";
+				else
+					potion = "healing";
+			}
+			else if (potion == "mana" || potion == "healing")
+				potion = "rejuvenation";
+			if(PwnPots["FailedDrinks"]<3)
+				print("Attemting to drink a "+potion+" potion instead...");
+			result = drinkpot(potion,me);
+			if (result == 1)
+			{
+				print("Drinking a "+potion+" potion was a Success!");
+				PwnPots["FailedDrinks"] = 0;
+			}
+			else if (result == -1)
+				Eprint("Drink attempt FAILED!");
+			else
+			{
+				Eprint("Out of "+potion+" potions too!");
+				PwnPots["outOfPots"] = true;
+			}
+		}
+
+		PwnPots["_tMyLastDrink"] = new Date();
+	}
+}
+
+function CheckMerc()
+{
+	var merc = getUnit(1,PwnPots["mercname"]);
+	if(!merc) return;
+
+	if (merc.hp < 1)
+	{ // Well now, he's dead...  No use in giving him potions
+		PwnPots["mercAlive"] = false;
+		return;
+	}
+	if (merc.hp < PwnPots["myMercChickenLife"])
+	{
+		print("My merc is about to die.  I'm outta here!");
+		quit();
+	}
+
+	var tNow = new Date();
+	// don't drink more than you can handle
+	if (PwnPots["_tMercLastDrink"] && ((tNow - PwnPots["_tMercLastDrink"]) < (PwnPots["DrinkTimer"] * 1000)))
+		return false;
+
+	if (merc.hp <= PwnPots["mymercpotionlife"])
+	{ // Check hp level
+		if (PwnPots["MercFavorsJuves"])
+			potion = "rejuvenation";
+		else
+			potion = "healing";
+
+		if (merc.hp <= 0 || me.mode == 0 || me.mode == 17 || (me.classid == 4 && me.mode == 18))
+			return;
+
+		if(PwnPots["FailedDrinks"]<3)
+			print("Attemting to give merc a " + potion + " potion...");
+		var result = drinkpot(potion,merc);
+		if (result == 1)
+		{
+			print("Feeding mercenary a "+potion+" potion was a Success!");
+			PwnPots["FailedDrinks"] = 0;
+			delay(100);
+		}
+		else
+		{
+			if (result == -1)
+				Eprint("Feeding mercernary a potion FAILED!");
+			else
+				Eprint("Out of " + potion + " potions!");
+
+			if (potion=="healing")
+				potion = "rejuvenation";
+			else
+				potion = "healing";
+			if(PwnPots["FailedDrinks"]<3)
+				print("Attemting to give merc a "+potion+" potion instead...");
+			ok2 = drinkpot(potion,merc);
+			if (result == 1)
+			{
+				print("Feeding mercenary a "+potion+" potion was a Success!");
+				PwnPots["FailedDrinks"] = 0;
+				delay(100);
+			}
+			else if (result == -1)
+				Eprint("Feeding mercernary a potion FAILED!");
+			else if(result == 0)
+			{
+				Eprint("Out of "+potion+" potions too!");
+				PwnPots["outOfPots"] = true;
+			}
+		}
+		PwnPots["_tMercLastDrink"] = new Date();
+	}
+}
+
+function Eprint(string)
+{
+	PrintLWFile(string) ;
+	PwnPots["FailedDrinks"]++;
+	if (PwnPots["FailedDrinks"]<3) // Stop spamming
+		print(string);
+	if (PwnPots["FailedDrinks"]==3)
+	{
+		print("Failed to drink any potions!");
+		PrintLWFile("Failed to drink any potions!");
+	}
+}
+
+function GetReady()
+{
+	// start checking status on first area change
+	PwnPots["myarea"] = me.area;
+	if(!PwnPots["startpotions"])
+		print("Life watching "+me.name);
+	PwnPots["startpotions"]=true;
+	me.chickenhp = (PwnPots["chickenlife"]<99)?parseInt((PwnPots["mymaxlife"] * PwnPots["chickenlife"]) / 100):parseInt(PwnPots["chickenlife"]);
+	me.chickenmp = (PwnPots["chickenmana"]<99)?parseInt((PwnPots["mymaxmana"] * PwnPots["chickenmana"]) / 100):parseInt(PwnPots["chickenmana"]);
+
+	merc = getUnit(1);
+	if (merc) do
+	{
+		if(merc.classid!=271 && merc.classid!=338 && merc.classid!=359 && merc.classid!=561)
+			continue;
+		var parent = merc.getParent();
+		if (parent && parent.name == me.name && merc.hp > 0)
+		{
+			PwnPots["mercname"] = merc.name;
+			if(!PwnPots["havemerc"] || !PwnPots["mercAlive"])
+				print("Life watching "+PwnPots["mercname"]);
+			PwnPots["havemerc"] = true;
+			PwnPots["mercAlive"] = true;
+		}
+	} while(merc && merc.getNext());
+}
