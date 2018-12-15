@@ -8,3 +8,6 @@ d2jsp bot for private battle net
 4、目前对sorc的支持最好，sorc需要冰封球和静态立场以及第二个冰甲技能
 5、在output文件夹下会输出kp结果
 Enjoy!
+
+Sig+kp脚本下载链接，解压即可使用
+链接:https://pan.baidu.com/s/14KqQLnAL-PekTgLeCawxAA  密码:8kh7
