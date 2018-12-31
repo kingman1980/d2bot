@@ -1,0 +1,160 @@
+function GetDictionary() {
+	return [// STATS
+	        ["PLUS_STRENGTH",              "getStat(0)"],
+	        ["PLUS_ENERGY",                "getStat(1)"],
+	        ["PLUS_DEXTERITY",             "getStat(2)"],
+	        ["PLUS_VITALITY",              "getStat(3)"],
+	        ["PLUS_LIFE",                  "Math.floor(getStat(7)/256)"],
+	        ["PLUS_MANA",                  "Math.floor(getStat(9)/256)"],
+	        ["ENHANCED_DEFENSE",           "getStat(16)"],
+	        ["ENHANCED_DAMAGE",            "getStat(18)"],
+	        ["PHYSICAL_DAMAGE_REDUCED_BY", "getStat(34)"],
+	        ["MAGIC_DAMAGE_REDUCED_BY",    "getStat(35)"],
+	        ["PHYSICAL_DAMAGE_REDUCTION_%","getStat(36)"],
+	        ["FIRE_RESIST",          "getStat(39)"],
+	        ["LIGHTNING_RESIST",     "getStat(41)"],
+	        ["COLD_RESIST",          "getStat(43)"],
+	        ["POISON_RESIST",        "getStat(45)"],
+	        ["MIN_FIRE_DAMAGE",      "getStat(48)"],
+	        ["MAX_FIRE_DAMAGE",      "getStat(49)"],
+	        ["MIN_LIGHTNING_DAMAGE", "getStat(50)"],
+	        ["MAX_LIGHTNING_DAMAGE", "getStat(51)"],
+	        ["MIN_COLD_DAMAGE",      "getStat(54)"],
+	        ["MAX_COLD_DAMAGE",      "getStat(55)"],
+	        ["COLD_DURATION",        "Math.floor(getStat(56)/25)"],
+	        ["MIN_POISON_DAMAGE",    "Math.floor((item.getStat(57) * item.getStat(59)) / 256)"],
+	        ["MAX_POISON_DAMAGE",    "Math.floor((item.getStat(58) * item.getStat(59)) / 256)"],
+	        ["POISON_DURATION",      "Math.floor(getStat(59)/25)"],
+	        ["LIFE_LEECH",           "getStat(60)"],
+	        ["MANA_LEECH",           "getStat(62)"],
+	        ["GOLD_FIND",            "getStat(79)"],
+	        ["MAGIC_FIND",           "getStat(80)"],
+	        ["AMAZON_SKILLS",        "getStat(83)"],
+	        ["PALADIN_SKILLS",       "getStat(84)"],
+	        ["NECROMANCER_SKILLS",   "getStat(85)"],
+	        ["SORCERESS_SKILLS",     "getStat(86)"],
+	        ["BARBARIAN_SKILLS",     "getStat(87)"],
+	        ["REDUCED_REQUIRMENTS",  "getStat(91)"],
+	        ["I_A_S",                "getStat(93)"],
+	        ["RUN_WALK",             "getStat(96)"],
+	        ["HIT_RECOVERY",         "getStat(99)"],
+	        ["FASTER_BLOCK",         "getStat(102)"],
+	        ["FAST_CAST",            "getStat(105)"],
+	        ["AUTOMOD_SKILL_1_SKILL","(getStat(107)&0x1FF)"],
+	        ["AUTOMOD_SKILL_1_LEVEL","Math.floor((getStat(107)&0x1E00)/0x200)"],
+	        ["AUTOMOD_SKILL_2_SKILL","(getStat(108)&0x1FF)"],
+	        ["AUTOMOD_SKILL_2_LEVEL","Math.floor((getStat(108)&0x1E00)/0x200)"],
+	        ["AUTOMOD_SKILL_3_SKILL","(getStat(109)&0x1FF)"],
+	        ["AUTOMOD_SKILL_3_LEVEL","Math.floor((getStat(109)&0x1E00)/0x200)"],
+	        ["DRUID_SKILLS",         "getStat(179)"],
+	        ["ASSASSIN_SKILLS",      "getStat(180)"],
+	        // see stats-explained.txt for tab numbers
+	        ["PLUS_SKILL_TREE_TAB",  "(getStat(188) & 0x1E)"],
+	        ["PLUS_SKILL_TREE_LEVEL","Math.floor((getStat(188)&0x60)/0x20)"],
+	        ["NUM_SOCKETS",          "getStat(194)"],
+	        ["CHARGED_SKILL_1_SKILL","(getStat(204)&0x1FF)"],
+	        ["CHARGED_SKILL_1_LEVEL","Math.floor((getStat(204)&0x1E00)/0x200)"],
+	        ["CHARGED_SKILL_1_CURRENT","Math.floor((getStat(204)&0xFC000)/0x4000)"],
+	        ["CHARGED_SKILL_1_MAX",  "Math.floor((getStat(204)&0xFC00000)/0x400000)"],
+	        // FLAGS
+	        ["IS_IDENTIFIED",        "getFlag(0x10) != 0"],
+	        ["NOT_IDENTIFIED",       "getFlag(0x10) == 0"],
+	        ["IS_SOCKETED",          "getFlag(0x800) != 0"],
+	        ["NOT_SOCKETED",         "getFlag(0x800) == 0"],
+	        ["IS_ETHEREAL",          "getFlag(0x400000) != 0"],
+	        ["NOT_ETHEREAL",         "getFlag(0x400000) == 0"],
+	        // SKILLS
+	        ["TELEPORT",             "54"],
+	        // ITEM QUALITY
+	        ["INFERIOR_ITEM",        "quality == 1"],
+	        ["AVERAGE_ITEM",         "quality == 2"],
+	        ["SUPERIOR_ITEM",        "quality == 3"],
+	        ["MAGIC_ITEM",           "quality == 4"],
+	        ["SET_ITEM",             "quality == 5"],
+	        ["RARE_ITEM",            "quality == 6"],
+	        ["UNIQUE_ITEM",          "quality == 7"],
+	        ["CRAFTED_ITEM",         "quality == 8"],
+			// ITEM CLASS
+	        ["NORMAL_ITEM",          "itemclass == 0"],
+	        ["EXCEPTIONAL_ITEM",     "itemclass == 1"],
+	        ["ELITE_ITEM",           "itemclass == 2"],
+			// ITEM TYPES
+			["REGULAR_SHIELD",       "itemtype == 2"],
+			["ANY_ARMOR",            "itemtype == 3"],
+			["ANY_GOLD",             "itemtype == 4"],
+			["ANY_RING",             "itemtype == 10"],
+			["ANY_AMULET",           "itemtype == 12"],
+			["ANY_BOOTS",            "itemtype == 15"],
+			["ANY_GLOVES",           "itemtype == 16"],
+			["ANY_BELT",             "itemtype == 19"],
+			["ANY_SCEPTER",          "itemtype == 24"],
+			["ANY_WAND",             "itemtype == 25"],
+			["ANY_STAFF",            "itemtype == 26"],
+			["REGULAR_BOW",          "itemtype == 27"],
+			["ANY_AXE",              "itemtype == 28"],
+			["ANY_CLUB",             "itemtype == 29"],
+			["ANY_SWORD",            "itemtype == 30"],
+			["ANY_HAMMER",           "itemtype == 31"],
+			["ANY_KNIFE",            "itemtype == 32"],
+			["REGULAR_SPEAR",        "itemtype == 33"],
+			["ANY_POLEARM",          "itemtype == 34"],
+			["ANY_CROSSBOW",         "itemtype == 35"],
+			["ANY_MACE",             "itemtype == 36"],
+			["REGULAR_HELM",         "itemtype == 37"],
+			["ANY_QUEST_ITEM",       "itemtype == 39"],
+			["ANY_THROW_KNIFE",      "itemtype == 42"],
+			["ANY_THROW_AXE",        "itemtype == 43"],
+			["REGULAR_JAVELIN",      "itemtype == 44"],
+			["ANY_JEWEL",            "itemtype == 58"],
+			["SORCERESS_ORB",        "itemtype == 68"],
+			["NECROMANCER_HEAD",     "itemtype == 69"],
+			["PALADIN_SHIELD",       "itemtype == 70"],
+			["BARBARIAN_HELM",       "itemtype == 71"],
+			["DRUID_PELT",           "itemtype == 72"],
+			["ANY_RUNE",             "itemtype == 74"],
+			["ANY_CIRCLET",          "itemtype == 75"],
+			["SMALL_CHARM",          "itemtype == 82"],
+			["LARGE_CHARM",          "itemtype == 83"],
+			["GRAND_CHARM",          "itemtype == 84"],
+			["AMAZON_BOW",           "itemtype == 85"],
+			["AMAZON_SPEAR",         "itemtype == 86"],
+			["AMAZON_JAVELIN",       "itemtype == 87"],
+			["ASSASSIN_CLAW",        "itemtype == 88"],
+			["ANY_HELM",             "(REGULAR_HELM || BARBARIAN_HELM || DRUID_PELT)"],
+			["ANY_SHIELD",           "(REGULAR_SHIELD || PALADIN_SHIELD || NECROMANCER_HEAD)"],
+			["ANY_ORB",              "SORCERESS_ORB"],
+			["ANY_BOW",              "(REGULAR_BOW || AMAZON_BOW)"],
+			["ANY_SPEAR",            "(REGULAR_SPEAR || AMAZON_SPEAR)"],
+			["ANY_JAVELIN",          "(REGULAR_JAVELIN || AMAZON_JAVELIN)"],
+			["ANY_CLAW",             "ASSASSIN_CLAW"],
+			["ANY_CHARM",            "(SMALL_CHARM || LARGE_CHARM || GRAND_CHARM)"],
+			// ITEM CODES
+	        // MISC
+	        ["FLAWLESS_GEMS",        "name.indexOf('Flawless') >= 0"],
+	        ["CRAFTING_RUNES",       "/r(09|11|12)/.test(code)"],
+	        ["MID_RUNES",            "/r(17|18|19|20|21)/.test(code)"],
+	        ["HIGH_RUNES",           "/r(2[2-9]|30|31|32|33)/.test(code)"]
+	       ];
+}
+
+function PreparseEvalString (evalString, dictionary) {
+	var parseAgain;
+	var newEvalString = evalString;
+
+	if (!evalString || evalString.length <= 0) { return null; }
+	if (arguments.length < 1) { return null; }
+	if (arguments.length < 2) { dictionary = GetDictionary(); }
+
+	do {
+		parseAgain = false;
+		for (var i in dictionary) {
+			newEvalString = evalString.replace(eval("/"+dictionary[i][0]+"/g"),dictionary[i][1]);
+			if (newEvalString != evalString) {
+				parseAgain = true;
+				evalString = newEvalString;
+			}
+		}
+	} while (parseAgain);
+
+	return newEvalString;
+}
